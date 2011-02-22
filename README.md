@@ -1,15 +1,15 @@
- # YieldStar Client#
+# YieldStar Client #
 
- Adapter for YieldStar AppExchange service.
+Adapter for YieldStar AppExchange service.
 
- ## Installation ##
+## Installation ##
 
- 1. Add this to your Gemfile:
+1. Add this to your Gemfile:
 
-         gem 'yield_star_client', :git => 'git@github.com:g5search/yield_star_client.git'
+        gem 'yield_star_client', :git => 'git@github.com:g5search/yield_star_client.git'
 
- 2. Execute `bundle install`
+2. Execute `bundle install`
 
- ## Examples ##
+## Examples ##
 
- **TODO:** Usage examples go here.
+**TODO:** Usage examples go here.
