@@ -1,0 +1,2 @@
+branch_name=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+rvm --create use 1.9.2@yield_star_client-${branch_name}

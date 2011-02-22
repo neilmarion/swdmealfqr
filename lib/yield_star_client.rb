@@ -1,0 +1,3 @@
+module YieldStarClient
+  # Your code goes here...
+end
