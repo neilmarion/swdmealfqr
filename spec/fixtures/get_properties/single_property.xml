@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getPropertiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <property>
+          <externalPropertyId>1</externalPropertyId>
+          <name>Minimal</name>
+        </property>
+      </return>
+    </getPropertiesResponse>
+  </S:Body>
+</S:Envelope>

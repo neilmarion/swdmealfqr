@@ -19,9 +19,15 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+  s.add_dependency('configlet', '~> 2.1')
+  s.add_dependency('savon', '~> 0.8')
+
   s.add_development_dependency('rspec',"~> 2.4")
   s.add_development_dependency('webmock', '~> 1.6')
   s.add_development_dependency('yard', '~> 0.6')
   s.add_development_dependency('bluecloth','~> 2.0.9')
+  s.add_development_dependency('savon_spec','~> 0.1')
+  s.add_development_dependency('autotest', '~> 4.4')
+  s.add_development_dependency('autotest-growl', '~> 0.2')
   s.has_rdoc=true
 end

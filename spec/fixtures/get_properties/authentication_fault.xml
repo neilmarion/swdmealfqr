@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <S:Fault xmlns:ns3="http://www.w3.org/2003/05/soap-envelope">
+      <faultcode>S:Server</faultcode>
+      <faultstring>Client [testing] not found for this user [12e72edcd56-341]</faultstring>
+      <detail>
+        <AuthenticationFault:AuthenticationFault xmlns:AuthenticationFault="http://yieldstar.com/ws/AppExchange/v1" xmlns="http://yieldstar.com/ws/AppExchange/v1">
+          <code>12e72edcd56-341</code>
+          <message>Client [testing] not found for this user [12e72edcd56-341]</message>
+        </AuthenticationFault:AuthenticationFault>
+      </detail>
+    </S:Fault>
+  </S:Body>
+</S:Envelope>

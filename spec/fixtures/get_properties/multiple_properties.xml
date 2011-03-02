@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getPropertiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <property>
+          <externalPropertyId>2</externalPropertyId>
+          <name>Typical</name>
+          <address>123 Address Ln</address>
+          <city>Beverly Hills</city>
+          <state>CA</state>
+          <zip>90210</zip>
+          <longitude>-122.605687</longitude>
+          <latitude>45.544873</latitude>
+          <phone/>
+          <fax/>
+          <yearBuilt>2009</yearBuilt>
+        </property>
+        <property>
+          <externalPropertyId>3</externalPropertyId>
+          <name>Fully Loaded</name>
+          <address>550 NW Franklin Ave #200</address>
+          <city>Bend</city>
+          <state>OR</state>
+          <zip>97701</zip>
+          <longitude>-121.313936</longitude>
+          <latitude>44.057411</latitude>
+          <phone>5413063374</phone>
+          <fax>1234567890</fax>
+          <website>http://g5platform.com</website>
+          <unitCount>100</unitCount>
+          <yearBuilt>2008</yearBuilt>
+        </property>
+      </return>
+    </getPropertiesResponse>
+  </S:Body>
+</S:Envelope>
