@@ -12,9 +12,11 @@ describe "property methods" do
   subject { test_object }
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
   let(:client_name) { 'my client name' }
+  let(:external_property_id) { 'my-external-property-id' }
 
   it { should respond_to(:get_properties) }
   it { should respond_to(:get_property) }
+  it { should respond_to(:get_property_parameters) }
 
   describe "#get_properties" do
     before { savon.stubs(:get_properties).returns(nil) }
@@ -158,8 +160,7 @@ describe "property methods" do
 
     subject { property }
     let(:property) { test_object.get_property(client_name, external_property_id) }
-    let(:external_property_id) { 'my-external-property-id' }
-
+    
     it "should retrieve the property data from the service" do
       savon.expects(:get_property).
         with(:client_name => client_name, :external_property_id => external_property_id).
@@ -238,6 +239,88 @@ describe "property methods" do
 
       let(:operation_message) { 'Invalid property id 1508' }
       let(:operation_code) { '12e7838f468-1e8' }
+
+      let(:generic_message) { 'java.lang.NullPointerException' }
+      let(:generic_code) { 'S:Server' }
+    end
+  end
+
+  describe "#get_property_parameters" do
+    before { savon.stubs(:get_property_parameters).returns(nil) }
+
+    subject { parameters }
+    let(:parameters) { test_object.get_property_parameters(client_name, external_property_id) }
+
+    it "should retrieve the data from the service" do
+      savon.expects(:get_property_parameters).
+        with(:client_name => client_name, :external_property_id => external_property_id).
+        returns(:no_parameters)
+      subject.should be
+    end
+
+    context "with empty parameters" do
+      before { savon.stubs(:get_property_parameters).returns(:no_parameters) }
+
+      it { should be }
+      it { should be_empty }
+    end
+
+    context "with partial parameters" do
+      before { savon.stubs(:get_property_parameters).returns(:simple_parameters) }
+
+      it { should be }
+
+      it { should have(1).parameter }
+
+      it { should have_key(:post_date) }
+      its([:post_date]) { should == Date.new(2011, 3, 2) }
+    end
+
+    context "with full parameters" do
+      before { savon.stubs(:get_property_parameters).returns(:full_parameters) }
+
+      it { should be }
+
+      it { should have(7).parameters }
+    
+      it { should have_key(:new_lease_term_options) }
+      its([:new_lease_term_options]) { should == 3 }
+
+      it { should have_key(:post_date) }
+      its([:post_date]) { should == Date.new(2011, 3, 1) }
+
+      it { should have_key(:max_renewal_lease_term) }
+      its([:max_renewal_lease_term]) { should == 15 }
+
+      it { should have_key(:min_new_lease_term) }
+      its([:min_new_lease_term]) { should == 1 }
+
+      it { should have_key(:min_renewal_lease_term) }
+      its([:min_renewal_lease_term]) { should == 1 }
+
+      it { should have_key(:max_new_lease_term) }
+      its([:max_new_lease_term]) { should == 15 }
+
+      it { should have_key(:max_move_in_days) }
+      its([:max_move_in_days]) { should == 55 }
+    end
+
+    describe "validation" do
+      it_should_behave_like 'a client_name validator'
+      it_should_behave_like 'an external_property_id validator'
+    end
+
+    it_should_behave_like "a fault handler" do
+      let(:soap_action) { :get_property_parameters }
+
+      let(:authentication_message) { 'Client [testing] not found for this user [12e7cfa2e4b-262]' }
+      let(:authentication_code) { '12e7cfa2e4b-262' }
+
+      let(:internal_message) { 'Internal error [12e7cfbb782-37a]' }
+      let(:internal_code) { '12e7cfbb782-37a' }
+
+      let(:operation_message) { 'Invalid property id whatever [12e7cf7c085-10]' }
+      let(:operation_code) { '12e7cf7c085-10' }
 
       let(:generic_message) { 'java.lang.NullPointerException' }
       let(:generic_code) { 'S:Server' }

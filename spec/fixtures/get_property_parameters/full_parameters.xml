@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getPropertyParametersResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>1509</externalPropertyId>
+        <parameter>
+          <name>New Lease Term Options</name>
+          <value>3</value>
+        </parameter>
+        <parameter>
+          <name>Post Date</name>
+          <value>2011-03-01</value>
+        </parameter>
+        <parameter>
+          <name>Maximum Renewal Lease Term</name>
+          <value>15</value>
+        </parameter>
+        <parameter>
+          <name>Minimum New Lease Term</name>
+          <value>1</value>
+        </parameter>
+        <parameter>
+          <name>Minimum Renewal Lease Term</name>
+          <value>1</value>
+        </parameter>
+        <parameter>
+          <name>Maximum New Lease Term</name>
+          <value>15</value>
+        </parameter>
+        <parameter>
+          <name>Maximum Move In Days</name>
+          <value>55</value>
+        </parameter>
+      </return>
+    </getPropertyParametersResponse>
+  </S:Body>
+</S:Envelope>

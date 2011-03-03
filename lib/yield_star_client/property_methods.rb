@@ -1,6 +1,6 @@
 module YieldStarClient
   module PropertyMethods
-    # Returns all properties for a client.
+    # Retrieves all properties for a client.
     #
     # @see #get_property
     #
@@ -27,7 +27,7 @@ module YieldStarClient
       end 
     end
 
-    # Returns information for a specific property.
+    # Retrieves information for a specific property.
     #
     # A property is guaranteed to have the following attributes:
     #
@@ -68,6 +68,60 @@ module YieldStarClient
 
         property = response.to_hash[:get_property_response][:return][:property]
         process_property(property)
+      rescue Savon::SOAP::Fault => f
+        handle_fault(f)
+      end
+    end
+
+
+    # Retrieves pricing parameters for a specific property.
+    #
+    # Possible pricing parameters are:
+    #
+    # <b>+:post_date+</b>:: the post date of the latest Price Optimizer forecasting and optimization nightly run. +(Date)+
+    # <b>+:min_new_lease_term+</b>:: minimum length (in months) of a new lease term +(Integer)+
+    # <b>+:max_new_lease_term+</b>:: maximum length (in months) of a new lease term +(Integer)+
+    # <b>+:new_lease_term_options+</b>:: absolute number of lease term options to offer on either side of the base lease term when creating the lease term rent matrix. +(Integer)+
+    # <b>+:max_move_in_days+</b>:: number of fixed move in date options to return in response to a request for lease rates. +(Integer)+
+    # <b>+:min_renewal_lease_term+</b>:: minimum length (in months) of a renewal lease term +(Integer)+
+    # <b>+:max_renewal_lease_term+</b>:: maximum length (in months) of a renewal lease term +(Integer)+
+    #
+    # @param [String] client_name the name of the client to perform the request for
+    # @param [String] external_property_id the ID of the property to obtain information for
+    # @returns [Hash] the pricing data
+    # @raise [ArgumentError] when external_property_id or client_name are missing or invalid
+    # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
+    # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
+    # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
+    # @raise [YieldStarClient::ServerError] when any other server-side error occurs
+    def get_property_parameters(client_name, external_property_id)
+      validate_argument(:client_name, client_name, 16)
+      validate_argument(:external_property_id, external_property_id, 50)
+
+      begin
+        response = soap_client.request :wsdl, :get_property_parameters do
+          soap.element_form_default = :qualified
+          soap.body = {:client_name => client_name, :external_property_id => external_property_id}
+        end
+
+        param_hash = {}
+        params = response.to_hash[:get_property_parameters_response][:return][:parameter]
+
+        unless params.nil?
+          [params].flatten.each do |param|
+            name = param[:name].downcase.gsub(/(max|min)imum/, '\1').gsub(/\s+/, '_').to_sym
+
+            if name == :post_date
+              value = Date.parse(param[:value])
+            elsif param[:value]
+              value = param[:value].to_i
+            end
+
+            param_hash[name] = value
+          end
+        end
+
+        param_hash
       rescue Savon::SOAP::Fault => f
         handle_fault(f)
       end
