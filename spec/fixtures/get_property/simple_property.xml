@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getPropertyResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <property>
+          <externalPropertyId>42</externalPropertyId>
+          <name>Galaxy Apartments</name>
+        </property>
+      </return>
+    </getPropertyResponse>
+  </S:Body>
+</S:Envelope>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getPropertyResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>99</externalPropertyId>
+        <property>
+          <externalPropertyId>99</externalPropertyId>
+          <name>Full Property</name>
+          <address>123 My Street</address>
+          <city>Anywhere</city>
+          <state>AK</state>
+          <zip>99999</zip>
+          <longitude>-95.514257</longitude>
+          <latitude>29.732654</latitude>
+          <yearBuilt>2008</yearBuilt>
+          <phone>555-555-5555</phone>
+          <fax>999-999-9999</fax>
+          <website>http://google.com</website>
+          <unitCount>100</unitCount>
+        </property>
+      </return>
+    </getPropertyResponse>
+  </S:Body>
+</S:Envelope>

@@ -1,17 +1,26 @@
 require 'spec_helper'
 
+shared_examples_for "a client_name validator" do
+  it_should_behave_like "a string validator", :client_name, 16
+end
+
+shared_examples_for "an external_property_id validator" do
+  it_should_behave_like "a string validator", :external_property_id, 50
+end
+
 describe "property methods" do
   subject { test_object }
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:client_name) { 'my client name' }
 
   it { should respond_to(:get_properties) }
+  it { should respond_to(:get_property) }
 
   describe "#get_properties" do
     before { savon.stubs(:get_properties).returns(nil) }
 
     subject { properties }
     let(:properties) { test_object.get_properties(client_name) }
-    let(:client_name) { 'my client name' }
 
     it "should retrieve the property data by client_name from the service" do
       savon.expects(:get_properties).with(:request => {:client_name => client_name}).returns(:single_property)
@@ -125,98 +134,113 @@ describe "property methods" do
       end
     end
 
-    describe "validation" do
-      context "when client name is nil" do
-        let(:client_name) { nil }
+    it_should_behave_like "a client_name validator"
 
-        it "should raise an error" do
-          expect { subject }.to raise_error(ArgumentError)
-        end
-      end
+    it_should_behave_like "a fault handler" do
+      let(:soap_action) { :get_properties }
+      
+      let(:authentication_message) { 'Client [testing] not found for this user [12e72edcd56-341]' }
+      let(:authentication_code) { '12e72edcd56-341' }
 
-      context "when client name is blank" do
-        let(:client_name) { '       ' }
+      let(:internal_message) { 'An unexpected internal error has occurred' }
+      let(:internal_code) { 'my-internal-code' }
 
-        it "should raise an error" do
-          expect { subject }.to raise_error(ArgumentError)
-        end
-      end
+      let(:operation_message) { 'An expected error occurred in the operation' }
+      let(:operation_code) { 'my-op-code' }
 
-      context "when client name is long" do
-        let (:client_name) { 'this is an especially long client name that should violate the max length' }
+      let(:generic_message) { 'java.lang.NullPointerException' }
+      let(:generic_code) { 'S:Server' }
+    end
+  end
 
-        it "should raise an error" do
-          expect { subject }.to raise_error(ArgumentError)
-        end
-      end
+  describe "#get_property" do
+    before { savon.stubs(:get_property).returns(nil) }
+
+    subject { property }
+    let(:property) { test_object.get_property(client_name, external_property_id) }
+    let(:external_property_id) { 'my-external-property-id' }
+
+    it "should retrieve the property data from the service" do
+      savon.expects(:get_property).
+        with(:client_name => client_name, :external_property_id => external_property_id).
+        returns(:simple_property)
+      subject.should be
     end
 
-    # TODO: Refactor this into a shared example group or macro.
-    # Error handling is going to be identical for almost all of the actions.
-    describe "error handling" do
-      context "when there is an authentication fault" do
-        before { savon.stubs(:get_properties).returns(:authentication_fault) }
+    context "for a simple property" do
+      before { savon.stubs(:get_property).returns(:simple_property) }
 
-        it "should raise a YieldStarClient authentication error" do
-          expect { subject }.to raise_error(YieldStarClient::AuthenticationError)
-        end
+      it { should have(2).keys }
 
-        it "should include the fault message in the error object" do
-          expect { subject }.to raise_error { |e| e.message.should == 'Client [testing] not found for this user [12e72edcd56-341]' }
-        end
+      it { should have_key(:external_property_id) }
+      its([:external_property_id]) { should == '42' }
 
-        it "should include the fault code in the error object" do
-          expect { subject }.to raise_error { |e| e.code.should == '12e72edcd56-341' }
-        end
-      end
+      it { should have_key(:name) }
+      its([:name]) { should == 'Galaxy Apartments' }
+    end
 
-      context "when there is an internal error fault" do
-        before { savon.stubs(:get_properties).returns(:internal_error_fault) }
+    context "for a fully specified property" do
+      before { savon.stubs(:get_property).returns(:full_property) }
 
-        it "should raise a YieldStarClient internal error" do
-          expect { subject }.to raise_error(YieldStarClient::InternalError)
-        end
+      it { should have_key(:external_property_id) }
+      its([:external_property_id]) { should == '99' }
 
-        it "should include the fault message in the error object" do
-          expect { subject }.to raise_error { |e| e.message.should == 'An unexpected internal error has occurred' }
-        end
+      it { should have_key(:name) }
+      its([:name]) { should == 'Full Property' }
 
-        it "should include the fault code in the error object" do
-          expect { subject }.to raise_error { |e| e.code.should == 'my-internal-code' }
-        end
-      end
+      it { should have_key(:address) }
+      its([:address]) { should == '123 My Street' }
 
-      context "when there is an operation fault" do
-        before { savon.stubs(:get_properties).returns(:operation_fault) }
+      it { should have_key(:city) }
+      its([:city]) { should == 'Anywhere' }
 
-        it "should raise a YieldStarClient operation error" do
-          expect { subject }.to raise_error(YieldStarClient::OperationError)
-        end
+      it { should have_key(:state) }
+      its([:state]) { should == 'AK' }
 
-        it "should include the fault message in the error object" do
-          expect { subject }.to raise_error { |e| e.message.should == 'An expected error occurred in the operation' }
-        end
+      it { should have_key(:zip) }
+      its([:zip]) { should == '99999' }
 
-        it "should include the fault code in the error object" do
-          expect { subject }.to raise_error { |e| e.code.should == 'my-op-code' }
-        end
-      end
+      it { should have_key(:longitude) }
+      its([:longitude]) { should == -95.514257 }
 
-      context "when there is a generic fault" do
-        before { savon.stubs(:get_properties).returns(:generic_fault) }
+      it { should have_key(:latitude) }
+      its([:latitude]) { should == 29.732654 }
 
-        it "should raise a YieldStarClient server error" do
-          expect { subject }.to raise_error(YieldStarClient::ServerError)
-        end
+      it { should have_key(:year_built) }
+      its([:year_built]) { should == 2008 }
 
-        it "should include the fault message in the error object" do
-          expect { subject }.to raise_error { |e| e.message.should == 'java.lang.NullPointerException' }
-        end
+      it { should have_key(:phone) }
+      its([:phone]) { should == '555-555-5555' }
 
-        it "should include the fault code in the error object" do
-          expect { subject }.to raise_error { |e| e.code.should == 'S:Server' }
-        end
-      end
+      it { should have_key(:fax) }
+      its([:fax]) { should == '999-999-9999' }
+
+      it { should have_key(:website) }
+      its([:website]) { should == 'http://google.com' }
+
+      it { should have_key(:unit_count) }
+      its([:unit_count]) { should == 100 }
+    end
+
+    describe "validation" do
+      it_should_behave_like 'a client_name validator'
+      it_should_behave_like 'an external_property_id validator'
+    end
+
+    it_should_behave_like "a fault handler" do
+      let(:soap_action) { :get_property }
+      
+      let(:authentication_message) { 'Client [whatever] not found for this user [12e783ef853-1b5]' }
+      let(:authentication_code) { '12e783ef853-1b5' }
+
+      let(:internal_message) { 'An unexpected internal error has occurred' }
+      let(:internal_code) { 'my-internal-code' }
+
+      let(:operation_message) { 'Invalid property id 1508' }
+      let(:operation_code) { '12e7838f468-1e8' }
+
+      let(:generic_message) { 'java.lang.NullPointerException' }
+      let(:generic_code) { 'S:Server' }
     end
   end
 end
