@@ -3,6 +3,7 @@
   <S:Body>
     <getPropertiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
       <return>
+        <externalPropertyId>99</externalPropertyId>
         <property>
           <externalPropertyId>2</externalPropertyId>
           <name>Typical</name>

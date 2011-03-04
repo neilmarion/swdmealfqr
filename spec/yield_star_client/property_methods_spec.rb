@@ -21,6 +21,13 @@ describe "property methods" do
       subject.should be
     end
 
+    context "with no properties" do
+      before { savon.stubs(:get_properties).returns(:no_property) }
+
+      it { should be }
+      it { should be_empty }
+    end
+
     context "with single property" do
       before { savon.stubs(:get_properties).returns(:single_property) }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getFloorPlansResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>99</externalPropertyId>
+        <floorPlan>
+          <externalPropertyId>99</externalPropertyId>
+          <name>The Economy</name>
+          <description>An affordable choice for the frugal resident.</description>
+          <squareFootage>450</squareFootage>
+          <unitCount>42</unitCount>
+          <bedRooms>1.0</bedRooms>
+          <bathRooms>1.0</bathRooms>
+        </floorPlan>
+        <floorPlan>
+          <externalPropertyId>99</externalPropertyId>
+          <name>The Luxury</name>
+          <description>A palatial estate for the independently wealthy.</description>
+          <squareFootage>10000</squareFootage>
+          <unitCount>3</unitCount>
+          <bedRooms>7.0</bedRooms>
+          <bathRooms>7.3</bathRooms>
+        </floorPlan>
+      </return>
+    </getFloorPlansResponse>
+  </S:Body>
+</S:Envelope>

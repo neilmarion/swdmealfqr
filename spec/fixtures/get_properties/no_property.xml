@@ -3,11 +3,7 @@
   <S:Body>
     <getPropertiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
       <return>
-        <externalPropertyId>1</externalPropertyId>
-        <property>
-          <externalPropertyId>1</externalPropertyId>
-          <name>Minimal</name>
-        </property>
+        <externalPropertyId>99</externalPropertyId>
       </return>
     </getPropertiesResponse>
   </S:Body>

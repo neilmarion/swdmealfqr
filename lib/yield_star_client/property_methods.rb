@@ -25,7 +25,9 @@ module YieldStarClient
           soap.body = {:request => {:client_name => client_name}}
         end
 
-        properties = [response.to_hash[:get_properties_response][:return][:property]].flatten
+        properties = response.to_hash[:get_properties_response][:return][:property] || []
+        properties = [properties].flatten
+
         properties.collect{ |prop| process_property(prop) }
       rescue Savon::SOAP::Fault => f
         raise ServerError.translate_fault(f)
@@ -134,16 +136,10 @@ module YieldStarClient
 
     private
     def process_property(prop_hash)
-      convert_types(prop_hash, [:unit_count, :year_built]) { |val| val.to_i }
-      convert_types(prop_hash, [:longitude, :latitude]) { |val| val.to_f }
+      # TODO: better solution for type conversion
+      [:unit_count, :year_built].each { |k| prop_hash[k] = prop_hash[k].to_i if prop_hash.has_key?(k) }
+      [:longitude, :latitude].each { |k| prop_hash[k] = prop_hash[k].to_f if prop_hash.has_key?(k) }
       prop_hash
-    end
-
-    # TODO: refactor this somewhere it can be shared. Or find an open-source project where someone else
-    # did it better.
-    def convert_types(hash, keys, &block)
-      keys.each { |k| hash[k] = yield hash[k] if hash.has_key?(k) }
-      hash
     end
   end
 end

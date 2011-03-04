@@ -5,6 +5,37 @@ module YieldStarClient
   module FloorPlanMethods
     include Validations
 
+    # Retrieves all floor plans for a particular property.
+    #
+    # @see #get_floor_plan
+    #
+    # @param [String] client_name the YieldStar client name
+    # @param [String] external_property_id the ID of the property
+    # @return [Array<Hash>] list of floor plans
+    # @raise [ArgumentError] when a parameter is missing or invalid
+    # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
+    # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
+    # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
+    # @raise [YieldStarClient::ServerError] when any other server-side error occurs
+    def get_floor_plans(client_name, external_property_id)
+      validate_client_name(client_name)
+      validate_external_property_id(external_property_id)
+
+      begin
+        response = soap_client.request :wsdl, :get_floor_plans do
+          soap.element_form_default = :qualified
+          soap.body = { :client_name => client_name, :external_property_id => external_property_id }
+        end
+
+        floor_plans = response.to_hash[:get_floor_plans_response][:return][:floor_plan] || []
+        floor_plans = [floor_plans].flatten
+
+        floor_plans.collect { |fp| process_floor_plan(fp) }
+      rescue Savon::SOAP::Fault => f
+        raise ServerError.translate_fault(f)
+      end
+    end
+
     # Retrieves a specific floor plan.
     #
     # A floor plan is guaranteed to have the following data:
@@ -21,7 +52,7 @@ module YieldStarClient
     # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property
     # @param [String] floor_plan_name the name of the floor plan
-    # @returns [Hash] the floor plan data
+    # @return [Hash] the floor plan data
     # @raise [ArgumentError] when a parameter is missing or invalid
     # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
