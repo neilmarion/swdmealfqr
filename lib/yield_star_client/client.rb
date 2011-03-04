@@ -1,7 +1,7 @@
 require 'savon'
 
 require 'property_methods'
-require 'errors'
+require 'floor_plan_methods'
 
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.
@@ -9,6 +9,7 @@ module YieldStarClient
   # and no knowledge of SOAP is required in order to use the client.
   class Client
     include PropertyMethods
+    include FloorPlanMethods
 
     attr_writer *YieldStarClient::VALID_CONFIG_OPTIONS
 
@@ -35,7 +36,7 @@ module YieldStarClient
     # This method is provided publicly as a convenience, but should
     # rarely be used.
     #
-    # @returns [Savon::Client]
+    # @return [Savon::Client]
     def soap_client
       Savon::Client.new do
         wsdl.endpoint = self.endpoint.to_s
@@ -51,7 +52,7 @@ module YieldStarClient
     # @see YieldStarClient.configure
     # 
     # @param [Symbol] attribute the name of the attribute
-    # @returns [String] the value of the attribute
+    # @return [String] the value of the attribute
     def get_value(attribute)
       instance_variable_get("@#{attribute}") || YieldStarClient.send(attribute)
     end

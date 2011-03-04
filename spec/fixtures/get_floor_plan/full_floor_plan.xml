@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getFloorPlanResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>99</externalPropertyId>
+        <floorPlan>
+          <externalPropertyId>99</externalPropertyId>
+          <name>The Oxford</name>
+          <description>An apartment</description>
+          <squareFootage>797</squareFootage>
+          <unitCount>49</unitCount>
+          <bedRooms>1.0</bedRooms>
+          <bathRooms>1.1</bathRooms>
+        </floorPlan>
+      </return>
+    </getFloorPlanResponse>
+  </S:Body>
+</S:Envelope>

@@ -1,11 +1,16 @@
 require 'spec_helper'
 
-# @param param_name [Symbol] the name of the parameter to be validated
-# @param max_length [Integer] the maximum allowable length
-#
-# Assumes subject has been preconfigured to use a let() helper method
-# that matches param_name
-shared_examples_for 'a string validator' do |param_name, max_length|
+shared_examples_for "a client_name validator" do
+  it_should_behave_like "a required string validator", :client_name
+  it_should_behave_like "a string length validator", :client_name, 16
+end
+
+shared_examples_for "an external_property_id validator" do
+  it_should_behave_like "a required string validator", :external_property_id
+  it_should_behave_like "a string length validator", :external_property_id, 50
+end
+
+shared_examples_for 'a required string validator' do |param_name|
   context "when #{param_name} is nil" do
     let(param_name) { nil }
 
@@ -29,7 +34,9 @@ shared_examples_for 'a string validator' do |param_name, max_length|
       expect { subject }.to raise_error { |e| e.message.should match(/#{param_name}/i) }
     end
   end
+end
 
+shared_examples_for 'a string length validator' do |param_name, max_length|
   context "when #{param_name} is too long" do
     let(param_name) { "foo" * max_length }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getFloorPlanResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <floorPlan>
+          <externalPropertyId>42</externalPropertyId>
+          <name>simple-plan</name>
+        </floorPlan>
+      </return>
+    </getFloorPlanResponse>
+  </S:Body>
+</S:Envelope>

@@ -1,13 +1,5 @@
 require 'spec_helper'
 
-shared_examples_for "a client_name validator" do
-  it_should_behave_like "a string validator", :client_name, 16
-end
-
-shared_examples_for "an external_property_id validator" do
-  it_should_behave_like "a string validator", :external_property_id, 50
-end
-
 describe "property methods" do
   subject { test_object }
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
@@ -138,21 +130,7 @@ describe "property methods" do
 
     it_should_behave_like "a client_name validator"
 
-    it_should_behave_like "a fault handler" do
-      let(:soap_action) { :get_properties }
-      
-      let(:authentication_message) { 'Client [testing] not found for this user [12e72edcd56-341]' }
-      let(:authentication_code) { '12e72edcd56-341' }
-
-      let(:internal_message) { 'An unexpected internal error has occurred' }
-      let(:internal_code) { 'my-internal-code' }
-
-      let(:operation_message) { 'An expected error occurred in the operation' }
-      let(:operation_code) { 'my-op-code' }
-
-      let(:generic_message) { 'java.lang.NullPointerException' }
-      let(:generic_code) { 'S:Server' }
-    end
+    it_should_behave_like "a fault handler", :get_properties
   end
 
   describe "#get_property" do
@@ -228,21 +206,7 @@ describe "property methods" do
       it_should_behave_like 'an external_property_id validator'
     end
 
-    it_should_behave_like "a fault handler" do
-      let(:soap_action) { :get_property }
-      
-      let(:authentication_message) { 'Client [whatever] not found for this user [12e783ef853-1b5]' }
-      let(:authentication_code) { '12e783ef853-1b5' }
-
-      let(:internal_message) { 'An unexpected internal error has occurred' }
-      let(:internal_code) { 'my-internal-code' }
-
-      let(:operation_message) { 'Invalid property id 1508' }
-      let(:operation_code) { '12e7838f468-1e8' }
-
-      let(:generic_message) { 'java.lang.NullPointerException' }
-      let(:generic_code) { 'S:Server' }
-    end
+    it_should_behave_like "a fault handler", :get_property 
   end
 
   describe "#get_property_parameters" do
@@ -310,20 +274,6 @@ describe "property methods" do
       it_should_behave_like 'an external_property_id validator'
     end
 
-    it_should_behave_like "a fault handler" do
-      let(:soap_action) { :get_property_parameters }
-
-      let(:authentication_message) { 'Client [testing] not found for this user [12e7cfa2e4b-262]' }
-      let(:authentication_code) { '12e7cfa2e4b-262' }
-
-      let(:internal_message) { 'Internal error [12e7cfbb782-37a]' }
-      let(:internal_code) { '12e7cfbb782-37a' }
-
-      let(:operation_message) { 'Invalid property id whatever [12e7cf7c085-10]' }
-      let(:operation_code) { '12e7cf7c085-10' }
-
-      let(:generic_message) { 'java.lang.NullPointerException' }
-      let(:generic_code) { 'S:Server' }
-    end
+    it_should_behave_like "a fault handler", :get_property_parameters
   end
 end

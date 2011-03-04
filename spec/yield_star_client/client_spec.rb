@@ -23,7 +23,14 @@ describe YieldStarClient::Client do
   its(:password) { should == password }
   its(:namespace) { should == namespace }
 
+  # Methods from the PropertyMethods mixin
+  # The actual tests for these are in property_methods_spec
   it { should respond_to(:get_properties) }
+  it { should respond_to(:get_property) }
+  it { should respond_to(:get_property_parameters) }
+
+  # Methods from the FloorPlanMethods mixin
+  it { should respond_to(:get_floor_plan) }
 
   context "with default configuration" do
     let(:client) { YieldStarClient::Client.new }

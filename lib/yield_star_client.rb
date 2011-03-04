@@ -4,8 +4,6 @@ module YieldStarClient
   autoload :Configlet, 'configlet'
   extend Configlet
 
-  autoload :Client, 'client'
-
   # All valid configuration options.
   #
   # @see YieldStarClient.configure
@@ -71,4 +69,6 @@ module YieldStarClient
   def self.reset
     VALID_CONFIG_OPTIONS.each { |opt| self.send("#{opt}=", nil) } 
   end
+
+  require 'client'
 end

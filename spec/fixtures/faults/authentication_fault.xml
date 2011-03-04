@@ -3,11 +3,11 @@
   <S:Body>
     <S:Fault xmlns:ns4="http://www.w3.org/2003/05/soap-envelope">
       <faultcode>S:Server</faultcode>
-      <faultstring>Client [whatever] not found for this user [12e783ef853-1b5]</faultstring>
+      <faultstring>Client [foo] not found for this user [12e7e719764-21c]</faultstring>
       <detail>
         <AuthenticationFault:AuthenticationFault xmlns:AuthenticationFault="http://yieldstar.com/ws/AppExchange/v1" xmlns="http://yieldstar.com/ws/AppExchange/v1">
-          <code>12e783ef853-1b5</code>
-          <message>Client [whatever] not found for this user [12e783ef853-1b5]</message>
+          <code>12e7e719764-21c</code>
+          <message>Client [foo] not found for this user [12e7e719764-21c]</message>
         </AuthenticationFault:AuthenticationFault>
       </detail>
     </S:Fault>
