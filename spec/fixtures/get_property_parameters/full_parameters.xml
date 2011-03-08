@@ -3,7 +3,7 @@
   <S:Body>
     <getPropertyParametersResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
       <return>
-        <externalPropertyId>1509</externalPropertyId>
+        <externalPropertyId>my-external-property-id</externalPropertyId>
         <parameter>
           <name>New Lease Term Options</name>
           <value>3</value>

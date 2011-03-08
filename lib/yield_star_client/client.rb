@@ -4,6 +4,8 @@ require 'property_methods'
 require 'floor_plan_methods'
 require 'unit_methods'
 
+require 'errors'
+
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.
   # The interface strives to be SOAP-agnostic whenever possible; all inputs and outputs are pure ruby 

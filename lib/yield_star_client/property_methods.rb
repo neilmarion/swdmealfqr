@@ -1,16 +1,71 @@
 require 'validations'
-require 'errors'
+require 'base_model'
 
 module YieldStarClient
+  # Represents a property in the YieldStar system.
+  #
+  # A property is guaranteed to have an +external_property_id+ and +name+; all other attributes are optional.
+  #
+  # @attr [String] external_property_id the property ID
+  # @attr [String] name the name of the property
+  # @attr [String] address the street address
+  # @attr [String] city the city in which the property is located
+  # @attr [String] state the two-letter code of the state in which the property is located
+  # @attr [String] zip the zip code
+  # @attr [String] fax the fax telephone number
+  # @attr [String] phone the voice telephone number
+  # @attr [Float] latitude the latitude of the property's location
+  # @attr [Float] longitude the longitude of the property's location
+  # @attr [Integer] unit_count the number of units at this property
+  # @attr [String] website the URL of the property website
+  # @attr [Integer] year_built the year in which the property was built
+  class Property < BaseModel
+    property :external_property_id
+    property :name
+    property :address
+    property :city
+    property :state
+    property :zip
+    property :fax
+    property :phone
+    property :latitude, :type => Float
+    property :longitude, :type => Float
+    property :unit_count, :type => Integer
+    property :website
+    property :year_built, :type => Integer
+  end
+
+  # Represents the pricing parameters for a particular property.
+  #
+  # This object is guaranteed to have an +external_property_id+; all other attributes may be nil.
+  #
+  # @attr [String] external_property_id the ID of the property
+  # @attr [Date] post_date the post date of the latest Price Optimizer forecasting and optimization nightly run.
+  # @attr [Integer] min_new_lease_term minimum length (in months) of a new lease term
+  # @attr [Integer] max_new_lease_term maximum length (in months) of a new lease term
+  # @attr [Integer] new_lease_term_options absolute number of lease term options to offer on either side of the base lease term when creating the lease term rent matrix.
+  # @attr [Integer] max_move_in_days number of fixed move in date options to return in response to a request for lease rates.
+  # @attr [Integer] min_renewal_lease_term minimum length (in months) of a renewal lease term
+  # @attr [Integer] max_renewal_lease_term maximum length (in months) of a renewal lease term
+  class PropertyParameters < BaseModel
+    property :external_property_id
+    property :post_date, :type => Date
+    property :min_new_lease_term, :type => Integer
+    property :max_new_lease_term, :type => Integer
+    property :new_lease_term_options, :type => Integer
+    property :max_move_in_days, :type => Integer
+    property :min_renewal_lease_term, :type => Integer
+    property :max_renewal_lease_term, :type => Integer
+  end
+
   module PropertyMethods
     include Validations
 
     # Retrieves all properties for a client.
     #
-    # @see #get_property
-    #
     # @param [String] client_name the YieldStar client name
-    # @return [Array<Hash>] list of properties 
+    # @return [Array<YieldStarClient::Property>] list of properties
+    #
     # @raise [ArgumentError] when client_name is missing or invalid
     # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
@@ -23,33 +78,15 @@ module YieldStarClient
 
       props = response.to_hash[:get_properties_response][:return][:property] || []
       props = [props].flatten
-      props.collect { |p| process_property(p) }
+      props.collect { |p| Property.new(p) }
     end
 
     # Retrieves information for a specific property.
     #
-    # A property is guaranteed to have the following attributes:
-    #
-    # <b>+:external_property_id+</b>:: the property ID +(String)+
-    # <b>+:name+</b>:: the property name +(String)+
-    #
-    # Additionally, the property may have the following optional attributes:
-    #
-    # <b>+:address+</b>:: the street address +(String)+
-    # <b>+:city+</b>:: the city in which the property is located +(String)+
-    # <b>+:state+</b>:: the two-letter code of the state in which the property is located +(String)+
-    # <b>+:zip+</b>:: the zip code +(String)+
-    # <b>+:fax+</b>:: the fax telephone number +(String)+
-    # <b>+:phone+</b>:: the voice telephone number +(String)+
-    # <b>+:latitude+</b>:: the latitude of the property's location +(Float)+
-    # <b>+:longitude+</b>:: the longitude of the property's location +(Float)+
-    # <b>+:unit_count+</b>:: the number of units at this property +(Integer)+
-    # <b>+:website+</b>:: the URL of the property website +(String)+
-    # <b>+:year_built+</b>:: the year in which the property was built +(Integer)+
-    #
     # @param [String] client_name the name of the client to perform the request for
     # @param [String] external_property_id the ID of the property to obtain information for
-    # @return [Hash] the property data
+    # @return [YieldStarClient::Property] the property data
+    #
     # @raise [ArgumentError] when external_property_id or client_name are missing or invalid
     # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
@@ -62,25 +99,16 @@ module YieldStarClient
       response = send_soap_request(:get_property, :client_name => client_name, :external_property_id => external_property_id)
 
       property = response.to_hash[:get_property_response][:return][:property]
-      process_property(property)
+      Property.new(property)
     end
 
 
     # Retrieves pricing parameters for a specific property.
     #
-    # Possible pricing parameters are:
-    #
-    # <b>+:post_date+</b>:: the post date of the latest Price Optimizer forecasting and optimization nightly run. +(Date)+
-    # <b>+:min_new_lease_term+</b>:: minimum length (in months) of a new lease term +(Integer)+
-    # <b>+:max_new_lease_term+</b>:: maximum length (in months) of a new lease term +(Integer)+
-    # <b>+:new_lease_term_options+</b>:: absolute number of lease term options to offer on either side of the base lease term when creating the lease term rent matrix. +(Integer)+
-    # <b>+:max_move_in_days+</b>:: number of fixed move in date options to return in response to a request for lease rates. +(Integer)+
-    # <b>+:min_renewal_lease_term+</b>:: minimum length (in months) of a renewal lease term +(Integer)+
-    # <b>+:max_renewal_lease_term+</b>:: maximum length (in months) of a renewal lease term +(Integer)+
-    #
     # @param [String] client_name the name of the client to perform the request for
     # @param [String] external_property_id the ID of the property to obtain information for
-    # @return [Hash] the pricing data
+    # @return [YieldStarClient::PropertyParameters] the pricing data
+    #
     # @raise [ArgumentError] when external_property_id or client_name are missing or invalid
     # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
@@ -93,32 +121,18 @@ module YieldStarClient
       response = send_soap_request(:get_property_parameters, :client_name => client_name, 
                                                              :external_property_id => external_property_id)
 
-      param_hash = {}
-      params = response.to_hash[:get_property_parameters_response][:return][:parameter]
+      response_hash = response.to_hash[:get_property_parameters_response][:return]
+      param_hash = { :external_property_id => response_hash[:external_property_id] }
+      params = [response_hash[:parameter]].flatten
 
-      unless params.nil?
-        [params].flatten.each do |param|
+      unless params.first.nil?
+        params.each do |param|
           name = param[:name].downcase.gsub(/(max|min)imum/, '\1').gsub(/\s+/, '_').to_sym
-
-          if name == :post_date
-            value = Date.parse(param[:value])
-          elsif param[:value]
-            value = param[:value].to_i
-          end
-
-          param_hash[name] = value
+          param_hash[name] = param[:value]
         end
       end
 
-      param_hash
-    end
-
-    private
-    def process_property(prop_hash)
-      # TODO: better solution for type conversion
-      [:unit_count, :year_built].each { |k| prop_hash[k] = prop_hash[k].to_i if prop_hash.has_key?(k) }
-      [:longitude, :latitude].each { |k| prop_hash[k] = prop_hash[k].to_f if prop_hash.has_key?(k) }
-      prop_hash
+      PropertyParameters.new(param_hash)
     end
   end
 end

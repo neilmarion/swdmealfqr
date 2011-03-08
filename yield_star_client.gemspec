@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency('configlet', '~> 2.1')
   s.add_dependency('savon', '~> 0.8')
+  s.add_dependency('hashie', '~> 1.0')
 
   s.add_development_dependency('rspec',"~> 2.4")
   s.add_development_dependency('webmock', '~> 1.6')

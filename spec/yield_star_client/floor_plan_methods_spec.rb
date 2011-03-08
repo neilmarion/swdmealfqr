@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'floor_plan_methods'
 
 describe "floor plan methods" do
   subject { test_object }
@@ -28,40 +27,20 @@ describe "floor plan methods" do
     context "with a minimal floor plan" do
       before { savon.stubs(:get_floor_plan).returns(:simple_floor_plan) }
 
-      it { should have(2).attributes }
-
-      it { should have_key(:external_property_id) }
-      its([:external_property_id]) { should == '42' }
-
-      it { should have_key(:name) }
-      its([:name]) { should == 'simple-plan' }
+      its(:external_property_id) { should == '42' }
+      its(:name) { should == 'simple-plan' }
     end
 
     context "with a fully defined floor plan" do
       before { savon.stubs(:get_floor_plan).returns(:full_floor_plan) }
 
-      it { should have(7).attributes }
-
-      it { should have_key(:external_property_id) }
-      its([:external_property_id]) { should == '99' }
-      
-      it { should have_key(:name) }
-      its([:name]) { should == 'The Oxford' }
-
-      it { should have_key(:description) }
-      its([:description]) { should == 'An apartment' }
-
-      it { should have_key(:square_footage) }
-      its([:square_footage]) { should == 797 }
-
-      it { should have_key(:unit_count) }
-      its([:unit_count]) { should == 49 }
-
-      it { should have_key(:bed_rooms) }
-      its([:bed_rooms]) { should == 1.0 }
-
-      it { should have_key(:bath_rooms) }
-      its([:bath_rooms]) { should == 1.1 }
+      its(:external_property_id) { should == '99' }
+      its(:name) { should == 'The Oxford' }
+      its(:description) { should == 'An apartment' }
+      its(:square_footage) { should == 797 }
+      its(:unit_count) { should == 49 }
+      its(:bedrooms) { should == 1.0 }
+      its(:bathrooms) { should == 1.1 }
     end
 
     describe "validation" do
@@ -103,70 +82,37 @@ describe "floor plan methods" do
       describe "first floor plan" do
         subject { floor_plans.first }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '42' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'simple' }
-
-        it { should have_key(:description) }
-        its([:description]) { should == 'A simple floor plan.' }
+        its(:external_property_id) { should == '42' }
+        its(:name) { should == 'simple' }
+        its(:description) { should == 'A simple floor plan.' }
       end
     end
 
     context "with multiple floor plans" do
       before { savon.stubs(:get_floor_plans).returns(:multiple_floor_plans) }
 
-      it { should have(2).floor_plans }
-
       describe "first floor plan" do
         subject { floor_plans.first }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '99' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'The Economy' }
-
-        it { should have_key(:description) }
-        its([:description]) { should == 'An affordable choice for the frugal resident.' }
-
-        it { should have_key(:square_footage) }
-        its([:square_footage]) { should == 450 }
-
-        it { should have_key(:unit_count) }
-        its([:unit_count]) { should == 42 }
-
-        it { should have_key(:bed_rooms) }
-        its([:bed_rooms]) { should == 1.0 }
-
-        it { should have_key(:bath_rooms) }
-        its([:bath_rooms]) { should == 1.0 }
+        its(:external_property_id) { should == '99' }
+        its(:name) { should == 'The Economy' }
+        its(:description) { should == 'An affordable choice for the frugal resident.' }
+        its(:square_footage) { should == 450 }
+        its(:unit_count) { should == 42 }
+        its(:bedrooms) { should == 1.0 }
+        its(:bathrooms) { should == 1.0 }
       end
 
       describe "last floor plan" do
         subject { floor_plans.last }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '99' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'The Luxury' }
-
-        it { should have_key(:description) }
-        its([:description]) { should == 'A palatial estate for the independently wealthy.' }
-
-        it { should have_key(:square_footage) }
-        its([:square_footage]) { should == 10000 }
-
-        it { should have_key(:unit_count) }
-        its([:unit_count]) { should == 3 }
-
-        it { should have_key(:bed_rooms) }
-        its([:bed_rooms]) { should == 7.0 }
-
-        it { should have_key(:bath_rooms) }
-        its([:bath_rooms]) { should == 7.3 }
+        its(:external_property_id) { should == '99' }
+        its(:name) { should == 'The Luxury' }
+        its(:description) { should == 'A palatial estate for the independently wealthy.' }
+        its(:square_footage) { should == 10000 }
+        its(:unit_count) { should == 3 }
+        its(:bedrooms) { should == 7.0 }
+        its(:bathrooms) { should == 7.3 }
       end
     end
 

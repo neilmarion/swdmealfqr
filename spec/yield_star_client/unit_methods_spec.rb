@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'unit_methods'
 
 describe "unit methods" do
   subject { test_object }
@@ -10,6 +9,7 @@ describe "unit methods" do
   let(:external_property_id) { 'my_prop_id' }
 
   it { should respond_to(:get_unit) }
+  it { should respond_to(:get_units) }
 
   describe "#get_unit" do
     before { savon.stubs(:get_unit).returns(nil) }
@@ -39,51 +39,25 @@ describe "unit methods" do
     context "for a minimal unit" do
       before { savon.stubs(:get_unit).returns(:simple_unit) }
 
-      it { should have_key(:external_property_id) }
-      its([:external_property_id]) { should == '42' }
-
-      it { should have_key(:floor_plan_name) }
-      its([:floor_plan_name]) { should == 'Economy' }
-
-      it { should have_key(:name) }
-      its([:name]) { should == '1A' }
-
-      it { should have_key(:availability_status) }
-      its([:availability_status]) { should == :occupied_on_notice }
+      its(:external_property_id) { should == '42' }
+      its(:floor_plan_name) { should == 'Economy' }
+      its(:name) { should == '1A' }
+      its(:availability_status) { should == :occupied_on_notice }
     end
 
     context "for a fully populated unit" do
       before { savon.stubs(:get_unit).returns(:full_unit) }
 
-      it { should have_key(:external_property_id) }
-      its([:external_property_id]) { should == '42' }
-
-      it { should have_key(:floor_plan_name) }
-      its([:floor_plan_name]) { should == 'Luxury' }
-
-      it { should have_key(:name) }
-      its([:name]) { should == 'Unit 6' }
-
-      it { should have_key(:availability_status) }
-      its([:availability_status]) { should == :vacant }
-
-      it { should have_key(:building) }
-      its([:building]) { should == '99' }
-
-      it { should have_key(:bed_rooms) }
-      its([:bed_rooms]) { should == 6.0 }
-
-      it { should have_key(:bath_rooms) }
-      its([:bath_rooms]) { should == 5.3 }
-
-      it { should have_key(:square_footage) }
-      its([:square_footage]) { should == 5555 }
-
-      it { should have_key(:unit_type) }
-      its([:unit_type]) { should == 'foo' }
-
-      it { should have_key(:make_ready_date) }
-      its([:make_ready_date]) { should == Date.new(2011,03,10) }
+      its(:external_property_id) { should == '42' }
+      its(:floor_plan_name) { should == 'Luxury' }
+      its(:name) { should == 'Unit 6' }
+      its(:availability_status) { should == :vacant }
+      its(:building) { should == '99' }
+      its(:bedrooms) { should == 6.0 }
+      its(:bathrooms) { should == 5.3 }
+      its(:square_footage) { should == 5555 }
+      its(:unit_type) { should == 'foo' }
+      its(:make_ready_date) { should == Date.new(2011,03,10) }
     end
 
     describe "validations" do
@@ -131,17 +105,10 @@ describe "unit methods" do
       describe "first unit" do
         subject { units.first }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '42' }
-
-        it { should have_key(:floor_plan_name) }
-        its([:floor_plan_name]) { should == 'FP99' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'Unit 1' }
-
-        it { should have_key(:availability_status) }
-        its([:availability_status]) { should == :occupied }
+        its(:external_property_id) { should == '42' }
+        its(:floor_plan_name) { should == 'FP99' }
+        its(:name) { should == 'Unit 1' }
+        its(:availability_status) { should == :occupied }
       end
     end
 
@@ -154,63 +121,29 @@ describe "unit methods" do
       describe "first unit" do
         subject { units.first }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '42' }
-
-        it { should have_key(:floor_plan_name) }
-        its([:floor_plan_name]) { should == 'Economy' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'Apt 313' }
-
-        it { should have_key(:bed_rooms) }
-        its([:bed_rooms]) { should == 2.0 }
-
-        it { should have_key(:bath_rooms) }
-        its([:bath_rooms]) { should == 1.1 }
-
-        it { should have_key(:square_footage) }
-        its([:square_footage]) { should == 1000 }
-
-        it { should have_key(:unit_type) }
-        its([:unit_type]) { should == 'apartment' }
-
-        it { should have_key(:availability_status) }
-        its([:availability_status]) { should == :pending }
+        its(:external_property_id) { should == '42' }
+        its(:floor_plan_name) { should == 'Economy' }
+        its(:name) { should == 'Apt 313' }
+        its(:bedrooms) { should == 2.0 }
+        its(:bathrooms) { should == 1.1 }
+        its(:square_footage) { should == 1000 }
+        its(:unit_type) { should == 'apartment' }
+        its(:availability_status) { should == :pending }
       end
 
       describe "last unit" do
         subject { units.last }
 
-        it { should have_key(:external_property_id) }
-        its([:external_property_id]) { should == '42' }
-
-        it { should have_key(:floor_plan_name) }
-        its([:floor_plan_name]) { should == 'Luxury' }
-
-        it { should have_key(:name) }
-        its([:name]) { should == 'The Villa' }
-
-        it { should have_key(:bed_rooms) }
-        its([:bed_rooms]) { should == 6.0 }
-
-        it { should have_key(:bath_rooms) }
-        its([:bath_rooms]) { should == 4.0 }
-
-        it { should have_key(:square_footage) }
-        its([:square_footage]) { should == 5000 }
-
-        it { should have_key(:unit_type) }
-        its([:unit_type]) { should == 'single-family home' }
-
-        it { should have_key(:building) }
-        its([:building]) { should == '99' }
-
-        it { should have_key(:make_ready_date) }
-        its([:make_ready_date]) { should == Date.new(2011, 4, 1) }
-
-        it { should have_key(:availability_status) }
-        its([:availability_status]) { should == :unknown }
+        its(:external_property_id) { should == '42' }
+        its(:floor_plan_name) { should == 'Luxury' }
+        its(:name) { should == 'The Villa' }
+        its(:bedrooms) { should == 6.0 }
+        its(:bathrooms) { should == 4.0 }
+        its(:square_footage) { should == 5000 }
+        its(:unit_type) { should == 'single-family home' }
+        its(:building) { should == '99' }
+        its(:make_ready_date) { should == Date.new(2011, 4, 1) }
+        its(:availability_status) { should == :unknown }
       end
     end
 
