@@ -17,9 +17,9 @@ module YieldStarClient
   #   * +:pending+ -- this unit is available but a lease is pending
   #   * +:unknown+ -- the status is unknown or unrecognized
   # @attr [String] building the name of the building associated with the unit
-  # @attr [Float] bed_rooms the number of bedrooms in the unit
-  # @attr [Float] bath_rooms the number of bathrooms in the unit
-  # @attr [Integer] square_footage the square footage of the unit
+  # @attr [Float] bedrooms the number of bedrooms in the unit
+  # @attr [Float] bathrooms the number of bathrooms in the unit
+  # @attr [Integer] square_feet the square footage of the unit
   # @attr [String] unit_type the client-defined grouping of the unit
   # @attr [Date] make_ready_date the date on which the unit is ready for move-in
   class Unit < Modelish::Base
@@ -30,7 +30,7 @@ module YieldStarClient
     property :building
     property :bedrooms, :from => :bed_rooms, :type => Float
     property :bathrooms, :from => :bath_rooms, :type => Float
-    property :square_footage, :type => Integer
+    property :square_feet, :type => Integer, :from => :square_footage
     property :unit_type
     property :make_ready_date, :type => Date
   end
@@ -61,7 +61,7 @@ module YieldStarClient
 
       response = send_soap_request(:get_unit, body)
       unit = response.to_hash[:get_unit_response][:return][:unit]
-      
+
       Unit.new(unit)
     end
 
@@ -81,14 +81,14 @@ module YieldStarClient
     def get_units(client_name, external_property_id, floor_plan_name=nil)
       validate_client_name(client_name)
       validate_external_property_id(external_property_id)
-      
+
       body = {:client_name => client_name, :external_property_id => external_property_id}
       body[:floor_plan_name] = floor_plan_name if floor_plan_name
       response = send_soap_request(:get_units, body)
 
       units = response.to_hash[:get_units_response][:return][:unit] || []
       units = [units].flatten
-      
+
       units.collect { |u| Unit.new(u) }
     end
   end

@@ -55,20 +55,20 @@ describe "unit methods" do
       its(:building) { should == '99' }
       its(:bedrooms) { should == 6.0 }
       its(:bathrooms) { should == 5.3 }
-      its(:square_footage) { should == 5555 }
+      its(:square_feet) { should == 5555 }
       its(:unit_type) { should == 'foo' }
       its(:make_ready_date) { should == Date.new(2011,03,10) }
     end
 
-    describe "validations" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-      it_should_behave_like 'a required string validator', :unit_name
-      it "should allow a nil building" do
-        expect { subject }.to_not raise_error(ArgumentError)
-      end
+    # Validation
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
+    it_should_behave_like 'a required string validator', :unit_name
+    it "should allow a nil building" do
+      expect { subject }.to_not raise_error(ArgumentError)
     end
 
+    # Error handling
     it_should_behave_like "a fault handler", :get_unit
   end
 
@@ -126,7 +126,7 @@ describe "unit methods" do
         its(:name) { should == 'Apt 313' }
         its(:bedrooms) { should == 2.0 }
         its(:bathrooms) { should == 1.1 }
-        its(:square_footage) { should == 1000 }
+        its(:square_feet) { should == 1000 }
         its(:unit_type) { should == 'apartment' }
         its(:availability_status) { should == :pending }
       end
@@ -139,7 +139,7 @@ describe "unit methods" do
         its(:name) { should == 'The Villa' }
         its(:bedrooms) { should == 6.0 }
         its(:bathrooms) { should == 4.0 }
-        its(:square_footage) { should == 5000 }
+        its(:square_feet) { should == 5000 }
         its(:unit_type) { should == 'single-family home' }
         its(:building) { should == '99' }
         its(:make_ready_date) { should == Date.new(2011, 4, 1) }
@@ -154,15 +154,15 @@ describe "unit methods" do
       it { should be_empty }
     end
 
-    describe "validations" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
+    # Validation
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
 
-      it "should allow a nil floor_plan_name" do
-        expect { subject }.to_not raise_error(ArgumentError)
-      end
+    it "should allow a nil floor_plan_name" do
+      expect { subject }.to_not raise_error(ArgumentError)
     end
 
+    # Error handling
     it_should_behave_like 'a fault handler', :get_units
   end
 end

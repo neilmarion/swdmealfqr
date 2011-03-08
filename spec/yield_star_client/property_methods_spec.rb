@@ -128,11 +128,11 @@ describe "property methods" do
       its(:unit_count) { should == 100 }
     end
 
-    describe "validation" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-    end
+    # Validations
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
 
+    # Error handling
     it_should_behave_like "a fault handler", :get_property 
   end
 
@@ -179,11 +179,11 @@ describe "property methods" do
       its(:max_move_in_days) { should == 55 }
     end
 
-    describe "validation" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-    end
+    # Validations
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
 
+    # Error handling
     it_should_behave_like "a fault handler", :get_property_parameters
   end
 end

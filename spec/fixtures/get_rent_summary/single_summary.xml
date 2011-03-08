@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getRentSummaryResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <effectiveDate>2011-03-11</effectiveDate>
+        <floorPlanUnitType>
+          <floorPlanName>99</floorPlanName>
+          <unitType>1b1ba</unitType>
+          <bedRooms>1.0</bedRooms>
+          <bathRooms>1.0</bathRooms>
+          <avgSqFt>797</avgSqFt>
+          <minMarketRent>765</minMarketRent>
+          <maxMarketRent>820</maxMarketRent>
+          <minConcession>500</minConcession>
+          <maxConcession>500</maxConcession>
+          <minFinalRent>807</minFinalRent>
+          <maxFinalRent>862</maxFinalRent>
+        </floorPlanUnitType>
+      </return>
+    </getRentSummaryResponse>
+  </S:Body>
+</S:Envelope>

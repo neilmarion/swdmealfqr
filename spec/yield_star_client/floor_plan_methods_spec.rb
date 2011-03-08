@@ -37,18 +37,18 @@ describe "floor plan methods" do
       its(:external_property_id) { should == '99' }
       its(:name) { should == 'The Oxford' }
       its(:description) { should == 'An apartment' }
-      its(:square_footage) { should == 797 }
+      its(:square_feet) { should == 797 }
       its(:unit_count) { should == 49 }
       its(:bedrooms) { should == 1.0 }
       its(:bathrooms) { should == 1.1 }
     end
 
-    describe "validation" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-      it_should_behave_like 'a required string validator', :floor_plan_name      
-    end
-
+    # Validations
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
+    it_should_behave_like 'a required string validator', :floor_plan_name      
+    
+    # Error handling
     it_should_behave_like 'a fault handler', :get_floor_plan
   end
 
@@ -97,7 +97,7 @@ describe "floor plan methods" do
         its(:external_property_id) { should == '99' }
         its(:name) { should == 'The Economy' }
         its(:description) { should == 'An affordable choice for the frugal resident.' }
-        its(:square_footage) { should == 450 }
+        its(:square_feet) { should == 450 }
         its(:unit_count) { should == 42 }
         its(:bedrooms) { should == 1.0 }
         its(:bathrooms) { should == 1.0 }
@@ -109,18 +109,18 @@ describe "floor plan methods" do
         its(:external_property_id) { should == '99' }
         its(:name) { should == 'The Luxury' }
         its(:description) { should == 'A palatial estate for the independently wealthy.' }
-        its(:square_footage) { should == 10000 }
+        its(:square_feet) { should == 10000 }
         its(:unit_count) { should == 3 }
         its(:bedrooms) { should == 7.0 }
         its(:bathrooms) { should == 7.3 }
       end
     end
 
-    describe "validation" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-    end
+    # Validation
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
 
+    # Error handling
     it_should_behave_like 'a fault handler', :get_floor_plans
   end
 end

@@ -10,7 +10,7 @@ module YieldStarClient
   # @attr [String] external_property_id the property ID of this floor plan
   # @attr [String] name the name of this floor plan
   # @attr [String] description the description of this floor plan
-  # @attr [Integer] square_footage the average square footage of this floor plan
+  # @attr [Integer] square_feet the average square footage of this floor plan
   # @attr [Integer] unit_count the number of units with this floor plan
   # @attr [Float] bedrooms the bedroom count of the floor plan
   # @attr [Float] bathrooms the bathroom count of the floor plan
@@ -18,7 +18,7 @@ module YieldStarClient
     property :external_property_id
     property :name
     property :description
-    property :square_footage, :type => Integer
+    property :square_feet, :type => Integer, :from => :square_footage
     property :unit_count, :type => Integer
     property :bedrooms, :type => Float, :from => :bed_rooms
     property :bathrooms, :type => Float, :from => :bath_rooms

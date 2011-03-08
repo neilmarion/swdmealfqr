@@ -59,12 +59,12 @@ describe "amenity methods" do
       end
     end
 
-    describe "validations" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-      it_should_behave_like 'a required string validator', :floor_plan_name
-    end
+    # Validations
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
+    it_should_behave_like 'a required string validator', :floor_plan_name
 
+    # Error handling
     it_should_behave_like 'a fault handler', :get_floor_plan_amenities
   end
 
@@ -145,21 +145,21 @@ describe "amenity methods" do
       end
     end
 
-    describe "validations" do
-      it_should_behave_like 'a client_name validator'
-      it_should_behave_like 'an external_property_id validator'
-      it_should_behave_like 'a required string validator', :unit_name
+    # Validation
+    it_should_behave_like 'a client_name validator'
+    it_should_behave_like 'an external_property_id validator'
+    it_should_behave_like 'a required string validator', :unit_name
 
-      context "when there is no building" do
-        before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
-        let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
- 
-        it "should not raise an error" do
-          expect { subject }.to_not raise_error
-        end
+    context "when there is no building" do
+      before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
+      let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
+
+      it "should not raise an error" do
+        expect { subject }.to_not raise_error
       end
     end
 
+    # Error handling
     it_should_behave_like 'a fault handler', :get_unit_amenities
   end
 end
