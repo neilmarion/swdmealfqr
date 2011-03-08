@@ -3,6 +3,7 @@ require 'savon'
 require 'property_methods'
 require 'floor_plan_methods'
 require 'unit_methods'
+require 'amenity_methods'
 
 require 'errors'
 
@@ -14,6 +15,7 @@ module YieldStarClient
     include PropertyMethods
     include FloorPlanMethods
     include UnitMethods
+    include AmenityMethods
 
     attr_writer *YieldStarClient::VALID_CONFIG_OPTIONS
 

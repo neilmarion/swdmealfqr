@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getFloorPlanAmenitiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <amenity>
+          <name>Garbage Disposal</name>
+          <type>Appliance</type>
+        </amenity>
+        <amenity>
+          <name>Free Electricity</name>
+          <type>Utility</type>
+          <value>99.99</value>
+        </amenity>
+      </return>
+    </getFloorPlanAmenitiesResponse>
+  </S:Body>
+</S:Envelope>
