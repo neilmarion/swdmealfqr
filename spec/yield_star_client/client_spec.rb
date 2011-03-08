@@ -35,6 +35,10 @@ describe YieldStarClient::Client do
   it { should respond_to(:get_floor_plan) }
   it { should respond_to(:get_floor_plans) }
 
+  # Methods from UnitMethods
+  it { should respond_to(:get_unit) }
+  it { should respond_to(:get_units) }
+
   context "with default configuration" do
     let(:client) { YieldStarClient::Client.new }
 
@@ -128,26 +132,6 @@ describe YieldStarClient::Client do
           expect { subject }.to change{client.password}.from(password).to(configured_password)
         end
       end
-    end
-  end
-
-  describe "#soap_client" do
-    subject { soap_client }
-    let(:soap_client) { client.soap_client }
-    it { should be }
-    it { should respond_to(:request) }
-
-    describe ".wsdl" do
-      subject { soap_client.wsdl }
-      its(:endpoint) { should == endpoint }
-      its(:namespace) { should == namespace }
-    end
-
-    describe ".http.auth" do
-      subject { soap_client.http.auth }
-
-      its(:type) { should == :basic }
-      its(:credentials) { should == [username, password] }
     end
   end
 end

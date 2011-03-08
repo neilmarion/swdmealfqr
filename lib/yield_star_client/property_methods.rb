@@ -19,19 +19,11 @@ module YieldStarClient
     def get_properties(client_name)
       validate_client_name(client_name)
 
-      begin
-        response = soap_client.request :wsdl, :get_properties do
-          soap.element_form_default = :qualified
-          soap.body = {:request => {:client_name => client_name}}
-        end
+      response = send_soap_request(:get_properties, :client_name => client_name)
 
-        properties = response.to_hash[:get_properties_response][:return][:property] || []
-        properties = [properties].flatten
-
-        properties.collect{ |prop| process_property(prop) }
-      rescue Savon::SOAP::Fault => f
-        raise ServerError.translate_fault(f)
-      end 
+      props = response.to_hash[:get_properties_response][:return][:property] || []
+      props = [props].flatten
+      props.collect { |p| process_property(p) }
     end
 
     # Retrieves information for a specific property.
@@ -67,17 +59,10 @@ module YieldStarClient
       validate_client_name(client_name)
       validate_external_property_id(external_property_id)
 
-      begin
-        response = soap_client.request :wsdl, :get_property do
-          soap.element_form_default = :qualified
-          soap.body = {:client_name => client_name, :external_property_id => external_property_id}
-        end
+      response = send_soap_request(:get_property, :client_name => client_name, :external_property_id => external_property_id)
 
-        property = response.to_hash[:get_property_response][:return][:property]
-        process_property(property)
-      rescue Savon::SOAP::Fault => f
-        raise ServerError.translate_fault(f)
-      end
+      property = response.to_hash[:get_property_response][:return][:property]
+      process_property(property)
     end
 
 
@@ -105,33 +90,27 @@ module YieldStarClient
       validate_client_name(client_name)
       validate_external_property_id(external_property_id)
 
-      begin
-        response = soap_client.request :wsdl, :get_property_parameters do
-          soap.element_form_default = :qualified
-          soap.body = {:client_name => client_name, :external_property_id => external_property_id}
-        end
+      response = send_soap_request(:get_property_parameters, :client_name => client_name, 
+                                                             :external_property_id => external_property_id)
 
-        param_hash = {}
-        params = response.to_hash[:get_property_parameters_response][:return][:parameter]
+      param_hash = {}
+      params = response.to_hash[:get_property_parameters_response][:return][:parameter]
 
-        unless params.nil?
-          [params].flatten.each do |param|
-            name = param[:name].downcase.gsub(/(max|min)imum/, '\1').gsub(/\s+/, '_').to_sym
+      unless params.nil?
+        [params].flatten.each do |param|
+          name = param[:name].downcase.gsub(/(max|min)imum/, '\1').gsub(/\s+/, '_').to_sym
 
-            if name == :post_date
-              value = Date.parse(param[:value])
-            elsif param[:value]
-              value = param[:value].to_i
-            end
-
-            param_hash[name] = value
+          if name == :post_date
+            value = Date.parse(param[:value])
+          elsif param[:value]
+            value = param[:value].to_i
           end
-        end
 
-        param_hash
-      rescue Savon::SOAP::Fault => f
-        raise ServerError.translate_fault(f)
+          param_hash[name] = value
+        end
       end
+
+      param_hash
     end
 
     private

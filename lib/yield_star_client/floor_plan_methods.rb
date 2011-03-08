@@ -21,19 +21,12 @@ module YieldStarClient
       validate_client_name(client_name)
       validate_external_property_id(external_property_id)
 
-      begin
-        response = soap_client.request :wsdl, :get_floor_plans do
-          soap.element_form_default = :qualified
-          soap.body = { :client_name => client_name, :external_property_id => external_property_id }
-        end
+      response = send_soap_request(:get_floor_plans, :client_name => client_name, :external_property_id => external_property_id)
 
-        floor_plans = response.to_hash[:get_floor_plans_response][:return][:floor_plan] || []
-        floor_plans = [floor_plans].flatten
+      floor_plans = response.to_hash[:get_floor_plans_response][:return][:floor_plan] || []
+      floor_plans = [floor_plans].flatten
 
-        floor_plans.collect { |fp| process_floor_plan(fp) }
-      rescue Savon::SOAP::Fault => f
-        raise ServerError.translate_fault(f)
-      end
+      floor_plans.collect { |fp| process_floor_plan(fp) }
     end
 
     # Retrieves a specific floor plan.
@@ -61,20 +54,14 @@ module YieldStarClient
     def get_floor_plan(client_name, external_property_id, floor_plan_name)
       validate_client_name(client_name)
       validate_external_property_id(external_property_id)
-      validate_required(:floor_plan_name, floor_plan_name)
+      validate_required(:floor_plan_name => floor_plan_name)
 
-      begin
-        response = soap_client.request :wsdl, :get_floor_plan do
-          soap.element_form_default = :qualified
-          soap.body = {:client_name => client_name, :external_property_id => external_property_id, :name => floor_plan_name}
-        end
+      response = send_soap_request(:get_floor_plan, :client_name => client_name, 
+                                                    :external_property_id => external_property_id, 
+                                                    :name => floor_plan_name)
+      floor_plan = response.to_hash[:get_floor_plan_response][:return][:floor_plan]
 
-        floor_plan = response.to_hash[:get_floor_plan_response][:return][:floor_plan]
-
-        process_floor_plan(floor_plan)
-      rescue Savon::SOAP::Fault => f
-        raise ServerError.translate_fault(f)
-      end
+      process_floor_plan(floor_plan)
     end
 
     private

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getUnitsResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <unit>
+          <externalPropertyId>42</externalPropertyId>
+          <floorPlanName>Economy</floorPlanName>
+          <name>Apt 313</name>
+          <bedRooms>2.0</bedRooms>
+          <bathRooms>1.1</bathRooms>
+          <squareFootage>1000</squareFootage>
+          <unitType>apartment</unitType>
+          <availabilityStatus>Pending</availabilityStatus>
+        </unit>
+        <unit>
+          <externalPropertyId>42</externalPropertyId>
+          <floorPlanName>Luxury</floorPlanName>
+          <name>The Villa</name>
+          <bedRooms>6.0</bedRooms>
+          <bathRooms>4.0</bathRooms>
+          <squareFootage>5000</squareFootage>
+          <unitType>single-family home</unitType>
+          <building>99</building>
+          <makeReadyDate>2011-04-01</makeReadyDate>
+          <availabilityStatus>Unknown</availabilityStatus>
+        </unit>
+      </return>
+    </getUnitsResponse>
+  </S:Body>
+</S:Envelope>

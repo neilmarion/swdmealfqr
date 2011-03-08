@@ -18,7 +18,7 @@ describe "validations" do
   end
 
   describe "#validate_required" do  
-    subject { validator.validate_required(name, value) }
+    subject { validator.validate_required(name => value) }
     let(:name) { :my_required_argument }
     
     context "when value is nil" do

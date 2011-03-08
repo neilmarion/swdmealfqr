@@ -1,8 +1,11 @@
 require 'spec_helper'
+require 'floor_plan_methods'
 
 describe "floor plan methods" do
   subject { test_object }
+
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { 'my_external_property_id' }
 
@@ -17,7 +20,7 @@ describe "floor plan methods" do
 
     it "should retrieve the floor plan data from the service" do
       savon.expects(:get_floor_plan).
-        with(:client_name => client_name, :external_property_id => external_property_id, :name => floor_plan_name).
+        with(:request => {:client_name => client_name, :external_property_id => external_property_id, :name => floor_plan_name}).
         returns(:simple_floor_plan)
       subject.should be
     end
@@ -80,7 +83,7 @@ describe "floor plan methods" do
 
     it "should retrieve the floor plan data from the service" do
       savon.expects(:get_floor_plans).
-        with(:client_name => client_name, :external_property_id => external_property_id).
+        with(:request => {:client_name => client_name, :external_property_id => external_property_id}).
         returns(:single_floor_plan)
       subject.should be
     end

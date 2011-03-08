@@ -2,6 +2,7 @@ require 'savon'
 
 require 'property_methods'
 require 'floor_plan_methods'
+require 'unit_methods'
 
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.
@@ -10,6 +11,7 @@ module YieldStarClient
   class Client
     include PropertyMethods
     include FloorPlanMethods
+    include UnitMethods
 
     attr_writer *YieldStarClient::VALID_CONFIG_OPTIONS
 
@@ -32,9 +34,24 @@ module YieldStarClient
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 
+    private
+    # Sends a request directly to the SOAP service.
+    #
+    # @param [Symbol] soap_action the action to be invoked
+    # @param [Hash] soap_parameters the parameters to populate the request body
+    # @return [Savon::SOAP::Response]
+    def send_soap_request(soap_action,soap_parameters={})
+      begin
+        response = soap_client.request :wsdl, soap_action do
+          soap.element_form_default = :qualified
+          soap.body = { :request => soap_parameters }
+        end
+      rescue Savon::SOAP::Fault => f
+        raise ServerError.translate_fault(f)
+      end
+    end
+
     # Sets up a SOAP client for sending SOAP requests directly.
-    # This method is provided publicly as a convenience, but should
-    # rarely be used.
     #
     # @return [Savon::Client]
     def soap_client
@@ -45,7 +62,6 @@ module YieldStarClient
       end
     end
 
-    private
     # Retrieves an attribute's value. If the attribute has not been set
     # on this object, it is retrieved from the global configuration.
     #

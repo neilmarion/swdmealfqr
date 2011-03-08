@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getUnitsResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <unit>
+          <externalPropertyId>42</externalPropertyId>
+          <floorPlanName>FP99</floorPlanName>
+          <name>Unit 1</name>
+          <availabilityStatus>Occupied</availabilityStatus>
+        </unit>
+      </return>
+    </getUnitsResponse>
+  </S:Body>
+</S:Envelope>

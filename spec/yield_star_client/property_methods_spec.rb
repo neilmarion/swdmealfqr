@@ -1,8 +1,11 @@
 require 'spec_helper'
+require 'property_methods'
 
 describe "property methods" do
   subject { test_object }
+  
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+
   let(:client_name) { 'my client name' }
   let(:external_property_id) { 'my-external-property-id' }
 
@@ -148,7 +151,7 @@ describe "property methods" do
     
     it "should retrieve the property data from the service" do
       savon.expects(:get_property).
-        with(:client_name => client_name, :external_property_id => external_property_id).
+        with(:request => {:client_name => client_name, :external_property_id => external_property_id}).
         returns(:simple_property)
       subject.should be
     end
@@ -224,7 +227,7 @@ describe "property methods" do
 
     it "should retrieve the data from the service" do
       savon.expects(:get_property_parameters).
-        with(:client_name => client_name, :external_property_id => external_property_id).
+        with(:request => {:client_name => client_name, :external_property_id => external_property_id}).
         returns(:no_parameters)
       subject.should be
     end
