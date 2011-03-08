@@ -8,7 +8,7 @@ describe "amenity methods" do
   let(:external_property_id) { 'my_prop_id' }
 
   it { should respond_to(:get_floor_plan_amenities) }
-  xit { should respond_to(:get_unit_amenities) }
+  it { should respond_to(:get_unit_amenities) }
 
   describe "#get_floor_plan_amenities" do
     before { savon.stubs(:get_floor_plan_amenities).returns(nil) }
@@ -69,5 +69,97 @@ describe "amenity methods" do
   end
 
   describe "#get_unit_amenities" do
+    before { savon.stubs(:get_unit_amenities).returns(nil) }
+
+    subject { amenities }
+
+    let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name, building) }
+    let(:unit_name) { 'my_unit_name' }
+    let(:building) { 'my_building' }
+
+    context "without a building" do
+      let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
+      let(:soap_body) do 
+        {:client_name => client_name, 
+         :external_property_id => external_property_id, 
+         :unit_name => unit_name}
+      end
+
+      it "should retrieve the data from the service" do
+        savon.expects(:get_unit_amenities).with(:request => soap_body).returns(:no_amenities)
+        subject.should be
+      end
+    end
+
+    context "with a building" do
+      let(:soap_body) do 
+        {:client_name => client_name, 
+         :external_property_id => external_property_id, 
+         :unit_name => unit_name, 
+         :building => building}
+      end
+
+      it "should retrieve the data from the service" do
+        savon.expects(:get_unit_amenities).with(:request => soap_body).returns(:no_amenities)
+        subject.should be
+      end
+    end
+
+    context "when there are no amenities" do
+      before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
+
+      it { should be }
+      it { should be_empty }
+    end
+
+    context "when there is one amenity" do
+      before { savon.stubs(:get_unit_amenities).returns(:single_amenity) }
+
+      it { should have(1).amenity }
+
+      describe "first amenity" do
+        subject { amenities.first }
+
+        its(:name) { should == '2nd Floor' }
+        its(:type) { should == 'Fixed' }
+      end
+    end
+
+    context "when there are multiple amenities" do
+      before { savon.stubs(:get_unit_amenities).returns(:multiple_amenities) }
+
+      describe "first amenity" do
+        subject { amenities.first }
+
+        its(:name) { should == 'Rent Adjustment' }
+        its(:type) { should == 'Fixed' }
+        its(:value) { should == 50.0 }
+      end
+
+      describe "last amenity" do
+        subject { amenities.last }
+
+        its(:name) { should == 'Good Credit Adjustment' }
+        its(:type) { should == 'Variable' }
+        its(:value) { should be_nil }
+      end
+    end
+
+    describe "validations" do
+      it_should_behave_like 'a client_name validator'
+      it_should_behave_like 'an external_property_id validator'
+      it_should_behave_like 'a required string validator', :unit_name
+
+      context "when there is no building" do
+        before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
+        let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
+ 
+        it "should not raise an error" do
+          expect { subject }.to_not raise_error
+        end
+      end
+    end
+
+    it_should_behave_like 'a fault handler', :get_unit_amenities
   end
 end

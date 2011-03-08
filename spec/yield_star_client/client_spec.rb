@@ -41,7 +41,7 @@ describe YieldStarClient::Client do
 
   # Methods from AmenityMethods
   it { should respond_to(:get_floor_plan_amenities) }
-  xit { should respond_to(:get_unit_amenities) }
+  it { should respond_to(:get_unit_amenities) }
 
   context "with default configuration" do
     let(:client) { YieldStarClient::Client.new }

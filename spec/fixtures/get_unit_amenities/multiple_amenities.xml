@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getUnitAmenitiesResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <unitName>1A</unitName>
+        <amenity>
+          <name>Rent Adjustment</name>
+          <type>Fixed</type>
+          <value>50.00</value>
+        </amenity>
+        <amenity>
+          <name>Good Credit Adjustment</name>
+          <type>Variable</type>
+        </amenity>
+      </return>
+    </getUnitAmenitiesResponse>
+  </S:Body>
+</S:Envelope>
