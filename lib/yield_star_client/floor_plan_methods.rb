@@ -1,5 +1,5 @@
 require 'validations'
-require 'base_model'
+require 'modelish'
 
 module YieldStarClient
   # Represents a floor plan in the YieldStar system.
@@ -14,7 +14,7 @@ module YieldStarClient
   # @attr [Integer] unit_count the number of units with this floor plan
   # @attr [Float] bedrooms the bedroom count of the floor plan
   # @attr [Float] bathrooms the bathroom count of the floor plan
-  class FloorPlan < BaseModel
+  class FloorPlan < Modelish::Base
     property :external_property_id
     property :name
     property :description

@@ -1,5 +1,5 @@
 require 'validations'
-require 'base_model'
+require 'modelish'
 
 module YieldStarClient
   # Represents a YieldStar amenity.
@@ -9,7 +9,7 @@ module YieldStarClient
   # @attr [String] name the name of the amenity
   # @attr [String] type the type of the amenity
   # @attr [Float[ value the value of the amenity
-  class Amenity < BaseModel
+  class Amenity < Modelish::Base
     property :name
     property :type
     property :value, :type => Float

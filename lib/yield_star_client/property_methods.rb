@@ -1,5 +1,5 @@
 require 'validations'
-require 'base_model'
+require 'modelish'
 
 module YieldStarClient
   # Represents a property in the YieldStar system.
@@ -19,7 +19,7 @@ module YieldStarClient
   # @attr [Integer] unit_count the number of units at this property
   # @attr [String] website the URL of the property website
   # @attr [Integer] year_built the year in which the property was built
-  class Property < BaseModel
+  class Property < Modelish::Base
     property :external_property_id
     property :name
     property :address
@@ -47,7 +47,7 @@ module YieldStarClient
   # @attr [Integer] max_move_in_days number of fixed move in date options to return in response to a request for lease rates.
   # @attr [Integer] min_renewal_lease_term minimum length (in months) of a renewal lease term
   # @attr [Integer] max_renewal_lease_term maximum length (in months) of a renewal lease term
-  class PropertyParameters < BaseModel
+  class PropertyParameters < Modelish::Base
     property :external_property_id
     property :post_date, :type => Date
     property :min_new_lease_term, :type => Integer

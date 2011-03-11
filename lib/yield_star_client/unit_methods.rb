@@ -1,5 +1,5 @@
 require 'validations'
-require 'base_model'
+require 'modelish'
 
 module YieldStarClient
   # Represents a unit in the YieldStar system.
@@ -22,7 +22,7 @@ module YieldStarClient
   # @attr [Integer] square_footage the square footage of the unit
   # @attr [String] unit_type the client-defined grouping of the unit
   # @attr [Date] make_ready_date the date on which the unit is ready for move-in
-  class Unit < BaseModel
+  class Unit < Modelish::Base
     property :external_property_id
     property :floor_plan_name
     property :name
