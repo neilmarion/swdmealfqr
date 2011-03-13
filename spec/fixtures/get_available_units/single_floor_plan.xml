@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getAvailableUnitsResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <effectiveDate>2011-03-13</effectiveDate>
+        <floorPlan>
+          <floorPlanName>my_floor_plan</floorPlanName>
+          <unit>
+            <unitType>2b2ba</unitType>
+            <unitNumber>112358</unitNumber>
+            <status>OnNotice</status>
+            <dateAvailable>2011-04-01</dateAvailable>
+            <baseFinalRent>1054</baseFinalRent>
+            <bestLeaseTerm>14</bestLeaseTerm>
+            <bestMarketRent>1079</bestMarketRent>
+            <bestConcession>583</bestConcession>
+            <bestFinalRent>1038</bestFinalRent>
+          </unit>
+          <bedRooms>2.0</bedRooms>
+          <bathRooms>2.0</bathRooms>
+          <sqFt>1161</sqFt>
+        </floorPlan>
+      </return>
+    </getAvailableUnitsResponse>
+  </S:Body>
+</S:Envelope>

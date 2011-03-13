@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getAvailableUnitsResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>1509</externalPropertyId>
+        <effectiveDate>2011-03-13</effectiveDate>
+      </return>
+    </getAvailableUnitsResponse>
+  </S:Body>
+</S:Envelope>

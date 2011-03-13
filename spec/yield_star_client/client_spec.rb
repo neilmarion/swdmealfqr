@@ -45,7 +45,7 @@ describe YieldStarClient::Client do
 
   # Methods from RentMethods
   it { should respond_to(:get_rent_summary) }
-  xit { should respond_to(:get_available_units) }
+  it { should respond_to(:get_available_units) }
 
   context "with default configuration" do
     let(:client) { YieldStarClient::Client.new }

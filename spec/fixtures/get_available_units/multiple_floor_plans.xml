@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getAvailableUnitsResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <effectiveDate>2011-03-15</effectiveDate>
+        <floorPlan>
+          <floorPlanName>1B1B-D</floorPlanName>
+          <bedRooms>1.0</bedRooms>
+          <bathRooms>1.0</bathRooms>
+          <sqFt>874</sqFt>
+        </floorPlan>
+        <floorPlan>
+          <floorPlanName>1B1B</floorPlanName>
+          <unit>
+            <building>99</building>
+            <unitType>1b1ba-r</unitType>
+            <unitNumber>11235</unitNumber>
+            <feature>50 Base Rent Adjustment</feature>
+            <feature>2nd Floor</feature>
+            <status>NewUnit</status>
+            <dateAvailable>2011-05-11</dateAvailable>
+            <baseMarketRent>710</baseMarketRent>
+            <baseConcession>500</baseConcession>
+            <baseFinalRent>669</baseFinalRent>
+            <bestLeaseTerm>15</bestLeaseTerm>
+            <bestMarketRent>699</bestMarketRent>
+            <bestConcession>625</bestConcession>
+            <bestFinalRent>658</bestFinalRent>
+          </unit>
+          <unit>
+            <unitType>1b1ba</unitType>
+            <unitNumber>81321</unitNumber>
+            <feature>1st floor</feature>
+            <status>Vacant</status>
+            <dateAvailable>2011-03-07</dateAvailable>
+            <baseMarketRent>732</baseMarketRent>
+            <baseConcession>500</baseConcession>
+            <baseFinalRent>690</baseFinalRent>
+            <bestLeaseTerm>15</bestLeaseTerm>
+            <bestMarketRent>719</bestMarketRent>
+            <bestConcession>625</bestConcession>
+            <bestFinalRent>678</bestFinalRent>
+          </unit>
+          <bedRooms>1.0</bedRooms>
+          <bathRooms>1.0</bathRooms>
+          <sqFt>666</sqFt>
+        </floorPlan>
+      </return>
+    </getAvailableUnitsResponse>
+  </S:Body>
+</S:Envelope>
