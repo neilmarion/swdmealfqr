@@ -1,4 +1,4 @@
-require 'validations'
+require 'yield_star_client/validations'
 require 'modelish'
 
 module YieldStarClient
@@ -52,9 +52,9 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_unit(client_name, external_property_id, unit_name, building_name=nil)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
-      validate_required(:unit_name => unit_name)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
+      validate_required!(:unit_name => unit_name)
 
       body = {:client_name => client_name, :external_property_id => external_property_id, :name => unit_name}
       body[:building] = building_name if building_name
@@ -79,8 +79,8 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_units(client_name, external_property_id, floor_plan_name=nil)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
 
       body = {:client_name => client_name, :external_property_id => external_property_id}
       body[:floor_plan_name] = floor_plan_name if floor_plan_name

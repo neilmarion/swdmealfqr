@@ -1,4 +1,4 @@
-require 'validations'
+require 'yield_star_client/validations'
 require 'modelish'
 
 module YieldStarClient
@@ -16,6 +16,8 @@ module YieldStarClient
   end
 
   module AmenityMethods
+    include Validations
+
     # Retrieves all of the amenities associated with a specific floor plan.
     #
     # @param [String] client_name the YieldStar client name
@@ -30,9 +32,9 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_floor_plan_amenities(client_name, external_property_id, floor_plan_name)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
-      validate_required(:floor_plan_name => floor_plan_name)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
+      validate_required!(:floor_plan_name => floor_plan_name)
 
       response = send_soap_request(:get_floor_plan_amenities, :client_name => client_name, 
                                                               :external_property_id => external_property_id, 
@@ -57,9 +59,9 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_unit_amenities(client_name, external_property_id, unit_name, building=nil)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
-      validate_required(:unit_name => unit_name)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
+      validate_required!(:unit_name => unit_name)
 
       body = {:client_name => client_name,
               :external_property_id => external_property_id,

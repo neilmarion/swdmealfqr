@@ -1,4 +1,4 @@
-require 'validations'
+require 'yield_star_client/validations'
 require 'modelish'
 
 module YieldStarClient
@@ -25,7 +25,7 @@ module YieldStarClient
   end
 
   module FloorPlanMethods
-    include Validations
+    include YieldStarClient::Validations
 
     # Retrieves all floor plans for a particular property.
     #
@@ -39,8 +39,8 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_floor_plans(client_name, external_property_id)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
 
       response = send_soap_request(:get_floor_plans, :client_name => client_name, :external_property_id => external_property_id)
 
@@ -63,9 +63,9 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_floor_plan(client_name, external_property_id, floor_plan_name)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
-      validate_required(:floor_plan_name => floor_plan_name)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
+      validate_required!(:floor_plan_name => floor_plan_name)
 
       response = send_soap_request(:get_floor_plan, :client_name => client_name, 
                                                     :external_property_id => external_property_id, 

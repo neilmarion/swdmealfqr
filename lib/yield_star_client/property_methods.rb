@@ -1,4 +1,4 @@
-require 'validations'
+require 'yield_star_client/validations'
 require 'modelish'
 
 module YieldStarClient
@@ -59,7 +59,7 @@ module YieldStarClient
   end
 
   module PropertyMethods
-    include Validations
+    include YieldStarClient::Validations
 
     # Retrieves all properties for a client.
     #
@@ -72,7 +72,7 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_properties(client_name)
-      validate_client_name(client_name)
+      validate_client_name!(client_name)
 
       response = send_soap_request(:get_properties, :client_name => client_name)
 
@@ -93,8 +93,8 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_property(client_name, external_property_id)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
 
       response = send_soap_request(:get_property, :client_name => client_name, :external_property_id => external_property_id)
 
@@ -115,8 +115,8 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_property_parameters(client_name, external_property_id)
-      validate_client_name(client_name)
-      validate_external_property_id(external_property_id)
+      validate_client_name!(client_name)
+      validate_external_property_id!(external_property_id)
 
       response = send_soap_request(:get_property_parameters, :client_name => client_name, 
                                                              :external_property_id => external_property_id)
