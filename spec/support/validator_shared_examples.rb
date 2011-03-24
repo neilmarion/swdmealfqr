@@ -49,3 +49,31 @@ shared_examples_for 'a string length validator' do |param_name, max_length|
     end
   end
 end
+
+shared_examples_for 'an integer validator' do |param_name|
+  context "when #{param_name} cannot be cast to an int" do
+    let(param_name) { 'forty-two' }
+
+    it "should raise an ArgumentError" do
+      expect { subject }.to raise_error(ArgumentError)
+    end
+
+    it "should indicate the error is related to the #{param_name}" do
+      expect { subject }.to raise_error { |e| e.message.should match(/#{param_name}/i) }
+    end
+  end
+end
+
+shared_examples_for 'a date validator' do |param_name|
+  context "when #{param_name} cannot be converted to a date" do
+    let(param_name) { 'foo' }
+
+    it "should raise an ArgumentError" do
+      expect { subject }.to raise_error(ArgumentError)
+    end
+
+    it "should indicate the error is related to the #{param_name}" do
+      expect { subject }.to raise_error { |e| e.message.should match(/#{param_name}/i) }
+    end
+  end
+end

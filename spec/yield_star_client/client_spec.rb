@@ -47,6 +47,11 @@ describe YieldStarClient::Client do
   it { should respond_to(:get_rent_summary) }
   it { should respond_to(:get_available_units) }
 
+  # Methods from LeaseTermMethodsd
+  it { should respond_to(:get_lease_term_rent) }
+  xit { should respond_to(:get_lease_term_rent_plus) }
+  xit { should respond_to(:get_renewal_lease_term_rent) }
+
   context "with default configuration" do
     let(:client) { YieldStarClient::Client.new }
 

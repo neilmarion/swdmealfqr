@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getLeaseTermRentResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <leaseTermRentUnitResponse>
+          <unitNumber>112358</unitNumber>
+          <makeReadyDate>2011-03-13</makeReadyDate>
+          <unitRate>
+            <leaseTerm>12</leaseTerm>
+            <endDate>2012-03-07</endDate>
+            <marketRent>1096</marketRent>
+            <finalRent>1054</finalRent>
+            <moveInDate>2011-03-13</moveInDate>
+          </unitRate>
+        </leaseTermRentUnitResponse>
+      </return>
+    </getLeaseTermRentResponse>
+  </S:Body>
+</S:Envelope>

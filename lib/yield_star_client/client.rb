@@ -5,6 +5,7 @@ require 'floor_plan_methods'
 require 'unit_methods'
 require 'amenity_methods'
 require 'rent_methods'
+require 'lease_term_rent_methods'
 
 require 'errors'
 
@@ -18,6 +19,7 @@ module YieldStarClient
     include UnitMethods
     include AmenityMethods
     include RentMethods
+    include LeaseTermRentMethods
 
     attr_writer *YieldStarClient::VALID_CONFIG_OPTIONS
 
