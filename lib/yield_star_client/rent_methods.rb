@@ -168,7 +168,7 @@ module YieldStarClient
                                                          :external_property_id => external_property_id)
 
       data = response.to_hash[:get_available_units_response][:return]
-      base_props = data.select { |k,v| [:external_property_id, :effective_date].include?(k) }
+      base_props = data.reject { |k,v| ![:external_property_id, :effective_date].include?(k) }
 
       floor_plans = []
       floor_plans << data[:floor_plan] if data[:floor_plan]
