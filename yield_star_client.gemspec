@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('configlet', '~> 2.1')
+  s.add_dependency('httpi', '0.7.9') # httpi 0.9.0 broke savon - see http://github.com/rubiii/httpi/issues#issue/25
   s.add_dependency('savon', '~> 0.8')
   s.add_dependency('modelish')
 

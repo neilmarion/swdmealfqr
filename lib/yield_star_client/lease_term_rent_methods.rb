@@ -1,5 +1,6 @@
 require 'yield_star_client/validations'
 require 'modelish'
+
 module YieldStarClient
   # Represents unit rate data for a combination of lease term
   # and move-in date for a particular unit.
@@ -20,6 +21,7 @@ module YieldStarClient
   # @attr [Float] monthly_percent_concession the monthly concession percentage (defaults to 0.0)
   # @attr [Float] months_concession the months concession (defaults to 0.0)
   # @attr [Integer] one_time_fixed_concession the one time fixed concession (defaults to 0.0)
+  # @attr [Date] price_valid_end_date the last date for which the price is valid
   class UnitRate < Modelish::Base
     property :external_property_id
     property :building
@@ -36,6 +38,7 @@ module YieldStarClient
     property :monthly_percent_concession, :type => Float, :default => 0.0
     property :months_concession, :type => Float, :default => 0.0
     property :one_time_fixed_concession, :type => Integer, :default => 0
+    property :price_valid_end_date, :type => Date, :from => :pv_end_date
   end
 
   # @private
@@ -83,6 +86,19 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_lease_term_rent(client_name, external_property_id, unit_number, opts={})
+      call_lease_term_rent_method(client_name, external_property_id, unit_number, opts)
+    end
+
+    # This method is identical to {#get_lease_term_rent}, but the return value also includes
+    # the last date for which the price is valid.
+    #
+    # {see #get_lease_term_rent}
+    def get_lease_term_rent_plus(client_name, external_property_id, unit_number, opts={})
+      call_lease_term_rent_method(client_name, external_property_id, unit_number, opts, '_plus')
+    end
+
+    private
+    def call_lease_term_rent_method(client_name, external_property_id, unit_number, opts, method_suffix='')
       validate_client_name!(client_name)
       validate_external_property_id!(external_property_id)
       validate_required!(:unit_number => unit_number)
@@ -97,8 +113,9 @@ module YieldStarClient
         request_params[:lease_term_rent_unit_request] = lease_term_opts.to_request_hash
       end
 
-      response = send_soap_request(:get_lease_term_rent, request_params)
-      response_hash = response.to_hash[:get_lease_term_rent_response][:return][:lease_term_rent_unit_response]
+      soap_action = "get_lease_term_rent#{method_suffix}".to_sym
+      response = send_soap_request(soap_action, request_params)
+      response_hash = response.to_hash["get_lease_term_rent#{method_suffix}_response".to_sym][:return]["lease_term_rent_unit#{method_suffix}_response".to_sym]
 
       common_params = {:external_property_id => external_property_id.to_s}
       common_params.merge!(response_hash.reject { |k,v| k == :unit_rate })
@@ -109,6 +126,7 @@ module YieldStarClient
       unit_rates.collect do |r|
         UnitRate.new(common_params.merge(r)) 
       end
+
     end
   end
 end
