@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getRenewalLeaseTermRentResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+      </return>
+    </getRenewalLeaseTermRentResponse>
+  </S:Body>
+</S:Envelope>

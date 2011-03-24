@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <getRenewalLeaseTermRentResponse xmlns="http://yieldstar.com/ws/AppExchange/v1">
+      <return>
+        <externalPropertyId>42</externalPropertyId>
+        <renewalLeaseTermRentUnitResponse>
+          <unitNumber>112358</unitNumber>
+          <startDate>2011-10-24</startDate>
+          <unitRate>
+            <leaseTerm>1</leaseTerm>
+            <endDate>2011-11-24</endDate>
+            <marketRent>1331</marketRent>
+            <finalRent>1300</finalRent>
+            <best>true</best>
+          </unitRate>
+          <unitRate>
+            <leaseTerm>12</leaseTerm>
+            <endDate>2012-10-26</endDate>
+            <marketRent>1086</marketRent>
+            <finalRent>1086</finalRent>
+            <best>false</best>
+          </unitRate>
+        </renewalLeaseTermRentUnitResponse>
+      </return>
+    </getRenewalLeaseTermRentResponse>
+  </S:Body>
+</S:Envelope>
