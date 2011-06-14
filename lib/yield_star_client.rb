@@ -1,5 +1,3 @@
-$:.unshift(File.expand_path('yield_star_client',File.dirname(__FILE__)))
-
 module YieldStarClient
   autoload :Configlet, 'configlet'
   extend Configlet
@@ -70,5 +68,5 @@ module YieldStarClient
     VALID_CONFIG_OPTIONS.each { |opt| self.send("#{opt}=", nil) } 
   end
 
-  require 'client'
+  require 'yield_star_client/client'
 end

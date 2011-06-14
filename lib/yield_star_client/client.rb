@@ -1,13 +1,13 @@
 require 'savon'
 
-require 'property_methods'
-require 'floor_plan_methods'
-require 'unit_methods'
-require 'amenity_methods'
-require 'rent_methods'
-require 'lease_term_rent_methods'
+require 'yield_star_client/property_methods'
+require 'yield_star_client/floor_plan_methods'
+require 'yield_star_client/unit_methods'
+require 'yield_star_client/amenity_methods'
+require 'yield_star_client/rent_methods'
+require 'yield_star_client/lease_term_rent_methods'
 
-require 'errors'
+require 'yield_star_client/errors'
 
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.

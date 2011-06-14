@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'errors'
 
 describe YieldStarClient::ServerError do
   subject { error }
