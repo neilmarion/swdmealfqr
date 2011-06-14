@@ -4,11 +4,9 @@ Client adapter for the YieldStar AppExchange web service.
 
 ## Installation ##
 
-1. Add this to your Gemfile:
+The YieldStar adapter is available on [Rubygems][rubygems] and can be installed via:
 
-        gem 'yield_star_client', :git => 'git@github.com:g5search/yield_star_client.git'
-
-2. Execute `bundle install`
+        gem install 'yield_star_client'
 
 ## Configuration ##
 
@@ -35,5 +33,6 @@ Sensible defaults are provided for other configuration options. **TODO**: link t
 * [YieldStar documentation][yieldstar-docs]
 * [YieldStar WSDL][yieldstar-wsdl]
 
+ [rubygems]: http://rubygems.org/gems/yield_star_client
  [yieldstar-docs]: http://rmsws.yieldstar.com/rmsws/doc/AppExchange/index.html
  [yieldstar-wsdl]: http://rmsws.yieldstar.com/rmsws/AppExchange?wsdl
