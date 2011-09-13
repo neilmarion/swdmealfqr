@@ -158,6 +158,7 @@ module YieldStarClient
     def call_lease_term_rent_method(client_name, external_property_id, unit_number, opts={})
       validate_client_name!(client_name)
       validate_external_property_id!(external_property_id)
+      validate_required!(:unit_number=>unit_number)
 
       request_opts = opts.merge(:unit_number => unit_number)
       request_opts.delete_if { |k,v| [:request_element, :soap_action, :response_element, :result_class].include?(k) }
