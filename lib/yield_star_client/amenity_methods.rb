@@ -20,7 +20,6 @@ module YieldStarClient
 
     # Retrieves all of the amenities associated with a specific floor plan.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property where the floor plan is located
     # @param [String] floor_plan_name the name of the floor plan
     #
@@ -31,13 +30,11 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_floor_plan_amenities(client_name, external_property_id, floor_plan_name)
-      validate_client_name!(client_name)
+    def get_floor_plan_amenities(external_property_id, floor_plan_name)
       validate_external_property_id!(external_property_id)
       validate_required!(:floor_plan_name => floor_plan_name)
 
-      response = send_soap_request(:get_floor_plan_amenities, :client_name => client_name, 
-                                                              :external_property_id => external_property_id, 
+      response = send_soap_request(:get_floor_plan_amenities, :external_property_id => external_property_id, 
                                                               :floor_plan_name => floor_plan_name)
 
       amenities = response.to_hash[:get_floor_plan_amenities_response][:return][:amenity] || []
@@ -46,7 +43,6 @@ module YieldStarClient
 
     # Retrieves all of the amenities associated with a specific unit.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property where the floor plan is located
     # @param [String] unit_name the name of the unit
     # @param [optional,String] building the name of the building where the unit is located
@@ -58,13 +54,11 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_unit_amenities(client_name, external_property_id, unit_name, building=nil)
-      validate_client_name!(client_name)
+    def get_unit_amenities(external_property_id, unit_name, building=nil)
       validate_external_property_id!(external_property_id)
       validate_required!(:unit_name => unit_name)
 
-      body = {:client_name => client_name,
-              :external_property_id => external_property_id,
+      body = {:external_property_id => external_property_id,
               :unit_name => unit_name}
       body[:building] = building if building
 

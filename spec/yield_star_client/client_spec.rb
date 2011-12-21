@@ -6,10 +6,11 @@ describe YieldStarClient::Client do
   after { YieldStarClient.reset }
 
   let(:client) do
-    YieldStarClient::Client.new({:endpoint => endpoint, 
-                                 :username => username, 
+    YieldStarClient::Client.new({:endpoint => endpoint,
+                                 :username => username,
                                  :password => password,
-                                 :namespace => namespace})
+                                 :namespace => namespace,
+                                 :client_name => client_name})
   end
 
   let(:endpoint) { 'https://foo.com?wsdl' }
@@ -17,11 +18,13 @@ describe YieldStarClient::Client do
   let(:username) { 'test_user' }
   let(:password) { 'secret' }
   let(:namespace) { 'http://foo.com/namespace' }
+  let(:client_name) { 'test_client' }
 
   its(:endpoint) { should == endpoint }
   its(:username) { should == username }
   its(:password) { should == password }
   its(:namespace) { should == namespace }
+  its(:client_name) { should == client_name }
 
   # Methods from the PropertyMethods mixin
   # The actual tests for these are in property_methods_spec
@@ -59,6 +62,7 @@ describe YieldStarClient::Client do
     its(:username) { should_not be }
     its(:password) { should_not be }
     its(:namespace) { should == YieldStarClient::DEFAULT_NAMESPACE }
+    its(:client_name) { should_not be }
     its(:logger) { should be_a Logger }
     it { should_not be_debug }
   end
@@ -182,13 +186,36 @@ describe YieldStarClient::Client do
     context 'with nil' do
       let(:new_debug) { nil }
 
-      it 'should not change the debug setting' do
-        expect { subject }.to_not change { client.debug }
+      context 'when debug logging is enabled globally' do
+        before do
+          YieldStarClient.configure { |config| config.debug = true }
+        end
+
+        it 'should enable debug logging' do
+          subject
+          client.should be_debug
+        end
+
+        it 'should enable logging in savon' do
+          subject
+          Savon.should be_log
+        end
       end
 
-      it 'should disable logging in savon' do
-        subject
-        Savon.log?.should be_false
+      context 'when debug logging is disabled globally' do
+        before do
+          YieldStarClient.configure { |config| config.debug = false }
+        end
+
+        it 'should disable debug logging' do
+          subject
+          client.should_not be_debug
+        end
+
+        it 'should disable logging in savon' do
+          subject
+          Savon.should_not be_log
+        end
       end
     end
   end
@@ -198,15 +225,34 @@ describe YieldStarClient::Client do
 
     context 'with nil' do
       let(:new_logger) { nil }
+      context 'when there is a logger configured globally' do
+        let(:global_logger) { mock() }
 
-      it 'should set the logger to the default' do
-        subject
-        client.logger.should be_an_instance_of(Logger)
+        before do
+          YieldStarClient.configure { |config| config.logger = global_logger }
+        end
+
+        it 'should set the logger to the global logger' do
+          subject
+          client.logger.should == global_logger
+        end
+
+        it 'should set the savon logger to the global logger' do
+          subject
+          Savon.logger.should == global_logger
+        end
       end
 
-      it 'should change the logger setting in savon' do
-        subject
-        Savon.logger.should be_an_instance_of(Logger)
+      context 'when there is no logger configured globally' do
+        it 'should set the logger to the default' do
+          subject
+          client.logger.should be_an_instance_of(Logger)
+        end
+
+        it 'should change the logger setting in savon' do
+          subject
+          Savon.logger.should be_an_instance_of(Logger)
+        end
       end
     end
 
@@ -219,6 +265,40 @@ describe YieldStarClient::Client do
 
       it 'should change the logger setting in savon' do
         expect { subject }.to change { Savon.logger }.to(new_logger)
+      end
+    end
+  end
+
+  describe '#client_name=' do
+    subject { client.client_name = new_client_name }
+
+    context 'with nil' do
+      let(:new_client_name) { nil }
+
+      context 'when there is a client_name configured globally' do
+        let(:global_client_name) { 'global_client' }
+
+        before do
+          YieldStarClient.configure { |config| config.client_name = global_client_name }
+        end
+
+        it 'should change the client name to match the global configuration' do
+          expect { subject }.to change { client.client_name }.from(client_name).to(global_client_name)
+        end
+      end
+
+      context 'when there is no client_name configured globally' do
+        it 'should reset the client name' do
+          expect { subject }.to change { client.client_name }.from(client_name).to(nil)
+        end
+      end
+    end
+
+    context 'with client name' do
+      let(:new_client_name) { 'Some new client name' }
+
+      it 'should change the client_name' do
+        expect { subject }.to change { client.client_name }.from(client_name).to(new_client_name)
       end
     end
   end

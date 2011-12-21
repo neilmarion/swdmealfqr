@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "rental/availability methods" do
   subject { test_object }
 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { '42' }
@@ -14,7 +14,7 @@ describe "rental/availability methods" do
     before { savon.stubs(:get_rent_summary).returns(nil) }
 
     subject { rent_summaries }
-    let(:rent_summaries) { test_object.get_rent_summary(client_name, external_property_id) }
+    let(:rent_summaries) { test_object.get_rent_summary(external_property_id) }
 
     it "should retrieve the data from the service" do
       savon.expects(:get_rent_summary).
@@ -118,7 +118,7 @@ describe "rental/availability methods" do
     before { savon.stubs(:get_available_units).returns(nil) }
 
     subject { available_floor_plans }
-    let(:available_floor_plans) { test_object.get_available_units(client_name, external_property_id) }
+    let(:available_floor_plans) { test_object.get_available_units(external_property_id) }
 
     it "should retrieve the data from the service" do
       savon.expects(:get_available_units).

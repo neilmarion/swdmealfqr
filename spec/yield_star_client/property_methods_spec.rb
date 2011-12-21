@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "property methods" do
   subject { test_object }
   
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my client name' }
   let(:external_property_id) { 'my-external-property-id' }
@@ -16,7 +16,7 @@ describe "property methods" do
     before { savon.stubs(:get_properties).returns(nil) }
 
     subject { properties }
-    let(:properties) { test_object.get_properties(client_name) }
+    let(:properties) { test_object.get_properties }
 
     it "should retrieve the property data by client_name from the service" do
       savon.expects(:get_properties).with(:request => {:client_name => client_name}).returns(:single_property)
@@ -94,7 +94,7 @@ describe "property methods" do
     before { savon.stubs(:get_property).returns(nil) }
 
     subject { property }
-    let(:property) { test_object.get_property(client_name, external_property_id) }
+    let(:property) { test_object.get_property(external_property_id) }
     
     it "should retrieve the property data from the service" do
       savon.expects(:get_property).
@@ -140,7 +140,7 @@ describe "property methods" do
     before { savon.stubs(:get_property_parameters).returns(nil) }
 
     subject { parameters }
-    let(:parameters) { test_object.get_property_parameters(client_name, external_property_id) }
+    let(:parameters) { test_object.get_property_parameters(external_property_id) }
 
     it "should retrieve the data from the service" do
       savon.expects(:get_property_parameters).

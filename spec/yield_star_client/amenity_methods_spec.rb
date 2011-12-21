@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "amenity methods" do
   subject { test_object } 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { 'my_prop_id' }
@@ -14,7 +14,7 @@ describe "amenity methods" do
     before { savon.stubs(:get_floor_plan_amenities).returns(nil) }
 
     subject { amenities }
-    let(:amenities) { test_object.get_floor_plan_amenities(client_name, external_property_id, floor_plan_name) }
+    let(:amenities) { test_object.get_floor_plan_amenities(external_property_id, floor_plan_name) }
     let(:floor_plan_name) { 'my_floor_plan' }
 
     it "should retrieve the amenity data from the service" do
@@ -73,12 +73,12 @@ describe "amenity methods" do
 
     subject { amenities }
 
-    let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name, building) }
+    let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name, building) }
     let(:unit_name) { 'my_unit_name' }
     let(:building) { 'my_building' }
 
     context "without a building" do
-      let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
+      let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name) }
       let(:soap_body) do 
         {:client_name => client_name, 
          :external_property_id => external_property_id, 
@@ -152,7 +152,7 @@ describe "amenity methods" do
 
     context "when there is no building" do
       before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
-      let(:amenities) { test_object.get_unit_amenities(client_name, external_property_id, unit_name) }
+      let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name) }
 
       it "should not raise an error" do
         expect { subject }.to_not raise_error

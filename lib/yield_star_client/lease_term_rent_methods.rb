@@ -83,7 +83,6 @@ module YieldStarClient
     # Retrieves a matrix providing the specific rate for each combination of 
     # lease term and move-in date for a particular unit.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property where the unit is located
     # @param [String] unit_number the unit_number that identifies the available unit
     # @param [Hash] opts optional filters for lease term data
@@ -102,11 +101,10 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_lease_term_rent(client_name, external_property_id, unit_number, opts={})
+    def get_lease_term_rent(external_property_id, unit_number, opts={})
       opts ||= {}
-      call_lease_term_rent_method(client_name, 
-                                  external_property_id, 
-                                  unit_number, 
+      call_lease_term_rent_method(external_property_id,
+                                  unit_number,
                                   opts.merge(:request_element => :lease_term_rent_unit_request,
                                              :soap_action => :get_lease_term_rent,
                                              :response_element => :lease_term_rent_unit_response,
@@ -117,11 +115,10 @@ module YieldStarClient
     # the last date for which the price is valid.
     #
     # {see #get_lease_term_rent}
-    def get_lease_term_rent_plus(client_name, external_property_id, unit_number, opts={})
+    def get_lease_term_rent_plus(external_property_id, unit_number, opts={})
       opts ||= {}
-      call_lease_term_rent_method(client_name, 
-                                  external_property_id, 
-                                  unit_number, 
+      call_lease_term_rent_method(external_property_id,
+                                  unit_number,
                                   opts.merge(:request_element => :lease_term_rent_unit_request,
                                              :soap_action => :get_lease_term_rent_plus,
                                              :response_element => :lease_term_rent_unit_plus_response,
@@ -131,7 +128,6 @@ module YieldStarClient
     # Retrieves rate data for units that are within "Renewal Notice Days" of lease expiration, 
     # and those units for which renewal rates have been manually generated and accepted.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property where the unit is located
     # @param [String] unit_number the unit_number that identifies the available unit
     # @param [Hash] opts optional filters for lease term data
@@ -143,11 +139,10 @@ module YieldStarClient
     # @return [Array<YieldStarClient::RenewalLeaseTermRent>] the list of units up for renewal
     #
     # @raise {see #get_lease_term_rent}
-    def get_renewal_lease_term_rent(client_name, external_property_id, unit_number, opts={})
+    def get_renewal_lease_term_rent(external_property_id, unit_number, opts={})
       opts ||= {}
-      call_lease_term_rent_method(client_name, 
-                                  external_property_id, 
-                                  unit_number, 
+      call_lease_term_rent_method(external_property_id,
+                                  unit_number,
                                   opts.merge(:request_element => :renewal_lease_term_rent_unit_request,
                                              :soap_action => :get_renewal_lease_term_rent,
                                              :response_element => :renewal_lease_term_rent_unit_response,
@@ -155,8 +150,7 @@ module YieldStarClient
     end
 
     private
-    def call_lease_term_rent_method(client_name, external_property_id, unit_number, opts={})
-      validate_client_name!(client_name)
+    def call_lease_term_rent_method(external_property_id, unit_number, opts={})
       validate_external_property_id!(external_property_id)
       validate_required!(:unit_number=>unit_number)
 

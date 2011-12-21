@@ -80,7 +80,7 @@ end
 
 describe "lease term rent methods" do
   subject { test_object } 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint' ) }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client' }
   let(:external_property_id) { '42' }
@@ -92,7 +92,7 @@ describe "lease term rent methods" do
     before { savon.stubs(:get_lease_term_rent).returns(nil) }
 
     subject { unit_rates }
-    let(:unit_rates) { test_object.get_lease_term_rent(client_name, external_property_id, unit_number, opts) }
+    let(:unit_rates) { test_object.get_lease_term_rent(external_property_id, unit_number, opts) }
     let(:opts) { {} }
 
     it_should_behave_like 'a lease_term_rent service caller', :get_lease_term_rent
@@ -181,7 +181,7 @@ describe "lease term rent methods" do
     before { savon.stubs(:get_lease_term_rent_plus).returns(nil) }
 
     subject { unit_rates }
-    let(:unit_rates) { test_object.get_lease_term_rent_plus(client_name, external_property_id, unit_number, opts) }
+    let(:unit_rates) { test_object.get_lease_term_rent_plus(external_property_id, unit_number, opts) }
     let(:opts) { {} }
 
     it_should_behave_like 'a lease_term_rent service caller', :get_lease_term_rent_plus
@@ -272,7 +272,7 @@ describe "lease term rent methods" do
     before { savon.stubs(:get_renewal_lease_term_rent).returns(nil) }
 
     subject { unit_rates }
-    let(:unit_rates) { test_object.get_renewal_lease_term_rent(client_name, external_property_id, unit_number, opts) }
+    let(:unit_rates) { test_object.get_renewal_lease_term_rent(external_property_id, unit_number, opts) }
 
     let(:opts) { Hash.new }
 

@@ -8,6 +8,7 @@ describe YieldStarClient do
   let(:username) { 'configured user' }
   let(:password) { 'configured password' }
   let(:namespace) { 'http://configured.namespace.com' }
+  let(:client_name) { 'configured client name' }
 
   after { YieldStarClient.reset }
 
@@ -20,6 +21,7 @@ describe YieldStarClient do
     its(:username) { should_not be }
     its(:password) { should_not be }
     its(:namespace) { should == default_namespace }
+    its(:client_name) { should_not be }
     its(:logger) { should be_an_instance_of Logger }
     it { should_not be_debug }
   end
@@ -36,6 +38,7 @@ describe YieldStarClient do
           config.username = username
           config.password = password
           config.namespace = namespace
+          config.client_name = client_name
           config.debug = true
           config.logger = logger
         end
@@ -46,6 +49,7 @@ describe YieldStarClient do
       its(:username) { should == username }
       its(:password) { should == password }
       its(:namespace) { should == namespace }
+      its(:client_name) { should == client_name }
       it { should be_debug }
       its(:logger) { should == logger }
     end
@@ -55,6 +59,7 @@ describe YieldStarClient do
         lambda do |config|
           config.username = username
           config.password = password
+          config.client_name = client_name
           config.debug = true
         end
       end
@@ -64,6 +69,7 @@ describe YieldStarClient do
       its(:username) { should == username }
       its(:password) { should == password }
       its(:namespace) { should == default_namespace }
+      its(:client_name) { should == client_name }
       its(:logger) { should be_an_instance_of Logger }
       it { should be_debug }
     end
@@ -76,6 +82,7 @@ describe YieldStarClient do
         config.username = username
         config.password = password
         config.namespace = namespace
+        config.client_name = client_name
         config.debug = true
         config.logger = logger
       end
@@ -95,6 +102,10 @@ describe YieldStarClient do
 
     it "should clear the password" do
       expect { subject }.to change{YieldStarClient.password}.from(password).to(nil)
+    end
+
+    it "should clear the client_name" do
+      expect { subject }.to change{YieldStarClient.client_name}.from(client_name).to(nil)
     end
 
     it "should change the namespace to the default" do

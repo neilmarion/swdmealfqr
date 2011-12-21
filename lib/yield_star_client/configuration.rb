@@ -5,7 +5,8 @@ module YieldStarClient
   # All valid configuration options.
   #
   # @see YieldStarClient.configure
-  VALID_CONFIG_OPTIONS = [:endpoint, :username, :password, :namespace, :debug, :logger]
+  VALID_CONFIG_OPTIONS = [:endpoint, :username, :password, :namespace, :client_name,
+                          :debug, :logger]
 
   DEFAULT_ENDPOINT = 'https://rmsws.yieldstar.com/rmsws/AppExchange'
   DEFAULT_NAMESPACE = 'http://yieldstar.com/ws/AppExchange/v1'
@@ -29,14 +30,14 @@ module YieldStarClient
       end
 
       define_method("#{config_opt}=".to_sym) do |val|
-        self[config_opt] = (val && val.to_s)
+        self[config_opt] = val ? val.to_s : nil
       end
     end
 
     # True if debug logging of SOAP requests and responses has been enabled;
     # false otherwise.
     def debug?
-      YieldStarClient[:debug] == 'true'
+      self[:debug] == 'true'
     end
 
     # Custom logger object for debug logging; defaults to STDOUT.
@@ -56,13 +57,17 @@ module YieldStarClient
     #   YieldStarClient.configure do |config|
     #     config.username = 'my_user'
     #     config.password = 'my_pass'
+    #     config.client_name = 'my_client'
     #   end
     # @example Overriding defaults
     #   YieldStarClient.configure do |config|
     #     config.username = 'my_user'
     #     config.password = 'my_pass'
+    #     config.client_name = 'my_client'
     #     config.endpoint = 'http://my.endpoint.com'
     #     config.namespace = 'http://my.namespace.com'
+    #     config.debug = true
+    #     config.logger = Logger.new('my.log')
     #   end
     # @return [YieldStarClient] _self
     # @see VALID_CONFIG_OPTIONS

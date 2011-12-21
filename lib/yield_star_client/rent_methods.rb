@@ -118,7 +118,6 @@ module YieldStarClient
     # Retrieves high-level rent information for all currently available floor
     # plans within a specific property.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property associated
     #                                      with the requested data
     #
@@ -129,12 +128,10 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_rent_summary(client_name, external_property_id)
-      validate_client_name!(client_name)
+    def get_rent_summary(external_property_id)
       validate_external_property_id!(external_property_id)
 
-      response = send_soap_request(:get_rent_summary, :client_name => client_name,
-                                                      :external_property_id => external_property_id)
+      response = send_soap_request(:get_rent_summary, :external_property_id => external_property_id)
 
       data = response.to_hash[:get_rent_summary_response][:return]
       shared_props = {:external_property_id => data[:external_property_id],
@@ -148,7 +145,6 @@ module YieldStarClient
     # Retrieves rental information for all currently available units at a specific 
     # property, grouped by floor plan.
     #
-    # @param [String] client_name the YieldStar client name
     # @param [String] external_property_id the ID of the property where the available
     #                                      units are located
     #
@@ -160,12 +156,10 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_available_units(client_name, external_property_id)
-      validate_client_name!(client_name)
+    def get_available_units(external_property_id)
       validate_external_property_id!(external_property_id)
 
-      response = send_soap_request(:get_available_units, :client_name => client_name, 
-                                                         :external_property_id => external_property_id)
+      response = send_soap_request(:get_available_units, :external_property_id => external_property_id)
 
       data = response.to_hash[:get_available_units_response][:return]
       base_props = data.reject { |k,v| ![:external_property_id, :effective_date].include?(k) }

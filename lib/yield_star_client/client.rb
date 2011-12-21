@@ -28,7 +28,7 @@ module YieldStarClient
     end
 
     def debug=(val)
-      @debug = val || false
+      @debug = val
       Savon.log = self.debug?
     end
 
@@ -36,12 +36,9 @@ module YieldStarClient
       get_value(:debug).to_s == 'true'
     end
 
-    def logger
-      get_value(:logger)
-    end
-
     def logger=(val)
-      @logger = Savon.logger = val || Logger.new(STDOUT)
+      @logger = val
+      Savon.logger = self.logger
     end
 
     # Initializes the client. All options are truly optional; if the option
@@ -53,11 +50,13 @@ module YieldStarClient
     # @param [Hash] options
     # @option options [String] :username The username for authenticating to the web service.
     # @option options [String] :password The password for authenticating to the web service.
+    # @option options [String] :client_name The YieldStar client name (required for all requests)
     # @option options [String] :endpoint The address for connecting to the web service.
     # @option options [String] :namespace The XML namespace to use for requests.
     # @option options [true,false] :debug true to enable debug logging of SOAP traffic; defaults to false
     def initialize(options={})
-      self.debug = false
+      self.debug = nil
+      self.logger = nil
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 
@@ -68,10 +67,12 @@ module YieldStarClient
     # @param [Hash] soap_parameters the parameters to populate the request body
     # @return [Savon::SOAP::Response]
     def send_soap_request(soap_action,soap_parameters={})
+      validate_client_name!(client_name)
+      default_params = { :client_name => client_name }
       begin
         response = soap_client.request :wsdl, soap_action do
           soap.element_form_default = :qualified
-          soap.body = { :request => soap_parameters }
+          soap.body = { :request => default_params.merge(soap_parameters) }
         end
       rescue Savon::SOAP::Fault => f
         raise ServerError.translate_fault(f)

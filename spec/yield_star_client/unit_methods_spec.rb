@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "unit methods" do
   subject { test_object }
  
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { 'my_prop_id' }
@@ -15,7 +15,7 @@ describe "unit methods" do
     before { savon.stubs(:get_unit).returns(nil) }
 
     subject { unit }
-    let(:unit) { test_object.get_unit(client_name, external_property_id, unit_name) }
+    let(:unit) { test_object.get_unit(external_property_id, unit_name) }
     let(:unit_name) { 'my_unit_name' }
     let(:soap_body) { {:client_name => client_name, :external_property_id => external_property_id, :name => unit_name}}
 
@@ -27,7 +27,7 @@ describe "unit methods" do
     end
 
     context "with a building name" do
-      let(:unit) { test_object.get_unit(client_name, external_property_id, unit_name, building_name) }
+      let(:unit) { test_object.get_unit(external_property_id, unit_name, building_name) }
       let(:building_name) { 'my_building' }
 
       it "should retrieve the data from the service" do
@@ -76,7 +76,7 @@ describe "unit methods" do
     before { savon.stubs(:get_units).returns(nil) }
 
     subject { units }
-    let(:units) { test_object.get_units(client_name, external_property_id) }
+    let(:units) { test_object.get_units(external_property_id) }
     let(:soap_body) { {:client_name => client_name, :external_property_id => external_property_id} }
 
     context "without a floor_plan name" do
@@ -87,7 +87,7 @@ describe "unit methods" do
     end
 
     context "with a floor_plan name" do
-      let(:units) { test_object.get_units(client_name, external_property_id, floor_plan_name) }
+      let(:units) { test_object.get_units(external_property_id, floor_plan_name) }
       let(:floor_plan_name) { 'my_floor_plan' }
 
       it "should retrieve the data from the service" do

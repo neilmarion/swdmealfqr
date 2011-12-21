@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "floor plan methods" do
   subject { test_object }
 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint') }
+  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { 'my_external_property_id' }
@@ -14,7 +14,7 @@ describe "floor plan methods" do
     before { savon.stubs(:get_floor_plan).returns(nil) }
 
     subject { floor_plan }
-    let(:floor_plan) { test_object.get_floor_plan(client_name, external_property_id, floor_plan_name) }
+    let(:floor_plan) { test_object.get_floor_plan(external_property_id, floor_plan_name) }
     let(:floor_plan_name) { 'my_floor_plan_name' }
 
     it "should retrieve the floor plan data from the service" do
@@ -58,7 +58,7 @@ describe "floor plan methods" do
     before { savon.stubs(:get_floor_plans).returns(nil) }
 
     subject { floor_plans }
-    let(:floor_plans) { test_object.get_floor_plans(client_name, external_property_id) }
+    let(:floor_plans) { test_object.get_floor_plans(external_property_id) }
 
     it "should retrieve the floor plan data from the service" do
       savon.expects(:get_floor_plans).

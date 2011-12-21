@@ -63,7 +63,6 @@ module YieldStarClient
 
     # Retrieves all properties for a client.
     #
-    # @param [String] client_name the YieldStar client name
     # @return [Array<YieldStarClient::Property>] list of properties
     #
     # @raise [ArgumentError] when client_name is missing or invalid
@@ -71,10 +70,8 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_properties(client_name)
-      validate_client_name!(client_name)
-
-      response = send_soap_request(:get_properties, :client_name => client_name)
+    def get_properties
+      response = send_soap_request(:get_properties)
 
       props = response.to_hash[:get_properties_response][:return][:property] || []
       props = [props].flatten
@@ -83,7 +80,6 @@ module YieldStarClient
 
     # Retrieves information for a specific property.
     #
-    # @param [String] client_name the name of the client to perform the request for
     # @param [String] external_property_id the ID of the property to obtain information for
     # @return [YieldStarClient::Property] the property data
     #
@@ -92,11 +88,10 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_property(client_name, external_property_id)
-      validate_client_name!(client_name)
+    def get_property(external_property_id)
       validate_external_property_id!(external_property_id)
 
-      response = send_soap_request(:get_property, :client_name => client_name, :external_property_id => external_property_id)
+      response = send_soap_request(:get_property, :external_property_id => external_property_id)
 
       property = response.to_hash[:get_property_response][:return][:property]
       Property.new(property)
@@ -105,7 +100,6 @@ module YieldStarClient
 
     # Retrieves pricing parameters for a specific property.
     #
-    # @param [String] client_name the name of the client to perform the request for
     # @param [String] external_property_id the ID of the property to obtain information for
     # @return [YieldStarClient::PropertyParameters] the pricing data
     #
@@ -114,12 +108,10 @@ module YieldStarClient
     # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_property_parameters(client_name, external_property_id)
-      validate_client_name!(client_name)
+    def get_property_parameters(external_property_id)
       validate_external_property_id!(external_property_id)
 
-      response = send_soap_request(:get_property_parameters, :client_name => client_name, 
-                                                             :external_property_id => external_property_id)
+      response = send_soap_request(:get_property_parameters, :external_property_id => external_property_id)
 
       response_hash = response.to_hash[:get_property_parameters_response][:return]
       param_hash = { :external_property_id => response_hash[:external_property_id] }
