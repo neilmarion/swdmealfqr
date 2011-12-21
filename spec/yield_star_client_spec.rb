@@ -20,10 +20,14 @@ describe YieldStarClient do
     its(:username) { should_not be }
     its(:password) { should_not be }
     its(:namespace) { should == default_namespace }
+    its(:logger) { should be_an_instance_of Logger }
+    it { should_not be_debug }
   end
 
   describe ".configure" do
     subject { YieldStarClient.configure(&config_block) }
+
+    let(:logger) { mock() }
 
     context "with full configuration" do
       let(:config_block) do
@@ -32,6 +36,8 @@ describe YieldStarClient do
           config.username = username
           config.password = password
           config.namespace = namespace
+          config.debug = true
+          config.logger = logger
         end
       end
 
@@ -40,6 +46,8 @@ describe YieldStarClient do
       its(:username) { should == username }
       its(:password) { should == password }
       its(:namespace) { should == namespace }
+      it { should be_debug }
+      its(:logger) { should == logger }
     end
 
     context "with partial configuration" do
@@ -47,6 +55,7 @@ describe YieldStarClient do
         lambda do |config|
           config.username = username
           config.password = password
+          config.debug = true
         end
       end
 
@@ -55,6 +64,8 @@ describe YieldStarClient do
       its(:username) { should == username }
       its(:password) { should == password }
       its(:namespace) { should == default_namespace }
+      its(:logger) { should be_an_instance_of Logger }
+      it { should be_debug }
     end
   end
 
@@ -65,8 +76,12 @@ describe YieldStarClient do
         config.username = username
         config.password = password
         config.namespace = namespace
+        config.debug = true
+        config.logger = logger
       end
     end
+
+    let(:logger) { mock() }
 
     subject { YieldStarClient.reset }
 
@@ -84,6 +99,15 @@ describe YieldStarClient do
 
     it "should change the namespace to the default" do
       expect { subject }.to change{YieldStarClient.namespace}.from(namespace).to(default_namespace)
+    end
+
+    it "should change the logger to the default" do
+      expect { subject }.to change{YieldStarClient.logger}
+      YieldStarClient.logger.should be_an_instance_of Logger
+    end
+
+    it "should change the debug setting to the default" do
+      expect { subject }.to change{YieldStarClient.debug?}.from(true).to(false)
     end
   end
 end

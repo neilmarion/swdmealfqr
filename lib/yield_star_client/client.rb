@@ -27,6 +27,23 @@ module YieldStarClient
       define_method(opt) { get_value(opt) }
     end
 
+    def debug=(val)
+      @debug = val || false
+      Savon.log = self.debug?
+    end
+
+    def debug?
+      get_value(:debug).to_s == 'true'
+    end
+
+    def logger
+      get_value(:logger)
+    end
+
+    def logger=(val)
+      @logger = Savon.logger = val || Logger.new(STDOUT)
+    end
+
     # Initializes the client. All options are truly optional; if the option
     # is not supplied to this method, then it will be set based on the
     # YieldStarClient configuration.
@@ -38,7 +55,9 @@ module YieldStarClient
     # @option options [String] :password The password for authenticating to the web service.
     # @option options [String] :endpoint The address for connecting to the web service.
     # @option options [String] :namespace The XML namespace to use for requests.
+    # @option options [true,false] :debug true to enable debug logging of SOAP traffic; defaults to false
     def initialize(options={})
+      self.debug = false
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 

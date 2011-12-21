@@ -1,3 +1,5 @@
+require 'logger'
+
 module YieldStarClient
   autoload :Configlet, 'configlet'
   extend Configlet
@@ -5,7 +7,7 @@ module YieldStarClient
   # All valid configuration options.
   #
   # @see YieldStarClient.configure
-  VALID_CONFIG_OPTIONS = [:endpoint, :username, :password, :namespace]
+  VALID_CONFIG_OPTIONS = [:endpoint, :username, :password, :namespace, :debug]
 
   DEFAULT_ENDPOINT = 'https://rmsws.yieldstar.com/rmsws/AppExchange'
   DEFAULT_NAMESPACE = 'http://yieldstar.com/ws/AppExchange/v1'
@@ -14,9 +16,10 @@ module YieldStarClient
   config :yield_star do
     default :endpoint => DEFAULT_ENDPOINT
     default :namespace => DEFAULT_NAMESPACE
+    default :debug => 'false'
   end
 
-  # Mutators and accessors for configuration options
+  # Mutators and accessors for simple configuration options
   class << self
     VALID_CONFIG_OPTIONS.each do |config_opt|
       define_method(config_opt) do
@@ -24,9 +27,21 @@ module YieldStarClient
       end
 
       define_method("#{config_opt}=".to_sym) do |val|
-        YieldStarClient[config_opt] = val
+        YieldStarClient[config_opt] = val && val.to_s
       end
     end
+  end
+
+  def self.debug?
+    YieldStarClient[:debug] == 'true'
+  end
+
+  def self.logger=(val)
+    @logger = val
+  end
+
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
   end
 
   # Configures this module through the given +block+.
@@ -65,7 +80,9 @@ module YieldStarClient
   # @see DEFAULT_ENDPOINT
   # @see DEFAULT_NAMESPACE
   def self.reset
-    VALID_CONFIG_OPTIONS.each { |opt| self.send("#{opt}=", nil) } 
+    VALID_CONFIG_OPTIONS.each { |opt| self.send("#{opt}=", nil) }
+    self.debug = nil
+    self.logger = nil
   end
 
   require 'yield_star_client/client'

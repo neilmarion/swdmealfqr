@@ -59,6 +59,8 @@ describe YieldStarClient::Client do
     its(:username) { should_not be }
     its(:password) { should_not be }
     its(:namespace) { should == YieldStarClient::DEFAULT_NAMESPACE }
+    its(:logger) { should be_a Logger }
+    it { should_not be_debug }
   end
 
   describe "#endpoint=" do
@@ -144,6 +146,79 @@ describe YieldStarClient::Client do
         it "should change the password to the configured value" do
           expect { subject }.to change{client.password}.from(password).to(configured_password)
         end
+      end
+    end
+  end
+
+  describe "#debug=" do
+    subject { client.debug = new_debug }
+
+    context 'with true' do
+      let(:new_debug) { true }
+
+      it 'should change the debug setting' do
+        expect { subject }.to change { client.debug }.to(new_debug)
+      end
+
+      it 'should enable logging in savon' do
+        subject
+        Savon.log?.should be_true
+      end
+    end
+
+    context 'with false' do
+      let(:new_debug) { false }
+
+      it 'should change the debug setting' do
+        expect { subject }.to_not change { client.debug }
+      end
+
+      it 'should disable logging in savon' do
+        subject
+        Savon.log?.should be_false
+      end
+    end
+
+    context 'with nil' do
+      let(:new_debug) { nil }
+
+      it 'should not change the debug setting' do
+        expect { subject }.to_not change { client.debug }
+      end
+
+      it 'should disable logging in savon' do
+        subject
+        Savon.log?.should be_false
+      end
+    end
+  end
+
+  describe "#logger=" do
+    subject { client.logger = new_logger }
+
+    context 'with nil' do
+      let(:new_logger) { nil }
+
+      it 'should set the logger to the default' do
+        subject
+        client.logger.should be_an_instance_of(Logger)
+      end
+
+      it 'should change the logger setting in savon' do
+        subject
+        Savon.logger.should be_an_instance_of(Logger)
+      end
+    end
+
+    context 'with custom logger' do
+      let(:new_logger) { mock() }
+
+      it 'should change the logger' do
+        expect { subject }.to change { client.logger }.to(new_logger)
+      end
+
+      it 'should change the logger setting in savon' do
+        expect { subject }.to change { Savon.logger }.to(new_logger)
       end
     end
   end
