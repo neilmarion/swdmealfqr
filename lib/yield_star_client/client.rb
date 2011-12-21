@@ -98,7 +98,8 @@ module YieldStarClient
     # @param [Symbol] attribute the name of the attribute
     # @return [String] the value of the attribute
     def get_value(attribute)
-      instance_variable_get("@#{attribute}") || YieldStarClient.send(attribute)
+      local_val = instance_variable_get("@#{attribute}")
+      local_val.nil? ? YieldStarClient.send(attribute) : local_val
     end
   end
 end

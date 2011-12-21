@@ -4,13 +4,19 @@ describe YieldStarClient::Client do
   subject { client }
 
   after { YieldStarClient.reset }
+  after do
+    Savon.log = nil
+    Savon.logger = nil
+  end
 
   let(:client) do
     YieldStarClient::Client.new({:endpoint => endpoint,
                                  :username => username,
                                  :password => password,
                                  :namespace => namespace,
-                                 :client_name => client_name})
+                                 :client_name => client_name,
+                                 :debug => debug,
+                                 :logger => logger})
   end
 
   let(:endpoint) { 'https://foo.com?wsdl' }
@@ -19,12 +25,16 @@ describe YieldStarClient::Client do
   let(:password) { 'secret' }
   let(:namespace) { 'http://foo.com/namespace' }
   let(:client_name) { 'test_client' }
+  let(:debug) { true }
+  let(:logger) { mock() }
 
   its(:endpoint) { should == endpoint }
   its(:username) { should == username }
   its(:password) { should == password }
   its(:namespace) { should == namespace }
   its(:client_name) { should == client_name }
+  its(:debug) { should == debug }
+  it { should be_debug }
 
   # Methods from the PropertyMethods mixin
   # The actual tests for these are in property_methods_spec
@@ -157,33 +167,21 @@ describe YieldStarClient::Client do
   describe "#debug=" do
     subject { client.debug = new_debug }
 
-    context 'with true' do
+    context 'with a boolean value' do
+      let(:debug) { false }
       let(:new_debug) { true }
 
       it 'should change the debug setting' do
-        expect { subject }.to change { client.debug }.to(new_debug)
+        expect { subject }.to change { client.debug? }.from(debug).to(new_debug)
       end
 
       it 'should enable logging in savon' do
-        subject
-        Savon.log?.should be_true
-      end
-    end
-
-    context 'with false' do
-      let(:new_debug) { false }
-
-      it 'should change the debug setting' do
-        expect { subject }.to_not change { client.debug }
-      end
-
-      it 'should disable logging in savon' do
-        subject
-        Savon.log?.should be_false
+        expect { subject }.to change { Savon.log? }.from(client.debug).to(new_debug)
       end
     end
 
     context 'with nil' do
+      let(:debug) { false }
       let(:new_debug) { nil }
 
       context 'when debug logging is enabled globally' do
@@ -192,29 +190,26 @@ describe YieldStarClient::Client do
         end
 
         it 'should enable debug logging' do
-          subject
-          client.should be_debug
+          expect { subject }.to change { client.debug? }.from(false).to(true)
         end
 
         it 'should enable logging in savon' do
-          subject
-          Savon.should be_log
+          expect { subject }.to change { Savon.log? }.from(client.debug?).to(true)
         end
       end
 
       context 'when debug logging is disabled globally' do
+        let(:debug) { true }
         before do
           YieldStarClient.configure { |config| config.debug = false }
         end
 
         it 'should disable debug logging' do
-          subject
-          client.should_not be_debug
+          expect { subject }.to change { client.debug? }.from(true).to(false)
         end
 
         it 'should disable logging in savon' do
-          subject
-          Savon.should_not be_log
+          expect { subject }.to change { Savon.log? }.from(true).to(false)
         end
       end
     end

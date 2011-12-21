@@ -19,7 +19,7 @@ module YieldStarClient
       base.config :yield_star do
         default :endpoint => DEFAULT_ENDPOINT
         default :namespace => DEFAULT_NAMESPACE
-        default :debug => 'false'
+        default :debug => false
       end
     end
 
