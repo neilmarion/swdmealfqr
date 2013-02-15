@@ -20,13 +20,14 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('configlet', '~> 2.1')
-  s.add_dependency('savon', '~> 0.9.7')
+  s.add_dependency('savon', '0.9.7')
   s.add_dependency('modelish', '>= 0.1.2')
 
   s.add_development_dependency('rspec','~> 2.4')
   s.add_development_dependency('webmock', '~> 1.6')
   s.add_development_dependency('yard', '~> 0.6')
   s.add_development_dependency('rdiscount', '~>1.6')
+  s.add_development_dependency('gyoku', '0.4.4')
   s.add_development_dependency('savon_spec','~> 0.1')
   s.has_rdoc=true
 end
