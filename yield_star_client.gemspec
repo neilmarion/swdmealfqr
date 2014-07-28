@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('webmock', '~> 1.6')
   s.add_development_dependency('yard', '~> 0.6')
   s.add_development_dependency('rdiscount', '~>1.6')
-  s.add_development_dependency('gyoku', '0.4.4')
   s.add_development_dependency('savon_spec','~> 0.1')
   s.has_rdoc=true
 end
