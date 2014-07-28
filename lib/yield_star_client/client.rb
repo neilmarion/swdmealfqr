@@ -11,7 +11,7 @@ require 'yield_star_client/errors'
 
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.
-  # The interface strives to be SOAP-agnostic whenever possible; all inputs and outputs are pure ruby 
+  # The interface strives to be SOAP-agnostic whenever possible; all inputs and outputs are pure ruby
   # and no knowledge of SOAP is required in order to use the client.
   class Client
     include PropertyMethods
@@ -94,7 +94,7 @@ module YieldStarClient
     # on this object, it is retrieved from the global configuration.
     #
     # @see YieldStarClient.configure
-    # 
+    #
     # @param [Symbol] attribute the name of the attribute
     # @return [String] the value of the attribute
     def get_value(attribute)

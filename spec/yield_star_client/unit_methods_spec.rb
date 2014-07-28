@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "unit methods" do
   subject { test_object }
- 
+
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my_client_name' }
