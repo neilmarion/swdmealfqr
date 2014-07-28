@@ -28,12 +28,15 @@ describe YieldStarClient::Client do
   let(:debug) { true }
   let(:logger) { mock() }
 
-  its(:endpoint) { should == endpoint }
-  its(:username) { should == username }
-  its(:password) { should == password }
-  its(:namespace) { should == namespace }
-  its(:client_name) { should == client_name }
-  its(:debug) { should == debug }
+  it "has the correct settings" do
+    expect(subject.endpoint).to eq endpoint
+    expect(subject.username).to eq username
+    expect(subject.password).to eq password
+    expect(subject.namespace).to eq namespace
+    expect(subject.client_name).to eq client_name
+    expect(subject.debug).to eq debug
+  end
+
   it { should be_debug }
 
   # Methods from the PropertyMethods mixin
@@ -66,14 +69,17 @@ describe YieldStarClient::Client do
   it { should respond_to(:get_renewal_lease_term_rent) }
 
   context "with default configuration" do
-    let(:client) { YieldStarClient::Client.new }
+    subject(:client) { YieldStarClient::Client.new }
 
-    its(:endpoint) { should == default_endpoint }
-    its(:username) { should_not be }
-    its(:password) { should_not be }
-    its(:namespace) { should == YieldStarClient::DEFAULT_NAMESPACE }
-    its(:client_name) { should_not be }
-    its(:logger) { should be_a Logger }
+    it "has the correct settings" do
+      expect(client.endpoint).to eq default_endpoint
+      expect(client.username).to be_blank
+      expect(client.password).to be_blank
+      expect(client.namespace).to eq YieldStarClient::DEFAULT_NAMESPACE
+      expect(client.client_name).to be_blank
+      expect(client.logger).to be_a Logger
+    end
+
     it { should_not be_debug }
   end
 

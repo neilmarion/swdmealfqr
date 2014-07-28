@@ -10,22 +10,38 @@ describe YieldStarClient::ServerError do
     let(:error) { YieldStarClient::ServerError.new }
 
     it { should respond_to(:code) }
-    its(:code) { should_not be }
+
+    it "does not have a code" do
+      expect(subject.code).to be_blank
+    end
 
     it { should respond_to(:message) }
-    its(:message) { should == error.class.name }
+
+    it "has the correct message" do
+      expect(subject.message).to eq error.class.name
+    end
   end
 
   context "message initialization" do
     let(:error) { YieldStarClient::ServerError.new(message) }
 
-    its(:code) { should_not be }
-    its(:message) { should == message }
+    it "does not have a code" do
+      expect(subject.code).to be_blank
+    end
+
+    it "has the correct message" do
+      expect(subject.message).to eq message
+    end
   end
 
   context "full initialization" do
-    its(:code) { should == code }
-    its(:message) { should == message }
+    it "has a code" do
+      expect(subject.code).to eq code
+    end
+
+    it "has the correct message" do
+      expect(subject.message).to eq message
+    end
   end
 
   describe "#to_s" do
@@ -49,32 +65,56 @@ describe YieldStarClient::ServerError do
       let(:response) { mock() { stubs(:body).returns(Savon::Spec::Fixture[:faults, :authentication_fault]) } }
 
       it { should be_a YieldStarClient::AuthenticationError }
-      its(:message) { should == 'Client [foo] not found for this user [12e7e719764-21c]' }
-      its(:code) { should == '12e7e719764-21c' }
+
+      it "has the correct message" do
+        expect(subject.message).to eq 'Client [foo] not found for this user [12e7e719764-21c]'
+      end
+
+      it "has the correct code" do
+        expect(subject.code).to eq '12e7e719764-21c'
+      end
     end
 
     context "for an internal error fault" do
       let(:response) { mock() { stubs(:body).returns(Savon::Spec::Fixture[:faults, :internal_error_fault]) } }
 
       it { should be_a YieldStarClient::InternalError }
-      its(:message) { should == 'Internal error [12e7cfbb782-37a]' }
-      its(:code) { should == '12e7cfbb782-37a' }
+
+      it "has the correct message" do
+        expect(subject.message).to eq 'Internal error [12e7cfbb782-37a]'
+      end
+
+      it "has the correct message" do
+        expect(subject.code).to eq '12e7cfbb782-37a'
+      end
     end
 
     context "for an operation fault" do
       let(:response) { mock() { stubs(:body).returns(Savon::Spec::Fixture[:faults, :operation_fault]) } }
 
       it { should be_a YieldStarClient::OperationError }
-      its(:message) { should == 'Invalid floor plan name null [12e7e6acc24-1b]' }
-      its(:code) { should == '12e7e6acc24-1b' }
+
+      it "has the correct message" do
+        expect(subject.message).to eq 'Invalid floor plan name null [12e7e6acc24-1b]'
+      end
+
+      it "has the correct code" do
+        expect(subject.code).to eq '12e7e6acc24-1b'
+      end
     end
 
     context "for a generic fault" do
       let(:response) { mock() { stubs(:body).returns(Savon::Spec::Fixture[:faults, :generic_fault]) } }
 
       it { should be_a YieldStarClient::ServerError }
-      its(:message) { should == 'java.lang.NullPointerException' }
-      its(:code) { should == 'S:Server' }
+
+      it "has the correct message" do
+        expect(subject.message).to eq 'java.lang.NullPointerException'
+      end
+
+      it "has the correct code" do
+        expect(subject.code).to eq 'S:Server'
+      end
     end
   end
 end

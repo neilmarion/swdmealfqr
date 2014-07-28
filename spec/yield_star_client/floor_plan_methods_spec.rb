@@ -27,20 +27,24 @@ describe "floor plan methods" do
     context "with a minimal floor plan" do
       before { savon.stubs(:get_floor_plan).returns(:simple_floor_plan) }
 
-      its(:external_property_id) { should == '42' }
-      its(:name) { should == 'simple-plan' }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '42'
+        expect(subject.name).to eq 'simple-plan'
+      end
     end
 
     context "with a fully defined floor plan" do
       before { savon.stubs(:get_floor_plan).returns(:full_floor_plan) }
 
-      its(:external_property_id) { should == '99' }
-      its(:name) { should == 'The Oxford' }
-      its(:description) { should == 'An apartment' }
-      its(:square_feet) { should == 797 }
-      its(:unit_count) { should == 49 }
-      its(:bedrooms) { should == 1.0 }
-      its(:bathrooms) { should == 1.1 }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '99'
+        expect(subject.name).to eq 'The Oxford'
+        expect(subject.description).to eq 'An apartment'
+        expect(subject.square_feet).to eq 797
+        expect(subject.unit_count).to eq 49
+        expect(subject.bedrooms).to eq 1.0
+        expect(subject.bathrooms).to eq 1.1
+      end
     end
 
     # Validations
@@ -77,14 +81,18 @@ describe "floor plan methods" do
     context "with one floor plan" do
       before { savon.stubs(:get_floor_plans).returns(:single_floor_plan) }
 
-      it { should have(1).floor_plan }
+      it "has 1 floor plan" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first floor plan" do
         subject { floor_plans.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:name) { should == 'simple' }
-        its(:description) { should == 'A simple floor plan.' }
+        it "is the correct floor plan" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.name).to eq 'simple'
+          expect(subject.description).to eq 'A simple floor plan.'
+        end
       end
     end
 
@@ -94,25 +102,29 @@ describe "floor plan methods" do
       describe "first floor plan" do
         subject { floor_plans.first }
 
-        its(:external_property_id) { should == '99' }
-        its(:name) { should == 'The Economy' }
-        its(:description) { should == 'An affordable choice for the frugal resident.' }
-        its(:square_feet) { should == 450 }
-        its(:unit_count) { should == 42 }
-        its(:bedrooms) { should == 1.0 }
-        its(:bathrooms) { should == 1.0 }
+        it "is the correct floor plan" do
+          expect(subject.external_property_id).to eq '99'
+          expect(subject.name).to eq 'The Economy'
+          expect(subject.description).to eq 'An affordable choice for the frugal resident.'
+          expect(subject.square_feet).to eq 450
+          expect(subject.unit_count).to eq 42
+          expect(subject.bedrooms).to eq 1.0
+          expect(subject.bathrooms).to eq 1.0
+        end
       end
 
       describe "last floor plan" do
         subject { floor_plans.last }
 
-        its(:external_property_id) { should == '99' }
-        its(:name) { should == 'The Luxury' }
-        its(:description) { should == 'A palatial estate for the independently wealthy.' }
-        its(:square_feet) { should == 10000 }
-        its(:unit_count) { should == 3 }
-        its(:bedrooms) { should == 7.0 }
-        its(:bathrooms) { should == 7.3 }
+        it "is the correct floor plan" do
+          expect(subject.external_property_id).to eq '99'
+          expect(subject.name).to eq 'The Luxury'
+          expect(subject.description).to eq 'A palatial estate for the independently wealthy.'
+          expect(subject.square_feet).to eq 10000
+          expect(subject.unit_count).to eq 3
+          expect(subject.bedrooms).to eq 7.0
+          expect(subject.bathrooms).to eq 7.3
+        end
       end
     end
 

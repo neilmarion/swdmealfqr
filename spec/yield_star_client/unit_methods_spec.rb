@@ -39,34 +39,35 @@ describe "unit methods" do
     context "for a minimal unit" do
       before { savon.stubs(:get_unit).returns(:simple_unit) }
 
-      its(:external_property_id) { should == '42' }
-      its(:floor_plan_name) { should == 'Economy' }
-      its(:name) { should == '1A' }
-      its(:availability_status) { should == :occupied_on_notice }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '42'
+        expect(subject.floor_plan_name).to eq 'Economy'
+        expect(subject.name).to eq '1A'
+        expect(subject.availability_status).to eq :occupied_on_notice
+      end
     end
 
     context "for a fully populated unit" do
       before { savon.stubs(:get_unit).returns(:full_unit) }
 
-      its(:external_property_id) { should == '42' }
-      its(:floor_plan_name) { should == 'Luxury' }
-      its(:name) { should == 'Unit 6' }
-      its(:availability_status) { should == :vacant }
-      its(:building) { should == '99' }
-      its(:bedrooms) { should == 6.0 }
-      its(:bathrooms) { should == 5.3 }
-      its(:square_feet) { should == 5555 }
-      its(:unit_type) { should == 'foo' }
-      its(:make_ready_date) { should == Date.new(2011,03,10) }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '42'
+        expect(subject.floor_plan_name).to eq 'Luxury'
+        expect(subject.name).to eq 'Unit 6'
+        expect(subject.availability_status).to eq :vacant
+        expect(subject.building).to eq '99'
+        expect(subject.bedrooms).to eq 6.0
+        expect(subject.bathrooms).to eq 5.3
+        expect(subject.square_feet).to eq 5555
+        expect(subject.unit_type).to eq 'foo'
+        expect(subject.make_ready_date).to eq Date.new(2011,03,10)
+      end
     end
 
     # Validation
     it_should_behave_like 'a client_name validator'
     it_should_behave_like 'an external_property_id validator'
     it_should_behave_like 'a required string validator', :unit_name
-    it "should allow a nil building" do
-      expect { subject }.to_not raise_error(ArgumentError)
-    end
 
     # Error handling
     it_should_behave_like "a fault handler", :get_unit
@@ -100,15 +101,20 @@ describe "unit methods" do
       before { savon.stubs(:get_units).returns(:single_unit) }
 
       it { should be }
-      it { should have(1).unit }
+
+      it "has 1 unit" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first unit" do
         subject { units.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:floor_plan_name) { should == 'FP99' }
-        its(:name) { should == 'Unit 1' }
-        its(:availability_status) { should == :occupied }
+        it "has the correct attributes" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.floor_plan_name).to eq 'FP99'
+          expect(subject.name).to eq 'Unit 1'
+          expect(subject.availability_status).to eq :occupied
+        end
       end
     end
 
@@ -116,34 +122,41 @@ describe "unit methods" do
       before { savon.stubs(:get_units).returns(:multiple_units) }
 
       it { should be }
-      it { should have(2).units }
+
+      it "has 2 units" do
+        expect(subject.size).to eq 2
+      end
 
       describe "first unit" do
         subject { units.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:floor_plan_name) { should == 'Economy' }
-        its(:name) { should == 'Apt 313' }
-        its(:bedrooms) { should == 2.0 }
-        its(:bathrooms) { should == 1.1 }
-        its(:square_feet) { should == 1000 }
-        its(:unit_type) { should == 'apartment' }
-        its(:availability_status) { should == :pending }
+        it "has the correct attributes" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.floor_plan_name).to eq 'Economy'
+          expect(subject.name).to eq 'Apt 313'
+          expect(subject.bedrooms).to eq 2.0
+          expect(subject.bathrooms).to eq 1.1
+          expect(subject.square_feet).to eq 1000
+          expect(subject.unit_type).to eq 'apartment'
+          expect(subject.availability_status).to eq :pending
+        end
       end
 
       describe "last unit" do
         subject { units.last }
 
-        its(:external_property_id) { should == '42' }
-        its(:floor_plan_name) { should == 'Luxury' }
-        its(:name) { should == 'The Villa' }
-        its(:bedrooms) { should == 6.0 }
-        its(:bathrooms) { should == 4.0 }
-        its(:square_feet) { should == 5000 }
-        its(:unit_type) { should == 'single-family home' }
-        its(:building) { should == '99' }
-        its(:make_ready_date) { should == Date.new(2011, 4, 1) }
-        its(:availability_status) { should == :unknown }
+        it "has the correct attributes" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.floor_plan_name).to eq 'Luxury'
+          expect(subject.name).to eq 'The Villa'
+          expect(subject.bedrooms).to eq 6.0
+          expect(subject.bathrooms).to eq 4.0
+          expect(subject.square_feet).to eq 5000
+          expect(subject.unit_type).to eq 'single-family home'
+          expect(subject.building).to eq '99'
+          expect(subject.make_ready_date).to eq Date.new(2011, 4, 1)
+          expect(subject.availability_status).to eq :unknown
+        end
       end
     end
 
@@ -157,10 +170,6 @@ describe "unit methods" do
     # Validation
     it_should_behave_like 'a client_name validator'
     it_should_behave_like 'an external_property_id validator'
-
-    it "should allow a nil floor_plan_name" do
-      expect { subject }.to_not raise_error(ArgumentError)
-    end
 
     # Error handling
     it_should_behave_like 'a fault handler', :get_units

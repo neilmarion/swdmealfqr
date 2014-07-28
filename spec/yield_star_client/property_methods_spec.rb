@@ -33,55 +33,65 @@ describe "property methods" do
     context "with single property" do
       before { savon.stubs(:get_properties).returns(:single_property) }
 
-      it { should have(1).property }
+      it "has 1 property" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first property" do
         subject { properties.first }
  
-        its(:name) { should == 'Minimal' }
-        its(:external_property_id) { should == '1' }
+        it "has the correct attributes" do
+          expect(subject.name).to eq 'Minimal'
+          expect(subject.external_property_id).to eq '1'
+        end
       end
     end
 
     context "with multiple properties" do
       before { savon.stubs(:get_properties).returns(:multiple_properties) }
 
-      it { should have(2).properties }
+      it "has 2 properties" do
+        expect(subject.size).to eq 2
+      end
 
       describe "first property" do
         subject { properties.first }
 
-        its(:external_property_id) { should == '2' }
-        its(:name) { should == 'Typical' }
-        its(:address) { should == '123 Address Ln' }
-        its(:city) { should == 'Beverly Hills' }
-        its(:state) { should == 'CA' }
-        its(:zip) { should == '90210' }
-        its(:longitude) { should == -122.605687 }
-        its(:latitude) { should == 45.544873 }
-        its(:phone) { should_not be }
-        its(:fax) { should_not be }
-        its(:year_built) { should == 2009 }
-        its(:unit_count) { should_not be }
-        its(:website) { should_not be }
+        it "has the correct attributes" do
+          expect(subject.external_property_id).to eq '2'
+          expect(subject.name).to eq 'Typical'
+          expect(subject.address).to eq '123 Address Ln'
+          expect(subject.city).to eq 'Beverly Hills'
+          expect(subject.state).to eq 'CA'
+          expect(subject.zip).to eq '90210'
+          expect(subject.longitude).to eq(-122.605687)
+          expect(subject.latitude).to eq 45.544873
+          expect(subject.phone).to be_blank
+          expect(subject.fax).to be_blank
+          expect(subject.year_built).to eq 2009
+          expect(subject.unit_count).to be_blank
+          expect(subject.website).to be_blank
+        end
       end
 
       describe "last property" do
         subject { properties.last }
 
-        its(:external_property_id) { should == '3' }
-        its(:name) { should == 'Fully Loaded' }
-        its(:address) { should == '550 NW Franklin Ave #200' }
-        its(:city) { should == 'Bend' }
-        its(:state) { should == 'OR' }
-        its(:zip) { should == '97701' }
-        its(:longitude) { should == -121.313936 }
-        its(:latitude) { should == 44.057411 }
-        its(:phone) { should == '5413063374' }
-        its(:fax) { should == '1234567890' }
-        its(:website) { should == 'http://g5platform.com' }
-        its(:unit_count) { should == 100 }
-        its(:year_built) { should == 2008 }
+        it "has the correct attributes" do
+          expect(subject.external_property_id).to eq '3'
+          expect(subject.name).to eq 'Fully Loaded'
+          expect(subject.address).to eq '550 NW Franklin Ave #200'
+          expect(subject.city).to eq 'Bend'
+          expect(subject.state).to eq 'OR'
+          expect(subject.zip).to eq '97701'
+          expect(subject.longitude).to eq(-121.313936)
+          expect(subject.latitude).to eq 44.057411
+          expect(subject.phone).to eq '5413063374'
+          expect(subject.fax).to eq '1234567890'
+          expect(subject.website).to eq 'http://g5platform.com'
+          expect(subject.unit_count).to eq 100
+          expect(subject.year_built).to eq 2008
+        end
       end
     end
 
@@ -106,26 +116,30 @@ describe "property methods" do
     context "for a simple property" do
       before { savon.stubs(:get_property).returns(:simple_property) }
 
-      its(:external_property_id) { should == '42' }
-      its(:name) { should == 'Galaxy Apartments' }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '42'
+        expect(subject.name).to eq 'Galaxy Apartments'
+      end
     end
 
     context "for a fully specified property" do
       before { savon.stubs(:get_property).returns(:full_property) }
 
-      its(:external_property_id) { should == '99' }
-      its(:name) { should == 'Full Property' }
-      its(:address) { should == '123 My Street' }
-      its(:city) { should == 'Anywhere' }
-      its(:state) { should == 'AK' }
-      its(:zip) { should == '99999' }
-      its(:longitude) { should == -95.514257 }
-      its(:latitude) { should == 29.732654 }
-      its(:year_built) { should == 2008 }
-      its(:phone) { should == '555-555-5555' }
-      its(:fax) { should == '999-999-9999' }
-      its(:website) { should == 'http://google.com' }
-      its(:unit_count) { should == 100 }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq '99'
+        expect(subject.name).to eq 'Full Property'
+        expect(subject.address).to eq '123 My Street'
+        expect(subject.city).to eq 'Anywhere'
+        expect(subject.state).to eq 'AK'
+        expect(subject.zip).to eq '99999'
+        expect(subject.longitude).to eq(-95.514257)
+        expect(subject.latitude).to eq 29.732654
+        expect(subject.year_built).to eq 2008
+        expect(subject.phone).to eq '555-555-5555'
+        expect(subject.fax).to eq '999-999-9999'
+        expect(subject.website).to eq 'http://google.com'
+        expect(subject.unit_count).to eq 100
+      end
     end
 
     # Validations
@@ -153,15 +167,21 @@ describe "property methods" do
       before { savon.stubs(:get_property_parameters).returns(:no_parameters) }
 
       it { should be }
-      its(:external_property_id) { should == external_property_id }
+
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq external_property_id
+      end
     end
 
     context "with partial parameters" do
       before { savon.stubs(:get_property_parameters).returns(:simple_parameters) }
 
       it { should be }
-      its(:external_property_id) { should == external_property_id }
-      its(:post_date) { should == Date.new(2011, 3, 2) }
+
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq external_property_id
+        expect(subject.post_date).to eq Date.new(2011, 3, 2)
+      end
     end
 
     context "with full parameters" do
@@ -169,14 +189,16 @@ describe "property methods" do
 
       it { should be }
 
-      its(:external_property_id) { should == external_property_id }
-      its(:new_lease_term_options) { should == 3 }
-      its(:post_date) { should == Date.new(2011, 3, 1) }
-      its(:max_renewal_lease_term) { should == 15 }
-      its(:min_new_lease_term) { should == 1 }
-      its(:min_renewal_lease_term) { should == 1 }
-      its(:max_new_lease_term) { should == 15 }
-      its(:max_move_in_days) { should == 55 }
+      it "has the correct attributes" do
+        expect(subject.external_property_id).to eq external_property_id
+        expect(subject.new_lease_term_options).to eq 3
+        expect(subject.post_date).to eq Date.new(2011, 3, 1)
+        expect(subject.max_renewal_lease_term).to eq 15
+        expect(subject.min_new_lease_term).to eq 1
+        expect(subject.min_renewal_lease_term).to eq 1
+        expect(subject.max_new_lease_term).to eq 15
+        expect(subject.max_move_in_days).to eq 55
+      end
     end
 
     # Validations

@@ -35,20 +35,26 @@ describe "amenity methods" do
     context "with a single amenity" do
       before { savon.stubs(:get_floor_plan_amenities).returns(:single_amenity) }
 
-      it { should have(1).amenity }
+      it "has 1 amenity" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first amenity" do
         subject { amenities.first }
 
-        its(:name) { should == 'Garage Spot' }
-        its(:type) { should == 'Parking' }
+        it "is the correct amenity" do
+          expect(subject.name).to eq 'Garage Spot'
+          expect(subject.type).to eq 'Parking'
+        end
       end
     end
 
     context "with multiple amenities" do
       before { savon.stubs(:get_floor_plan_amenities).returns(:multiple_amenities) }
 
-      it { should have(2).amenities }
+      it "has 2 amenities" do
+        expect(subject.size).to eq 2
+      end
 
       describe "first amenity" do
         subject { amenities.first }
@@ -115,13 +121,17 @@ describe "amenity methods" do
     context "when there is one amenity" do
       before { savon.stubs(:get_unit_amenities).returns(:single_amenity) }
 
-      it { should have(1).amenity }
+      it "has 1 amenity" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first amenity" do
         subject { amenities.first }
 
-        its(:name) { should == '2nd Floor' }
-        its(:type) { should == 'Fixed' }
+        it "is the correct amenity" do
+          expect(subject.name).to eq "2nd Floor"
+          expect(subject.type).to eq "Fixed"
+        end
       end
     end
 
@@ -131,17 +141,21 @@ describe "amenity methods" do
       describe "first amenity" do
         subject { amenities.first }
 
-        its(:name) { should == 'Rent Adjustment' }
-        its(:type) { should == 'Fixed' }
-        its(:value) { should == 50.0 }
+        it "is the correct amenity" do
+          expect(subject.name).to eq 'Rent Adjustment'
+          expect(subject.type).to eq 'Fixed'
+          expect(subject.value).to eq 50.0
+        end
       end
 
       describe "last amenity" do
         subject { amenities.last }
 
-        its(:name) { should == 'Good Credit Adjustment' }
-        its(:type) { should == 'Variable' }
-        its(:value) { should be_nil }
+        it "is the correct amenity" do
+          expect(subject.name).to eq 'Good Credit Adjustment'
+          expect(subject.type).to eq 'Variable'
+          expect(subject.value).to be_nil
+        end
       end
     end
 

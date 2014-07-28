@@ -107,72 +107,82 @@ describe "lease term rent methods" do
     context "when there is a single unit rate" do
       before { savon.stubs(:get_lease_term_rent).returns(:single_rate) }
 
-      it { should have(1).unit_rate }
+      it "has 1 unit rate" do
+        expect(subject.size).to eq 1
+      end
 
       describe "first record" do
         subject { unit_rates.first }
  
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should_not be }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 13) }
-        its(:lease_term) { should == 12 }
-        its(:end_date) { should  == Date.civil(2012, 3, 7) }
-        its(:market_rent) { should == 1096 }
-        its(:final_rent) { should == 1054 }
-        its(:best) { should be_true }
-        its(:move_in_date) { should == Date.civil(2011, 3, 13) }
-        its(:total_concession) { should == 0 }
-        its(:monthly_fixed_concession) { should == 0 }
-        its(:monthly_percent_concession) { should == 0.0 }
-        its(:months_concession) { should == 0.0 }
-        its(:one_time_fixed_concession) { should == 0 }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to be_blank
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 13)
+          expect(subject.lease_term).to eq 12
+          expect(subject.end_date).to eq Date.civil(2012, 3, 7)
+          expect(subject.market_rent).to eq 1096
+          expect(subject.final_rent).to eq 1054
+          expect(subject.best).to eq true
+          expect(subject.move_in_date).to eq Date.civil(2011, 3, 13)
+          expect(subject.total_concession).to eq 0
+          expect(subject.monthly_fixed_concession).to eq 0
+          expect(subject.monthly_percent_concession).to eq 0.0
+          expect(subject.months_concession).to eq 0.0
+          expect(subject.one_time_fixed_concession).to eq 0
+        end
       end
     end
 
     context "when there are multiple unit rates" do
       before { savon.stubs(:get_lease_term_rent).returns(:multiple_rates) }
 
-      it { should have(2).unit_rates }
+      it "has 2 unit rates" do
+        expect(subject.size).to eq 2
+      end
 
       describe "the first record" do
         subject { unit_rates.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should == '123' }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 7) }
-        its(:lease_term) { should == 1 }
-        its(:end_date) { should  == Date.civil(2011, 7, 1) }
-        its(:market_rent) { should == 5277 }
-        its(:final_rent) { should == 5237 }
-        its(:best) { should be_true }
-        its(:move_in_date) { should == Date.civil(2011, 6, 1) }
-        its(:total_concession) { should == 41 }
-        its(:monthly_fixed_concession) { should == 0 }
-        its(:monthly_percent_concession) { should == 0.0 }
-        its(:months_concession) { should == 0.0 }
-        its(:one_time_fixed_concession) { should == 500 }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to eq '123'
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 7)
+          expect(subject.lease_term).to eq 1
+          expect(subject.end_date).to eq Date.civil(2011, 7, 1)
+          expect(subject.market_rent).to eq 5277
+          expect(subject.final_rent).to eq 5237
+          expect(subject.best).to eq true
+          expect(subject.move_in_date).to eq Date.civil(2011, 6, 1)
+          expect(subject.total_concession).to eq 41
+          expect(subject.monthly_fixed_concession).to eq 0
+          expect(subject.monthly_percent_concession).to eq 0.0
+          expect(subject.months_concession).to eq 0.0
+          expect(subject.one_time_fixed_concession).to eq 500
+        end
       end
 
       describe "the second record" do
         subject { unit_rates.last }
 
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should == '123' }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 7) }
-        its(:lease_term) { should == 15 }
-        its(:end_date) { should  == Date.civil(2012, 8, 24) }
-        its(:market_rent) { should == 1272 }
-        its(:final_rent) { should == 1230 }
-        its(:best) { should be_false }
-        its(:move_in_date) { should == Date.civil(2011, 6, 1) }
-        its(:total_concession) { should == 625 }
-        its(:monthly_fixed_concession) { should == 10 }
-        its(:monthly_percent_concession) { should == 0.02 }
-        its(:months_concession) { should == 0.5 }
-        its(:one_time_fixed_concession) { should == 500 }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to eq '123'
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 7)
+          expect(subject.lease_term).to eq 15
+          expect(subject.end_date).to eq Date.civil(2012, 8, 24)
+          expect(subject.market_rent).to eq 1272
+          expect(subject.final_rent).to eq 1230
+          expect(subject.best).to eq false
+          expect(subject.move_in_date).to eq Date.civil(2011, 6, 1)
+          expect(subject.total_concession).to eq 625
+          expect(subject.monthly_fixed_concession).to eq 10
+          expect(subject.monthly_percent_concession).to eq 0.02
+          expect(subject.months_concession).to eq 0.5
+          expect(subject.one_time_fixed_concession).to eq 500
+        end
       end
     end
   end
@@ -195,75 +205,85 @@ describe "lease term rent methods" do
     context "when there is a single unit rate" do
       before { savon.stubs(:get_lease_term_rent_plus).returns(:single_rate) }
 
-      it { should have(1).unit_rate }
+      it "has 1 unit rate" do
+        expect(subject.size).to eq 1
+      end
 
       describe "the only record" do
         subject { unit_rates.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should_not be }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 23) }
-        its(:lease_term) { should == 12 }
-        its(:end_date) { should  == Date.civil(2012, 3, 24) }
-        its(:market_rent) { should == 1149 }
-        its(:final_rent) { should == 1108 }
-        its(:best) { should be_true }
-        its(:move_in_date) { should == Date.civil(2011, 3, 23) }
-        its(:total_concession) { should == 0 }
-        its(:monthly_fixed_concession) { should == 0 }
-        its(:monthly_percent_concession) { should == 0.0 }
-        its(:months_concession) { should == 0.0 }
-        its(:one_time_fixed_concession) { should == 0 }
-        its(:price_valid_end_date) { should == Date.civil(2011, 3, 25) }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to be_blank
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 23)
+          expect(subject.lease_term).to eq 12
+          expect(subject.end_date).to eq Date.civil(2012, 3, 24)
+          expect(subject.market_rent).to eq 1149
+          expect(subject.final_rent).to eq 1108
+          expect(subject.best).to eq true
+          expect(subject.move_in_date).to eq Date.civil(2011, 3, 23)
+          expect(subject.total_concession).to eq 0
+          expect(subject.monthly_fixed_concession).to eq 0
+          expect(subject.monthly_percent_concession).to eq 0.0
+          expect(subject.months_concession).to eq 0.0
+          expect(subject.one_time_fixed_concession).to eq 0
+          expect(subject.price_valid_end_date).to eq Date.civil(2011, 3, 25)
+        end
       end
     end
 
     context "when there are multiple unit rates" do
       before { savon.stubs(:get_lease_term_rent_plus).returns(:multiple_rates) }
 
-      it { should have(2).unit_rates }
+      it "has 2 unit rates" do
+        expect(subject.size).to eq 2
+      end
 
       describe "the first record" do
         subject { unit_rates.first }
 
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should == '123' }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 23) }
-        its(:lease_term) { should == 6 }
-        its(:end_date) { should  == Date.civil(2011, 9, 28) }
-        its(:market_rent) { should == 1249 }
-        its(:final_rent) { should == 1207 }
-        its(:best) { should be_true }
-        its(:move_in_date) { should == Date.civil(2011, 4, 1) }
-        its(:total_concession) { should == 250 }
-        its(:monthly_fixed_concession) { should == 0 }
-        its(:monthly_percent_concession) { should == 0.0 }
-        its(:months_concession) { should == 0.0 }
-        its(:one_time_fixed_concession) { should == 500 }
-        its(:price_valid_end_date) { should == Date.civil(2011, 4, 3) }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to eq '123'
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 23)
+          expect(subject.lease_term).to eq 6
+          expect(subject.end_date).to eq Date.civil(2011, 9, 28)
+          expect(subject.market_rent).to eq 1249
+          expect(subject.final_rent).to eq 1207
+          expect(subject.best).to eq true
+          expect(subject.move_in_date).to eq Date.civil(2011, 4, 1)
+          expect(subject.total_concession).to eq 250
+          expect(subject.monthly_fixed_concession).to eq 0
+          expect(subject.monthly_percent_concession).to eq 0.0
+          expect(subject.months_concession).to eq 0.0
+          expect(subject.one_time_fixed_concession).to eq 500
+          expect(subject.price_valid_end_date).to eq Date.civil(2011, 4, 3)
+        end
       end
 
       describe "the second record" do
         subject { unit_rates.last }
 
-        its(:external_property_id) { should == '42' }
-        its(:unit_number) { should == '112358' }
-        its(:building) { should == '123' }
-        its(:make_ready_date) { should == Date.civil(2011, 3, 23) }
-        its(:lease_term) { should == 12 }
-        its(:end_date) { should  == Date.civil(2012, 3, 26) }
-        its(:market_rent) { should == 1176 }
-        its(:final_rent) { should == 1135 }
-        its(:best) { should be_false }
-        its(:move_in_date) { should == Date.civil(2011, 4, 1) }
-        its(:total_concession) { should == 500 }
-        its(:monthly_fixed_concession) { should == 11 }
-        its(:monthly_percent_concession) { should == 0.02 }
-        its(:months_concession) { should == 2.0 }
-        its(:one_time_fixed_concession) { should == 500 }
-        its(:price_valid_end_date) { should == Date.civil(2011, 4, 3) }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq '42'
+          expect(subject.unit_number).to eq '112358'
+          expect(subject.building).to eq '123'
+          expect(subject.make_ready_date).to eq Date.civil(2011, 3, 23)
+          expect(subject.lease_term).to eq 12
+          expect(subject.end_date).to eq Date.civil(2012, 3, 26)
+          expect(subject.market_rent).to eq 1176
+          expect(subject.final_rent).to eq 1135
+          expect(subject.best).to eq false
+          expect(subject.move_in_date).to eq Date.civil(2011, 4, 1)
+          expect(subject.total_concession).to eq 500
+          expect(subject.monthly_fixed_concession).to eq 11
+          expect(subject.monthly_percent_concession).to eq 0.02
+          expect(subject.months_concession).to eq 2.0
+          expect(subject.one_time_fixed_concession).to eq 500
+          expect(subject.price_valid_end_date).to eq Date.civil(2011, 4, 3)
+        end
       end
     end
   end
@@ -340,51 +360,61 @@ describe "lease term rent methods" do
     context "when there is a single rate" do
       before { savon.stubs(:get_renewal_lease_term_rent).returns(:single_rate) }
 
-      it { should have(1).unit_rate }
+      it "has 1 unit rate" do
+        expect(subject.size).to eq 1
+      end
 
       describe "the only record" do
         subject { unit_rates.first }
 
-        its(:external_property_id) { should == external_property_id }
-        its(:unit_number) { should == unit_number }
-        its(:building) { should == '123' }
-        its(:lease_term) { should == 12 }
-        its(:end_date) { should == Date.civil(2012, 10, 26) }
-        its(:market_rent) { should == 1086 }
-        its(:final_rent) { should == 1086 }
-        its(:best) { should be_true }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq external_property_id
+          expect(subject.unit_number).to eq unit_number
+          expect(subject.building).to eq '123'
+          expect(subject.lease_term).to eq 12
+          expect(subject.end_date).to eq Date.civil(2012, 10, 26)
+          expect(subject.market_rent).to eq 1086
+          expect(subject.final_rent).to eq 1086
+          expect(subject.best).to eq true
+        end
       end
     end
 
     context "when there are multiple rates" do
       before { savon.stubs(:get_renewal_lease_term_rent).returns(:multiple_rates) }
 
-      it { should have(2).unit_rates }
+      it "has 2 unit rates" do
+        expect(subject.size).to eq 2
+      end
 
       describe "the first record" do
         subject { unit_rates.first }
 
-        its(:external_property_id) { should == external_property_id }
-        its(:unit_number) { should == unit_number }
-        its(:start_date) { should == Date.civil(2011, 10, 24) }
-        its(:lease_term) { should == 1 }
-        its(:end_date) { should == Date.civil(2011, 11, 24) }
-        its(:market_rent) { should == 1331 }
-        its(:final_rent) { should == 1300 }
-        its(:best) { should be_true }
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq external_property_id
+          expect(subject.unit_number).to eq unit_number
+          expect(subject.start_date).to eq Date.civil(2011, 10, 24)
+          expect(subject.lease_term).to eq 1
+          expect(subject.end_date).to eq Date.civil(2011, 11, 24)
+          expect(subject.market_rent).to eq 1331
+          expect(subject.final_rent).to eq 1300
+          expect(subject.best).to eq true
+        end
       end
 
       describe "the second record" do
         subject { unit_rates.last }
 
-        its(:external_property_id) { should == external_property_id }
-        its(:unit_number) { should == unit_number }
-        its(:start_date) { should == Date.civil(2011, 10, 24) }
-        its(:lease_term) { should == 12 }
-        its(:end_date) { should == Date.civil(2012, 10, 26) }
-        its(:market_rent) { should == 1086 }
-        its(:final_rent) { should == 1086 }
-        its(:best) { should be_false}
+        it "is the correct record" do
+          expect(subject.external_property_id).to eq external_property_id
+          expect(subject.unit_number).to eq unit_number
+          expect(subject.start_date).to eq Date.civil(2011, 10, 24)
+          expect(subject.lease_term).to eq 12
+          expect(subject.end_date).to eq Date.civil(2012, 10, 26)
+          expect(subject.market_rent).to eq 1086
+          expect(subject.final_rent).to eq 1086
+          expect(subject.best).to eq false
+        end
       end
     end
   end

@@ -17,13 +17,15 @@ describe YieldStarClient do
   end
 
   context "with default configuration" do
-    its(:endpoint) { should == default_endpoint }
-    its(:username) { should_not be }
-    its(:password) { should_not be }
-    its(:namespace) { should == default_namespace }
-    its(:client_name) { should_not be }
-    its(:logger) { should be_an_instance_of Logger }
-    it { should_not be_debug }
+    it "has the correct settings" do
+      expect(subject.endpoint).to eq default_endpoint
+      expect(subject.username).to be_blank
+      expect(subject.password).to be_blank
+      expect(subject.namespace).to eq default_namespace
+      expect(subject.client_name).to be_blank
+      expect(subject.logger).to be_an_instance_of Logger
+      expect(subject).to_not be_debug
+    end
   end
 
   describe ".configure" do
@@ -45,13 +47,17 @@ describe YieldStarClient do
       end
 
       it { should == YieldStarClient }
-      its(:endpoint) { should == endpoint }
-      its(:username) { should == username }
-      its(:password) { should == password }
-      its(:namespace) { should == namespace }
-      its(:client_name) { should == client_name }
+
+      it "has the correct configuration" do
+        expect(subject.endpoint).to eq endpoint
+        expect(subject.username).to eq username
+        expect(subject.password).to eq password
+        expect(subject.namespace).to eq namespace
+        expect(subject.client_name).to eq client_name
+        expect(subject.logger).to eq logger
+      end
+
       it { should be_debug }
-      its(:logger) { should == logger }
     end
 
     context "with partial configuration" do
@@ -65,12 +71,16 @@ describe YieldStarClient do
       end
 
       it { should == YieldStarClient }
-      its(:endpoint) { should == default_endpoint }
-      its(:username) { should == username }
-      its(:password) { should == password }
-      its(:namespace) { should == default_namespace }
-      its(:client_name) { should == client_name }
-      its(:logger) { should be_an_instance_of Logger }
+
+      it "has the correct configuration" do
+        expect(subject.endpoint).to eq default_endpoint
+        expect(subject.username).to eq username
+        expect(subject.password).to eq password
+        expect(subject.namespace).to eq default_namespace
+        expect(subject.client_name).to eq client_name
+        expect(subject.logger).to be_an_instance_of Logger
+      end
+
       it { should be_debug }
     end
   end
