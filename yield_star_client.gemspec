@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('configlet', '~> 2.1')
-  s.add_dependency('savon', '0.9.7')
+  s.add_dependency('savon', '~> 1.0')
   s.add_dependency('modelish', '>= 0.1.2')
   s.add_dependency('gyoku', '0.4.4')
 

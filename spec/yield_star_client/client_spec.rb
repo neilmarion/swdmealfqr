@@ -4,10 +4,6 @@ describe YieldStarClient::Client do
   subject { client }
 
   after { YieldStarClient.reset }
-  after do
-    Savon.log = nil
-    Savon.logger = nil
-  end
 
   let(:client) do
     YieldStarClient::Client.new({:endpoint => endpoint,
@@ -180,10 +176,6 @@ describe YieldStarClient::Client do
       it 'should change the debug setting' do
         expect { subject }.to change { client.debug? }.from(debug).to(new_debug)
       end
-
-      it 'should enable logging in savon' do
-        expect { subject }.to change { Savon.log? }.from(client.debug).to(new_debug)
-      end
     end
 
     context 'with nil' do
@@ -198,10 +190,6 @@ describe YieldStarClient::Client do
         it 'should enable debug logging' do
           expect { subject }.to change { client.debug? }.from(false).to(true)
         end
-
-        it 'should enable logging in savon' do
-          expect { subject }.to change { Savon.log? }.from(client.debug?).to(true)
-        end
       end
 
       context 'when debug logging is disabled globally' do
@@ -212,10 +200,6 @@ describe YieldStarClient::Client do
 
         it 'should disable debug logging' do
           expect { subject }.to change { client.debug? }.from(true).to(false)
-        end
-
-        it 'should disable logging in savon' do
-          expect { subject }.to change { Savon.log? }.from(true).to(false)
         end
       end
     end
@@ -237,22 +221,13 @@ describe YieldStarClient::Client do
           subject
           client.logger.should == global_logger
         end
-
-        it 'should set the savon logger to the global logger' do
-          subject
-          Savon.logger.should == global_logger
-        end
       end
 
       context 'when there is no logger configured globally' do
         it 'should set the logger to the default' do
           subject
           client.logger.should be_an_instance_of(Logger)
-        end
-
-        it 'should change the logger setting in savon' do
-          subject
-          Savon.logger.should be_an_instance_of(Logger)
+          expect(Savon.config.logger.subject).to be_a(Logger)
         end
       end
     end
@@ -262,10 +237,6 @@ describe YieldStarClient::Client do
 
       it 'should change the logger' do
         expect { subject }.to change { client.logger }.to(new_logger)
-      end
-
-      it 'should change the logger setting in savon' do
-        expect { subject }.to change { Savon.logger }.to(new_logger)
       end
     end
   end

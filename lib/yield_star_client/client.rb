@@ -29,7 +29,7 @@ module YieldStarClient
 
     def debug=(val)
       @debug = val
-      Savon.log = self.debug?
+      @log = self.debug?
     end
 
     def debug?
@@ -38,7 +38,6 @@ module YieldStarClient
 
     def logger=(val)
       @logger = val
-      Savon.logger = self.logger
     end
 
     # Initializes the client. All options are truly optional; if the option
@@ -55,8 +54,11 @@ module YieldStarClient
     # @option options [String] :namespace The XML namespace to use for requests.
     # @option options [true,false] :debug true to enable debug logging of SOAP traffic; defaults to false
     def initialize(options={})
-      self.debug = nil
-      self.logger = nil
+      if debug?
+        Savon.configure do |c|
+          c.logger = get_value(:logger)
+        end
+      end
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 
