@@ -10,22 +10,40 @@ describe "floor plan methods" do
 
   it { should respond_to(:get_floor_plan) }
 
-  describe "#get_floor_plan" do
-    before { savon.stubs(:get_floor_plan).returns(nil) }
+  before(:all) { savon.mock! }
+  after(:all)  { savon.unmock! }
 
+  let(:simple_floor_plan) do
+    File.read("spec/fixtures/get_floor_plan/simple_floor_plan.xml")
+  end
+
+  let(:full_floor_plan) do
+    File.read("spec/fixtures/get_floor_plan/full_floor_plan.xml")
+  end
+
+  describe "#get_floor_plan" do
     subject { floor_plan }
     let(:floor_plan) { test_object.get_floor_plan(external_property_id, floor_plan_name) }
     let(:floor_plan_name) { 'my_floor_plan_name' }
 
     it "should retrieve the floor plan data from the service" do
+      message = {
+        client_name: client_name,
+        external_property_id: external_property_id,
+        name: floor_plan_name,
+      }
       savon.expects(:get_floor_plan).
-        with(:request => {:client_name => client_name, :external_property_id => external_property_id, :name => floor_plan_name}).
-        returns(:simple_floor_plan)
-      subject.should be
+        with(message: message).
+        returns(simple_floor_plan)
+      expect(subject).to_not be_empty
     end
 
     context "with a minimal floor plan" do
-      before { savon.stubs(:get_floor_plan).returns(:simple_floor_plan) }
+      before do
+        savon.expects(:get_floor_plan).
+          with(message: :any).
+          returns(simple_floor_plan)
+      end
 
       it "has the correct attributes" do
         expect(subject.external_property_id).to eq '42'
@@ -34,7 +52,11 @@ describe "floor plan methods" do
     end
 
     context "with a fully defined floor plan" do
-      before { savon.stubs(:get_floor_plan).returns(:full_floor_plan) }
+      before do
+        savon.expects(:get_floor_plan).
+          with(message: :any).
+          returns(full_floor_plan)
+      end
 
       it "has the correct attributes" do
         expect(subject.external_property_id).to eq '99'
@@ -59,10 +81,12 @@ describe "floor plan methods" do
   it { should respond_to(:get_floor_plans) }
 
   describe "#get_floor_plans" do
-    before { savon.stubs(:get_floor_plans).returns(nil) }
+    before { savon.expects(:get_floor_plans).with(message: :any).returns(nil) }
 
     subject { floor_plans }
-    let(:floor_plans) { test_object.get_floor_plans(external_property_id) }
+    let(:floor_plans) do
+      test_object.get_floor_plans(external_property_id)
+    end
 
     it "should retrieve the floor plan data from the service" do
       savon.expects(:get_floor_plans).
@@ -72,14 +96,14 @@ describe "floor plan methods" do
     end
 
     context "with no floor plan" do
-      before { savon.stubs(:get_floor_plans).returns(:no_floor_plan) }
+      before { savon.expects(:get_floor_plans).returns(:no_floor_plan) }
 
       it { should be }
       it { should be_empty }
     end
 
     context "with one floor plan" do
-      before { savon.stubs(:get_floor_plans).returns(:single_floor_plan) }
+      before { savon.expects(:get_floor_plans).returns(:single_floor_plan) }
 
       it "has 1 floor plan" do
         expect(subject.size).to eq 1
@@ -97,7 +121,7 @@ describe "floor plan methods" do
     end
 
     context "with multiple floor plans" do
-      before { savon.stubs(:get_floor_plans).returns(:multiple_floor_plans) }
+      before { savon.expects(:get_floor_plans).returns(:multiple_floor_plans) }
 
       describe "first floor plan" do
         subject { floor_plans.first }

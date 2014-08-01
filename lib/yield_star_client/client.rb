@@ -72,11 +72,12 @@ module YieldStarClient
       validate_client_name!(client_name)
       default_params = { :client_name => client_name }
       begin
-        response = soap_client.request :wsdl, soap_action do
-          soap.element_form_default = :qualified
-          soap.body = { :request => default_params.merge(soap_parameters) }
-        end
-      rescue Savon::SOAP::Fault => f
+        message = default_params.merge(soap_parameters)
+        response = soap_client.call(
+          soap_action,
+          message: default_params.merge(soap_parameters),
+        )
+      rescue Savon::SOAPFault => f
         raise ServerError.translate_fault(f)
       end
     end
@@ -85,11 +86,11 @@ module YieldStarClient
     #
     # @return [Savon::Client]
     def soap_client
-      Savon::Client.new do
-        wsdl.endpoint = self.endpoint.to_s
-        wsdl.namespace = self.namespace
-        http.auth.basic self.username, self.password
-      end
+      @soap_client ||= Savon.client(
+        endpoint: self.endpoint.to_s,
+        namespace: self.namespace.to_s,
+        headers: {username: self.username.to_s, password: self.password.to_s},
+      )
     end
 
     # Retrieves an attribute's value. If the attribute has not been set

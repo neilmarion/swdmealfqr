@@ -1,13 +1,12 @@
 require 'bundler'
 Bundler.require :default, :development
+require "savon/mock/spec_helper"
 
 Dir[File.join(File.dirname(__FILE__), 'support', '*.rb')].each { |f| require f }
 
-Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
-
 RSpec.configure do |config|
   config.include WebMock::API
-  config.include Savon::Spec::Macros
+  config.include Savon::SpecHelper
 end
 
 require 'yield_star_client'
