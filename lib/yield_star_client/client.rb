@@ -54,11 +54,6 @@ module YieldStarClient
     # @option options [String] :namespace The XML namespace to use for requests.
     # @option options [true,false] :debug true to enable debug logging of SOAP traffic; defaults to false
     def initialize(options={})
-      if debug?
-        Savon.configure do |c|
-          c.logger = get_value(:logger)
-        end
-      end
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 
@@ -75,7 +70,7 @@ module YieldStarClient
         message = default_params.merge(soap_parameters)
         response = soap_client.call(
           soap_action,
-          message: default_params.merge(soap_parameters),
+          message: {request: message},
         )
       rescue Savon::SOAPFault => f
         raise ServerError.translate_fault(f)
@@ -87,9 +82,12 @@ module YieldStarClient
     # @return [Savon::Client]
     def soap_client
       @soap_client ||= Savon.client(
+        element_form_default: :qualified,
         endpoint: self.endpoint.to_s,
-        namespace: self.namespace.to_s,
-        headers: {username: self.username.to_s, password: self.password.to_s},
+        namespace: self.namespace,
+        basic_auth: [self.username.to_s, self.password.to_s],
+        log: debug?,
+        logger: get_value(:logger),
       )
     end
 

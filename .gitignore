@@ -6,3 +6,5 @@ doc/*
 *~
 .DS_Store
 Gemfile.lock
+tmp/*
+spec/config.yml

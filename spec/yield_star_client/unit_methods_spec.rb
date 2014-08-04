@@ -3,7 +3,12 @@ require 'spec_helper'
 describe "unit methods" do
   subject { test_object }
 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
+  let(:test_object) do
+    YieldStarClient::Client.new(
+      endpoint: 'http://rmsws.mpfyieldstar.com/rmsws/AppExchange',
+      client_name: client_name,
+    )
+  end
 
   let(:client_name) { 'my_client_name' }
   let(:external_property_id) { 'my_prop_id' }

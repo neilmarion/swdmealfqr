@@ -27,5 +27,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('webmock', '~> 1.6')
   s.add_development_dependency('yard', '~> 0.6')
   s.add_development_dependency('rdiscount', '~>1.6')
+  s.add_development_dependency('vcr', '~> 2.9')
+  s.add_development_dependency('activesupport')
   s.has_rdoc=true
 end

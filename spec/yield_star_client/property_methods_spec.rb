@@ -1,8 +1,22 @@
 require 'spec_helper'
 
+describe YieldStarClient::Client do
+  describe "#get_properties", vcr: {record: :once} do
+    it "returns properties" do
+      client = described_class.new(CONFIG.merge(
+        debug: true,
+        logger: Logger.new("tmp/test.log"),
+      ))
+
+      properties = client.get_properties
+      expect(properties).to_not be_empty
+    end
+  end
+end
+
 describe "property methods" do
   subject { test_object }
-  
+
   let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
 
   let(:client_name) { 'my client name' }
@@ -39,7 +53,7 @@ describe "property methods" do
 
       describe "first property" do
         subject { properties.first }
- 
+
         it "has the correct attributes" do
           expect(subject.name).to eq 'Minimal'
           expect(subject.external_property_id).to eq '1'
@@ -105,7 +119,7 @@ describe "property methods" do
 
     subject { property }
     let(:property) { test_object.get_property(external_property_id) }
-    
+
     it "should retrieve the property data from the service" do
       savon.expects(:get_property).
         with(:request => {:client_name => client_name, :external_property_id => external_property_id}).
@@ -147,7 +161,7 @@ describe "property methods" do
     it_should_behave_like 'an external_property_id validator'
 
     # Error handling
-    it_should_behave_like "a fault handler", :get_property 
+    it_should_behave_like "a fault handler", :get_property
   end
 
   describe "#get_property_parameters" do
