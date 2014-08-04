@@ -1,4 +1,11 @@
+require "modelish"
+
 require 'yield_star_client/version'
+require 'yield_star_client/validations'
+
+require 'yield_star_client/models/property'
+require 'yield_star_client/models/property_parameters'
+
 require 'yield_star_client/configuration'
 
 module YieldStarClient
