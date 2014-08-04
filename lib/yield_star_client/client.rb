@@ -6,6 +6,7 @@ require 'yield_star_client/unit_methods'
 require 'yield_star_client/amenity_methods'
 require 'yield_star_client/rent_methods'
 require 'yield_star_client/lease_term_rent_methods'
+require 'yield_star_client/soap_client'
 
 require 'yield_star_client/errors'
 
