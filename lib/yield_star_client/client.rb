@@ -1,5 +1,4 @@
 require 'savon'
-require 'virtus'
 
 require 'yield_star_client/property_methods'
 require 'yield_star_client/floor_plan_methods'

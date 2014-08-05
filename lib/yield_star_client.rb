@@ -1,5 +1,6 @@
 require "modelish"
 require "active_model"
+require "virtus"
 
 require 'yield_star_client/version'
 require 'yield_star_client/validations'
