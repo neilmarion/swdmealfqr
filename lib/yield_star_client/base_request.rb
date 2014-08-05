@@ -20,7 +20,7 @@ module YieldStarClient
       :password,
       presence: true,
     )
-    validates :client_name, length: {maximum: 50}
+    validates :client_name, length: {maximum: 16}
 
     def self.execute(attributes)
       self.new(attributes).execute

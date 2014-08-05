@@ -24,11 +24,11 @@ module YieldStarClient
       it { is_expected.to validate_presence_of(:username) }
       it { is_expected.to validate_presence_of(:password) }
 
-      it { is_expected.to ensure_length_of(:client_name).is_at_most(50) }
+      it { is_expected.to ensure_length_of(:client_name).is_at_most(16) }
     end
 
     it "validates the length of client_name" do
-      request = described_class.new(client_name: "c"*51)
+      request = described_class.new(client_name: "c"*17)
       expect(request).to be_invalid
     end
 
@@ -36,7 +36,7 @@ module YieldStarClient
       context "attributes are invalid" do
         it "raises ValidationError" do
           params = {
-            client_name: "very long client name" * 50,
+            client_name: "very long client name",
             endpoint: "endpoint",
             namespace: "namespace",
             username: "username",
@@ -46,7 +46,7 @@ module YieldStarClient
           request = described_class.new(params)
 
           expect { request.execute }.
-            to raise_error(ArgumentError, "Client name is too long (maximum is 50 characters)")
+            to raise_error(ArgumentError, "Client name is too long (maximum is 16 characters)")
         end
 
       end
