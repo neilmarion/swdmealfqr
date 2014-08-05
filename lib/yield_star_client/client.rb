@@ -12,6 +12,8 @@ require 'yield_star_client/soap_client'
 require 'yield_star_client/base_request'
 require 'yield_star_client/get_properties/request'
 require 'yield_star_client/get_properties/response'
+require 'yield_star_client/get_property/request'
+require 'yield_star_client/get_property/response'
 
 require 'yield_star_client/errors'
 

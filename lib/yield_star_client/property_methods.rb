@@ -27,12 +27,10 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_property(external_property_id)
-      validate_external_property_id!(external_property_id)
-
-      response = send_soap_request(:get_property, :external_property_id => external_property_id)
-
-      property = response.to_hash[:get_property_response][:return][:property]
-      Property.new(property)
+      response = GetProperty::Request.execute(
+        default_savon_params.merge(external_property_id: external_property_id)
+      )
+      GetProperty::Response.new(response).property
     end
 
 
