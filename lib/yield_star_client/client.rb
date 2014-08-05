@@ -1,4 +1,5 @@
 require 'savon'
+require 'virtus'
 
 require 'yield_star_client/property_methods'
 require 'yield_star_client/floor_plan_methods'
@@ -7,6 +8,9 @@ require 'yield_star_client/amenity_methods'
 require 'yield_star_client/rent_methods'
 require 'yield_star_client/lease_term_rent_methods'
 require 'yield_star_client/soap_client'
+
+require 'yield_star_client/get_properties/request'
+require 'yield_star_client/get_properties/response'
 
 require 'yield_star_client/errors'
 
@@ -102,6 +106,18 @@ module YieldStarClient
     def get_value(attribute)
       local_val = instance_variable_get("@#{attribute}")
       local_val.nil? ? YieldStarClient.send(attribute) : local_val
+    end
+
+    def default_savon_params
+      {
+        client_name: self.client_name,
+        endpoint: self.endpoint.to_s,
+        namespace: self.namespace,
+        username: self.username.to_s,
+        password: self.password,
+        log: self.debug?,
+        logger: self.logger,
+      }
     end
   end
 end

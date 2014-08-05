@@ -21,6 +21,8 @@ module YieldStarClient
           request: request_params,
         }
       )
+    rescue Savon::SOAPFault => e
+      raise ServerError.translate_fault(e)
     end
 
     private

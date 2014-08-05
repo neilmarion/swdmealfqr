@@ -5,3 +5,4 @@ gemspec
 
 gem "pry"
 gem "vcr"
+gem "virtus-matchers", github: "jpmoral/virtus-matchers", branch: "rspec_integration"

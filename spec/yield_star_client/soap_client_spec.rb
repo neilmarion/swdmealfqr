@@ -47,6 +47,32 @@ module YieldStarClient
 
         expect(described_class.request(action, params)).to eq soap_response
       end
+
+      context "a Savon::SOAPFault exception occurs" do
+        let(:savon_error) do
+          generic_fault = File.read("spec/fixtures/faults/generic_fault.xml")
+          http = HTTPI::Response.new(500, {}, generic_fault)
+          nori = Nori.new
+          Savon::SOAPFault.new(http, nori)
+        end
+
+        it "re-raises the translated error" do
+          action = :some_action
+          params = {}
+
+          expect(::Savon).to receive(:client).and_return(savon_client)
+
+          allow(savon_client).to receive(:call).and_raise(savon_error)
+
+          expected_error = StandardError.new
+          expect(ServerError).to receive(:translate_fault).
+            with(savon_error).
+            and_return(expected_error)
+
+          expect{ described_class.request(action, params) }.
+            to raise_error(expected_error)
+        end
+      end
     end
 
   end

@@ -12,11 +12,8 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_properties
-      response = send_soap_request(:get_properties)
-
-      props = response.to_hash[:get_properties_response][:return][:property] || []
-      props = [props].flatten
-      props.collect { |p| Property.new(p) }
+      response = GetProperties::Request.execute(default_savon_params)
+      GetProperties::Response.new(response).properties
     end
 
     # Retrieves information for a specific property.

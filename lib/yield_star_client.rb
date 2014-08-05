@@ -1,4 +1,5 @@
 require "modelish"
+require "active_model"
 
 require 'yield_star_client/version'
 require 'yield_star_client/validations'
