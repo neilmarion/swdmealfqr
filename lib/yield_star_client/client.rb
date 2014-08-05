@@ -9,6 +9,7 @@ require 'yield_star_client/rent_methods'
 require 'yield_star_client/lease_term_rent_methods'
 require 'yield_star_client/soap_client'
 
+require 'yield_star_client/base_request'
 require 'yield_star_client/get_properties/request'
 require 'yield_star_client/get_properties/response'
 
