@@ -22,5 +22,14 @@ module YieldStarClient
       end
     end
 
+    describe ".new_from" do
+      it "is just an alias for .new for subclasses to override" do
+        unit_rate = double(described_class)
+
+        expect(described_class).to receive(:new).and_return(unit_rate)
+        described_class.new_from({})
+      end
+    end
+
   end
 end

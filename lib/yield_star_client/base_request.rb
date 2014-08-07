@@ -31,7 +31,11 @@ module YieldStarClient
       soap_action = self.class.const_get("SOAP_ACTION")
       fail ArgumentError, "define SOAP_ACTION" unless soap_action
 
-      SoapClient.request(soap_action, attributes)
+      SoapClient.request(soap_action, request_args)
+    end
+
+    def request_args
+      attributes
     end
 
   end

@@ -23,5 +23,9 @@ module YieldStarClient
     attribute :final_rent, Integer
     attribute :best, Boolean, default: true
 
+    def self.new_from(*args)
+      self.new(*args)
+    end
+
   end
 end

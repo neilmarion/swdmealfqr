@@ -9,12 +9,23 @@ require 'yield_star_client/lease_term_rent_methods'
 require 'yield_star_client/soap_client'
 
 require 'yield_star_client/base_request'
+require "yield_star_client/lease_term_request_config"
+require 'yield_star_client/base_response'
+require "yield_star_client/lease_term_response_config"
+
 require 'yield_star_client/get_properties/request'
 require 'yield_star_client/get_properties/response'
 require 'yield_star_client/get_property/request'
 require 'yield_star_client/get_property/response'
 require 'yield_star_client/get_property_parameters/request'
 require 'yield_star_client/get_property_parameters/response'
+require 'yield_star_client/get_lease_term_rent/request'
+require 'yield_star_client/get_lease_term_rent/response'
+require 'yield_star_client/get_lease_term_rent_plus/request'
+require 'yield_star_client/get_lease_term_rent_plus/response'
+require 'yield_star_client/get_renewal_lease_term_rent/request'
+require 'yield_star_client/get_renewal_lease_term_rent/response'
+require 'yield_star_client/extract_lease_term_rent_hashes'
 
 require 'yield_star_client/errors'
 
