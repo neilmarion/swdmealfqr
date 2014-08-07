@@ -13,6 +13,8 @@ require 'yield_star_client/get_properties/request'
 require 'yield_star_client/get_properties/response'
 require 'yield_star_client/get_property/request'
 require 'yield_star_client/get_property/response'
+require 'yield_star_client/get_property_parameters/request'
+require 'yield_star_client/get_property_parameters/response'
 
 require 'yield_star_client/errors'
 

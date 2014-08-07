@@ -23,5 +23,18 @@ module YieldStarClient
     attribute :max_move_in_days, Integer
     attribute :min_renewal_lease_term, Integer
     attribute :max_renewal_lease_term, Integer
+
+    def self.new_from(hash)
+      resulting_hash = hash.slice(:external_property_id)
+      params = [hash[:parameter]].flatten.compact
+
+      params.each do |param|
+        key = param[:name].downcase.gsub(/(max|min)imum/, '\1').
+          gsub(/\s+/, '_').to_sym
+        resulting_hash[key] = param[:value]
+      end
+
+      self.new(resulting_hash)
+    end
   end
 end
