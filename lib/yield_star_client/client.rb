@@ -25,6 +25,8 @@ require 'yield_star_client/get_lease_term_rent_plus/request'
 require 'yield_star_client/get_lease_term_rent_plus/response'
 require 'yield_star_client/get_renewal_lease_term_rent/request'
 require 'yield_star_client/get_renewal_lease_term_rent/response'
+require 'yield_star_client/get_floor_plan_amenities/request'
+require 'yield_star_client/get_floor_plan_amenities/response'
 require 'yield_star_client/extract_lease_term_rent_hashes'
 
 require 'yield_star_client/errors'
