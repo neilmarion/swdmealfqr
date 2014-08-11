@@ -17,6 +17,7 @@ require 'yield_star_client/models/lease_term_rent'
 require 'yield_star_client/models/renewal_lease_term_rent'
 require 'yield_star_client/models/rent_summary'
 require 'yield_star_client/models/lease_term_rent_options'
+require 'yield_star_client/models/unit'
 
 require "yield_star_client/extract_rent_summary_hashes"
 
