@@ -40,17 +40,13 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_unit_amenities(external_property_id, unit_name, building=nil)
-      validate_external_property_id!(external_property_id)
-      validate_required!(:unit_name => unit_name)
-
-      body = {:external_property_id => external_property_id,
-              :unit_name => unit_name}
-      body[:building] = building if building
-
-      response = send_soap_request(:get_unit_amenities, body)
-
-      amenities = response.to_hash[:get_unit_amenities_response][:return][:amenity] || []
-      [amenities].flatten.collect { |a| Amenity.new(a) }
+      request_args = default_savon_params.merge(
+        external_property_id: external_property_id,
+        unit_name: unit_name,
+        building: building,
+      )
+      response = GetUnitAmenities::Request.execute(request_args)
+      GetUnitAmenities::Response.new(response).amenities
     end
   end
 end
