@@ -25,6 +25,13 @@ module YieldStarClient
       body[:building] = building_name if building_name
 
       response = send_soap_request(:get_unit, body)
+      # request_args = {
+      #   external_property_id: external_property_id,
+      #   name: unit_name,
+      #   # building: building,
+      # }
+      # response = GetUnit::Request.new(request_args)
+
       unit = response.to_hash[:get_unit_response][:return][:unit]
 
       Unit.new(unit)

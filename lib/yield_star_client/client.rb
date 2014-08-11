@@ -35,6 +35,9 @@ require 'yield_star_client/get_available_units/request'
 require 'yield_star_client/get_available_units/response'
 require 'yield_star_client/get_units/request'
 require 'yield_star_client/get_units/response'
+require 'yield_star_client/get_unit/request'
+require 'yield_star_client/get_unit/response'
+
 require 'yield_star_client/extract_lease_term_rent_hashes'
 require 'yield_star_client/extract_available_floor_plan_hashes'
 
