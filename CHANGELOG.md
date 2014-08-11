@@ -1,6 +1,7 @@
 ## TBA
 
 * Change .rvmrc to .ruby-version. Use Ruby 1.9.3-p484.
+* Refactor code to depend on Savon less, and upgrade to Savon 2.0
 
 ## 0.2.0 (2012-01-16)
 
