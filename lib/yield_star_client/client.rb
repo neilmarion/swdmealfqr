@@ -29,6 +29,8 @@ require 'yield_star_client/get_floor_plan_amenities/request'
 require 'yield_star_client/get_floor_plan_amenities/response'
 require 'yield_star_client/get_unit_amenities/request'
 require 'yield_star_client/get_unit_amenities/response'
+require 'yield_star_client/get_rent_summary/request'
+require 'yield_star_client/get_rent_summary/response'
 require 'yield_star_client/extract_lease_term_rent_hashes'
 
 require 'yield_star_client/errors'
