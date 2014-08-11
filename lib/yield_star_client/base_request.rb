@@ -35,7 +35,7 @@ module YieldStarClient
     end
 
     def request_args
-      attributes
+      attributes.reject { |key, value| value.nil? }
     end
 
   end

@@ -32,6 +32,13 @@ module YieldStarClient
       expect(request).to be_invalid
     end
 
+    describe "#request_args" do
+      it "removes any keys with nil values" do
+        request = described_class.new(client_name: nil, username: "Ok")
+        expect(request.request_args).to eq(username: "Ok")
+      end
+    end
+
     describe ".execute" do
       context "attributes are invalid" do
         it "raises ValidationError" do
