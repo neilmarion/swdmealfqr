@@ -35,14 +35,12 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_floor_plan(external_property_id, floor_plan_name)
-      validate_external_property_id!(external_property_id)
-      validate_required!(:floor_plan_name => floor_plan_name)
-
-      response = send_soap_request(:get_floor_plan, :external_property_id => external_property_id, 
-                                                    :name => floor_plan_name)
-      floor_plan = response.to_hash[:get_floor_plan_response][:return][:floor_plan]
-
-      FloorPlan.new(floor_plan)
+      request_args = default_savon_params.merge(
+        external_property_id: external_property_id,
+        floor_plan_name: floor_plan_name,
+      )
+      response = GetFloorPlan::Request.execute(request_args)
+      GetFloorPlan::Response.new(response).floor_plan
     end
   end
 end
