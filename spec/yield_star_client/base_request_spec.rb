@@ -59,9 +59,8 @@ module YieldStarClient
       end
 
       it "makes a request with the correct action" do
-        class FakeRequest < BaseRequest
-          SOAP_ACTION = :fake_action
-        end
+        FakeRequest = Class.new(BaseRequest)
+        FakeRequest::SOAP_ACTION = :fake_action
 
         params = {
           client_name: "client_name",
