@@ -1,4 +1,4 @@
-## TBA
+## 1.0.0.beta.1
 
 * Change .rvmrc to .ruby-version. Use Ruby 1.9.3-p484.
 * Refactor code to depend on Savon less, and upgrade to Savon 2.0
