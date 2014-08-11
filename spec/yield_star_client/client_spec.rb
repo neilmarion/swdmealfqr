@@ -222,14 +222,6 @@ describe YieldStarClient::Client do
           client.logger.should == global_logger
         end
       end
-
-      context 'when there is no logger configured globally' do
-        it 'should set the logger to the default' do
-          subject
-          client.logger.should be_an_instance_of(Logger)
-          expect(Savon.config.logger.subject).to be_a(Logger)
-        end
-      end
     end
 
     context 'with custom logger' do
