@@ -2,7 +2,13 @@ require 'spec_helper'
 
 shared_examples_for "a fault handler" do |soap_action|
   context "when there is an authentication fault" do
-    before { savon.stubs(soap_action).raises_soap_fault.returns(Savon::Spec::Fixture[:faults, :authentication_fault]) }
+    before do
+      savon.expects(soap_action).
+        with(message: :any).
+        returns(File.read("spec/fixtures/faults/authentication_fault.xml"))
+        # raises_soap_fault.
+        # returns(Savon::Spec::Fixture[:faults, :authentication_fault])
+    end
 
     it "should raise a YieldStarClient authentication error" do
       expect { subject }.to raise_error(YieldStarClient::AuthenticationError)
@@ -18,7 +24,13 @@ shared_examples_for "a fault handler" do |soap_action|
   end
 
   context "when there is an internal error fault" do
-    before { savon.stubs(soap_action).raises_soap_fault.returns(Savon::Spec::Fixture[:faults, :internal_error_fault]) }
+    before do
+      savon.expects(soap_action).
+        with(message: :any).
+        returns(File.read("spec/fixtures/faults/internal_error_fault.xml"))
+        # raises_soap_fault.
+        # returns(Savon::Spec::Fixture[:faults, :internal_error_fault])
+    end
 
     it "should raise a YieldStarClient internal error" do
       expect { subject }.to raise_error(YieldStarClient::InternalError)
@@ -34,7 +46,13 @@ shared_examples_for "a fault handler" do |soap_action|
   end
 
   context "when there is an operation fault" do
-    before { savon.stubs(soap_action).raises_soap_fault.returns(Savon::Spec::Fixture[:faults, :operation_fault]) }
+    before do
+      savon.expects(soap_action).
+        with(message: :any).
+        returns(File.read("spec/fixtures/faults/operation_fault.xml"))
+        # raises_soap_fault.
+        # returns(Savon::Spec::Fixture[:faults, :operation_fault])
+    end
 
     it "should raise a YieldStarClient operation error" do
       expect { subject }.to raise_error(YieldStarClient::OperationError)
@@ -50,7 +68,13 @@ shared_examples_for "a fault handler" do |soap_action|
   end
 
   context "when there is a generic fault" do
-    before { savon.stubs(soap_action).raises_soap_fault.returns(Savon::Spec::Fixture[:faults, :generic_fault]) }
+    before do
+      savon.expects(soap_action).
+        with(message: :any).
+        returns(File.read("spec/fixtures/faults/generic_fault.xml"))
+        # raises_soap_fault.
+        # returns(Savon::Spec::Fixture[:faults, :generic_fault])
+    end
 
     it "should raise a YieldStarClient server error" do
       expect { subject }.to raise_error(YieldStarClient::ServerError)

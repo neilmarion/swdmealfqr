@@ -1,165 +1,134 @@
 require 'spec_helper'
 
-describe "amenity methods" do
-  subject { test_object } 
-  let(:test_object) { YieldStarClient::Client.new(:endpoint => 'http://bogusendpoint', :client_name => client_name) }
+module YieldStarClient
+  describe Client do
 
-  let(:client_name) { 'my_client_name' }
-  let(:external_property_id) { 'my_prop_id' }
+    include Savon::SpecHelper
 
-  it { should respond_to(:get_floor_plan_amenities) }
-  it { should respond_to(:get_unit_amenities) }
-
-  describe "#get_floor_plan_amenities" do
-    before { savon.stubs(:get_floor_plan_amenities).returns(nil) }
-
-    subject { amenities }
-    let(:amenities) { test_object.get_floor_plan_amenities(external_property_id, floor_plan_name) }
-    let(:floor_plan_name) { 'my_floor_plan' }
-
-    it "should retrieve the amenity data from the service" do
-      soap_body = {:client_name => client_name, 
-                   :external_property_id => external_property_id, 
-                   :floor_plan_name => floor_plan_name}
-      savon.expects(:get_floor_plan_amenities).with(:request => soap_body).returns(:no_amenities)
-      subject.should be
+    let(:logger) { Logger.new("tmp/test.log") }
+    let(:client_config) do
+      CONFIG.merge(
+        debug: true,
+        logger: logger,
+      )
     end
 
-    context "with no amenities" do
-      before { savon.stubs(:get_floor_plan_amenities).returns(:no_amenities) }
+    let(:client) { described_class.new(client_config) }
 
-      it { should be }
-      it { should be_empty }
-    end
+    describe "#get_floor_plan_amenities" do
+      before(:all) { savon.mock! }
+      after(:all) { savon.unmock! }
 
-    context "with a single amenity" do
-      before { savon.stubs(:get_floor_plan_amenities).returns(:single_amenity) }
-
-      it { should have(1).amenity }
-
-      describe "first amenity" do
-        subject { amenities.first }
-
-        its(:name) { should == 'Garage Spot' }
-        its(:type) { should == 'Parking' }
-      end
-    end
-
-    context "with multiple amenities" do
-      before { savon.stubs(:get_floor_plan_amenities).returns(:multiple_amenities) }
-
-      it { should have(2).amenities }
-
-      describe "first amenity" do
-        subject { amenities.first }
+      let(:fixture) do
+        path = File.join(
+          SPEC_DIR,
+          "fixtures",
+          "get_floor_plan_amenities",
+          "multiple_amenities.xml",
+        )
+        File.read(path)
       end
 
-      describe "last amenity" do
-        subject { amenities.last }
-      end
-    end
+      it "returns floor plan amenities", vcr: {record: :once} do
+        expected_message = client_config.
+          slice(:client_name).
+          merge(
+            external_property_id: "external_property_id",
+            floor_plan_name: "floor_plan_name",
+          )
 
-    # Validations
-    it_should_behave_like 'a client_name validator'
-    it_should_behave_like 'an external_property_id validator'
-    it_should_behave_like 'a required string validator', :floor_plan_name
+        savon.expects(:get_floor_plan_amenities).
+          with(message: {request: expected_message.symbolize_keys}).
+          returns(fixture)
 
-    # Error handling
-    it_should_behave_like 'a fault handler', :get_floor_plan_amenities
-  end
+        amenities = client.get_floor_plan_amenities(
+          "external_property_id",
+          "floor_plan_name",
+        )
 
-  describe "#get_unit_amenities" do
-    before { savon.stubs(:get_unit_amenities).returns(nil) }
+        expect(amenities.first).to be_an Amenity
 
-    subject { amenities }
+        # TODO: Find a way to use real recorded data, even if it's a test
+        # account.
+        #
+        # loop through the different properties and floor plans until we
+        # find one that has amenities to test.
 
-    let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name, building) }
-    let(:unit_name) { 'my_unit_name' }
-    let(:building) { 'my_building' }
+        # amenities = catch(:amenities) do
+        #   client.get_properties.each do |property|
+        #     external_property_id = property.external_property_id
+        #     floor_plans = client.get_floor_plans(external_property_id)
+        #     floor_plans.each do |floor_plan|
+        #       floor_plan_name = floor_plan.name
+        #       amenities = client.get_floor_plan_amenities(
+        #         external_property_id,
+        #         floor_plan_name
+        #       )
 
-    context "without a building" do
-      let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name) }
-      let(:soap_body) do 
-        {:client_name => client_name, 
-         :external_property_id => external_property_id, 
-         :unit_name => unit_name}
-      end
+        #       throw :amenities, amenities if amenities.any?
+        #     end
+        #   end
+        #   throw :amenities, []
+        # end
 
-      it "should retrieve the data from the service" do
-        savon.expects(:get_unit_amenities).with(:request => soap_body).returns(:no_amenities)
-        subject.should be
+        # fail "Unable to find any amenities" if amenities.empty?
+        # expect(amenities.first).to be_an Amenity
       end
     end
 
-    context "with a building" do
-      let(:soap_body) do 
-        {:client_name => client_name, 
-         :external_property_id => external_property_id, 
-         :unit_name => unit_name, 
-         :building => building}
-      end
+    describe "#get_unit_amenities" do
+      it "returns unit amenities", vcr: {record: :once} do
+        # loop through the different properties and floor plans until we
+        # find one that has amenities to test.
+        amenities = catch(:amenities) do
+          client.get_properties.each do |property|
+            external_property_id = property.external_property_id
+            floor_plans = client.get_floor_plans(external_property_id)
+            floor_plans.each do |floor_plan|
+              units = client.get_units(external_property_id, floor_plan.name)
+              units.each do |unit|
+                amenities = client.get_unit_amenities(
+                  external_property_id,
+                  unit.name,
+                )
 
-      it "should retrieve the data from the service" do
-        savon.expects(:get_unit_amenities).with(:request => soap_body).returns(:no_amenities)
-        subject.should be
-      end
-    end
+                throw :amenities, amenities if amenities.any?
+              end
+            end
+          end
 
-    context "when there are no amenities" do
-      before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
+          throw :amenities, []
+        end
 
-      it { should be }
-      it { should be_empty }
-    end
-
-    context "when there is one amenity" do
-      before { savon.stubs(:get_unit_amenities).returns(:single_amenity) }
-
-      it { should have(1).amenity }
-
-      describe "first amenity" do
-        subject { amenities.first }
-
-        its(:name) { should == '2nd Floor' }
-        its(:type) { should == 'Fixed' }
+        fail "Unable to find any amenities" if amenities.empty?
+        expect(amenities.first).to be_an Amenity
       end
     end
 
-    context "when there are multiple amenities" do
-      before { savon.stubs(:get_unit_amenities).returns(:multiple_amenities) }
+    it "passes the building to the request class" do
+      expected_hash = {
+        external_property_id: "external_property_id",
+        unit_name: "unit_name",
+        building: "building",
+      }
 
-      describe "first amenity" do
-        subject { amenities.first }
+      response = double
 
-        its(:name) { should == 'Rent Adjustment' }
-        its(:type) { should == 'Fixed' }
-        its(:value) { should == 50.0 }
-      end
+      expect(GetUnitAmenities::Request).to receive(:execute).
+        with(hash_including(expected_hash)).
+        and_return(response)
 
-      describe "last amenity" do
-        subject { amenities.last }
+      parsed_response = double(amenities: [])
 
-        its(:name) { should == 'Good Credit Adjustment' }
-        its(:type) { should == 'Variable' }
-        its(:value) { should be_nil }
-      end
+      allow(GetUnitAmenities::Response).to receive(:new).
+        with(response).and_return(parsed_response)
+
+      client.get_unit_amenities(
+        "external_property_id",
+        "unit_name",
+        "building",
+      )
     end
 
-    # Validation
-    it_should_behave_like 'a client_name validator'
-    it_should_behave_like 'an external_property_id validator'
-    it_should_behave_like 'a required string validator', :unit_name
-
-    context "when there is no building" do
-      before { savon.stubs(:get_unit_amenities).returns(:no_amenities) }
-      let(:amenities) { test_object.get_unit_amenities(external_property_id, unit_name) }
-
-      it "should not raise an error" do
-        expect { subject }.to_not raise_error
-      end
-    end
-
-    # Error handling
-    it_should_behave_like 'a fault handler', :get_unit_amenities
   end
 end

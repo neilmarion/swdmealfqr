@@ -1,3 +1,7 @@
+## TBA
+
+* Change .rvmrc to .ruby-version. Use Ruby 1.9.3-p484.
+
 ## 0.2.0 (2012-01-16)
 
 * Moved the client_name to the configuration, since it is required

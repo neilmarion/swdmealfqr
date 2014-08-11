@@ -6,12 +6,50 @@ require 'yield_star_client/unit_methods'
 require 'yield_star_client/amenity_methods'
 require 'yield_star_client/rent_methods'
 require 'yield_star_client/lease_term_rent_methods'
+require 'yield_star_client/soap_client'
+
+require 'yield_star_client/base_request'
+require "yield_star_client/lease_term_request_config"
+require 'yield_star_client/base_response'
+require "yield_star_client/lease_term_response_config"
+
+require 'yield_star_client/get_properties/request'
+require 'yield_star_client/get_properties/response'
+require 'yield_star_client/get_property/request'
+require 'yield_star_client/get_property/response'
+require 'yield_star_client/get_property_parameters/request'
+require 'yield_star_client/get_property_parameters/response'
+require 'yield_star_client/get_lease_term_rent/request'
+require 'yield_star_client/get_lease_term_rent/response'
+require 'yield_star_client/get_lease_term_rent_plus/request'
+require 'yield_star_client/get_lease_term_rent_plus/response'
+require 'yield_star_client/get_renewal_lease_term_rent/request'
+require 'yield_star_client/get_renewal_lease_term_rent/response'
+require 'yield_star_client/get_floor_plan_amenities/request'
+require 'yield_star_client/get_floor_plan_amenities/response'
+require 'yield_star_client/get_unit_amenities/request'
+require 'yield_star_client/get_unit_amenities/response'
+require 'yield_star_client/get_rent_summary/request'
+require 'yield_star_client/get_rent_summary/response'
+require 'yield_star_client/get_available_units/request'
+require 'yield_star_client/get_available_units/response'
+require 'yield_star_client/get_units/request'
+require 'yield_star_client/get_units/response'
+require 'yield_star_client/get_unit/request'
+require 'yield_star_client/get_unit/response'
+require 'yield_star_client/get_floor_plans/request'
+require 'yield_star_client/get_floor_plans/response'
+require 'yield_star_client/get_floor_plan/request'
+require 'yield_star_client/get_floor_plan/response'
+
+require 'yield_star_client/extract_lease_term_rent_hashes'
+require 'yield_star_client/extract_available_floor_plan_hashes'
 
 require 'yield_star_client/errors'
 
 module YieldStarClient
   # YieldStarClient::Client is the main object for connecting to the YieldStar AppExchange service.
-  # The interface strives to be SOAP-agnostic whenever possible; all inputs and outputs are pure ruby 
+  # The interface strives to be SOAP-agnostic whenever possible; all inputs and outputs are pure ruby
   # and no knowledge of SOAP is required in order to use the client.
   class Client
     include PropertyMethods
@@ -29,7 +67,7 @@ module YieldStarClient
 
     def debug=(val)
       @debug = val
-      Savon.log = self.debug?
+      @log = self.debug?
     end
 
     def debug?
@@ -38,7 +76,6 @@ module YieldStarClient
 
     def logger=(val)
       @logger = val
-      Savon.logger = self.logger
     end
 
     # Initializes the client. All options are truly optional; if the option
@@ -55,8 +92,6 @@ module YieldStarClient
     # @option options [String] :namespace The XML namespace to use for requests.
     # @option options [true,false] :debug true to enable debug logging of SOAP traffic; defaults to false
     def initialize(options={})
-      self.debug = nil
-      self.logger = nil
       options.each { |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
     end
 
@@ -70,11 +105,12 @@ module YieldStarClient
       validate_client_name!(client_name)
       default_params = { :client_name => client_name }
       begin
-        response = soap_client.request :wsdl, soap_action do
-          soap.element_form_default = :qualified
-          soap.body = { :request => default_params.merge(soap_parameters) }
-        end
-      rescue Savon::SOAP::Fault => f
+        message = default_params.merge(soap_parameters)
+        response = soap_client.call(
+          soap_action,
+          message: {request: message},
+        )
+      rescue Savon::SOAPFault => f
         raise ServerError.translate_fault(f)
       end
     end
@@ -83,23 +119,38 @@ module YieldStarClient
     #
     # @return [Savon::Client]
     def soap_client
-      Savon::Client.new do
-        wsdl.endpoint = self.endpoint.to_s
-        wsdl.namespace = self.namespace
-        http.auth.basic self.username, self.password
-      end
+      @soap_client ||= Savon.client(
+        element_form_default: :qualified,
+        endpoint: self.endpoint.to_s,
+        namespace: self.namespace,
+        basic_auth: [self.username.to_s, self.password.to_s],
+        log: debug?,
+        logger: get_value(:logger),
+      )
     end
 
     # Retrieves an attribute's value. If the attribute has not been set
     # on this object, it is retrieved from the global configuration.
     #
     # @see YieldStarClient.configure
-    # 
+    #
     # @param [Symbol] attribute the name of the attribute
     # @return [String] the value of the attribute
     def get_value(attribute)
       local_val = instance_variable_get("@#{attribute}")
       local_val.nil? ? YieldStarClient.send(attribute) : local_val
+    end
+
+    def default_savon_params
+      {
+        client_name: self.client_name,
+        endpoint: self.endpoint.to_s,
+        namespace: self.namespace,
+        username: self.username.to_s,
+        password: self.password,
+        log: self.debug?,
+        logger: self.logger,
+      }
     end
   end
 end
