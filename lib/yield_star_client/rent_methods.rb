@@ -38,17 +38,10 @@ module YieldStarClient
     # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
     # @raise [YieldStarClient::ServerError] when any other server-side error occurs
     def get_available_units(external_property_id)
-      validate_external_property_id!(external_property_id)
-
-      response = send_soap_request(:get_available_units, :external_property_id => external_property_id)
-
-      data = response.to_hash[:get_available_units_response][:return]
-      base_props = data.reject { |k,v| ![:external_property_id, :effective_date].include?(k) }
-
-      floor_plans = []
-      floor_plans << data[:floor_plan] if data[:floor_plan]
-
-      floor_plans.flatten.collect { |fp| AvailableFloorPlan.new(base_props.merge(fp)) }
+      request_args = default_savon_params.
+        merge(external_property_id: external_property_id)
+      response = GetAvailableUnits::Request.execute(request_args)
+      GetAvailableUnits::Response.new(response).available_units
     end
   end
 end
