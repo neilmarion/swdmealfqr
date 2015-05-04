@@ -32,7 +32,7 @@ module YieldStarClient
     attribute :effective_date, Date
     attribute :external_property_id, String
     attribute :floor_plan_name, String
-    attribute :unit_type, String
+    attribute :unit_type, String, default: ''
     attribute :bedrooms, Float
     attribute :bathrooms, Float
     attribute :avg_square_feet, Integer
@@ -44,6 +44,8 @@ module YieldStarClient
     attribute :min_final_rent, Integer
     attribute :max_final_rent, Integer
     attribute :floor_plan_description, String
+    attribute :bedrooms_override_from_unit_type, Float, default: lambda { |rs, attribute| self.bedrooms_override_from(rs.unit_type) }
+    attribute :bathrooms_override_from_unit_type, Float, default: lambda { |rs, attribute| self.bathrooms_override_from(rs.unit_type) }
 
     def self.new_from(args)
       args[:bedrooms] = args.delete(:bed_rooms) unless args[:bedrooms]
@@ -53,17 +55,17 @@ module YieldStarClient
       self.new(args)
     end
 
-    def bedrooms_override_from_unit_type
-      bed_and_bath_unit_type_split[0].to_f
-    end
-
-    def bathrooms_override_from_unit_type
-      bed_and_bath_unit_type_split[1].to_f
-    end
-
     private
 
-    def bed_and_bath_unit_type_split
+    def self.bedrooms_override_from(unit_type)
+      bed_and_bath_unit_type_split(unit_type)[0].to_f
+    end
+
+    def self.bathrooms_override_from(unit_type)
+      bed_and_bath_unit_type_split(unit_type)[1].to_f
+    end
+
+    def self.bed_and_bath_unit_type_split(unit_type)
       unit_type.split('x')
     end
   end
