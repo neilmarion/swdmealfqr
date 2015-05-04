@@ -1,4 +1,4 @@
-## TBA
+## 1.1.0
 
 * Add `#bedrooms_override_from_unit_type` and `#bathrooms_override_from_unit_type` to RentSummary.  These are calculated from the #unit_type as illustrated by the following:
 
