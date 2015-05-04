@@ -7,7 +7,7 @@ module YieldStarClient
         rent_summary_hashes =
           extract_rent_summary_hashes_from(@soap_response.to_hash)
         @rent_summaries = rent_summary_hashes.map do |hash|
-          RentSummary.new(hash)
+          RentSummary.new_from(hash)
         end
       end
 
