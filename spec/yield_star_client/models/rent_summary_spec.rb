@@ -30,10 +30,22 @@ module YieldStarClient
           avg_sq_ft: 50,
         }
 
-        rs = described_class.new_from(args)
+        rs = RentSummary.new_from(args)
         expect(rs.bedrooms).to eq 2.5
         expect(rs.bathrooms).to eq 1
         expect(rs.avg_square_feet).to eq 50
+      end
+    end
+
+    describe '#bedrooms_override_from_unit_type and #bathrooms_override_from_unit_type' do
+      context "unit_type is composed of two dimensions separated by an 'x' character" do
+        let(:unit_type) { '3.5x2' }
+        let(:rent_summary) { RentSummary.new(unit_type: unit_type) }
+
+        it "return dimensions extracted from the unit_type" do
+          expect(rent_summary.bedrooms_override_from_unit_type).to eq 3.5
+          expect(rent_summary.bathrooms_override_from_unit_type).to eq 2
+        end
       end
     end
 

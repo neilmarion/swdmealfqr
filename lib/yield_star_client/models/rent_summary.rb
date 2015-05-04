@@ -52,6 +52,20 @@ module YieldStarClient
 
       self.new(args)
     end
+
+    def bedrooms_override_from_unit_type
+      bed_and_bath_unit_type_split[0].to_f
+    end
+
+    def bathrooms_override_from_unit_type
+      bed_and_bath_unit_type_split[1].to_f
+    end
+
+    private
+
+    def bed_and_bath_unit_type_split
+      unit_type.split('x')
+    end
   end
 
 end
