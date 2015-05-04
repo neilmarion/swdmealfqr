@@ -25,22 +25,47 @@ module YieldStarClient
   # @attr [Integer] max_final_rent the maximum **EFFECTIVE** rents for the currently available
   #                                units in this unit type.
   # @attr [String] floor_plan_description the marketing name of the floor plan
-  class RentSummary < Modelish::Base
-    property :effective_date, :type => Date
-    property :external_property_id
-    property :floor_plan_name
-    property :unit_type
-    property :bedrooms, :type => Float, :from => :bed_rooms
-    property :bathrooms, :type => Float, :from => :bath_rooms
-    property :avg_square_feet, :type => Integer, :from => :avg_sq_ft
-    property :min_market_rent, :type => Integer
-    property :max_market_rent, :type => Integer
-    property :concession_type
-    property :min_concession, :type => Integer
-    property :max_concession, :type => Integer
-    property :min_final_rent, :type => Integer
-    property :max_final_rent, :type => Integer
-    property :floor_plan_description
+  class RentSummary
+
+    include Virtus.model
+
+    attribute :effective_date, Date
+    attribute :external_property_id, String
+    attribute :floor_plan_name, String
+    attribute :unit_type, String
+    attribute :bedrooms, Float
+    attribute :bathrooms, Float
+    attribute :avg_square_feet, Integer
+    attribute :min_market_rent, Integer
+    attribute :max_market_rent, Integer
+    attribute :concession_type, String
+    attribute :min_concession, Integer
+    attribute :max_concession, Integer
+    attribute :min_final_rent, Integer
+    attribute :max_final_rent, Integer
+    attribute :floor_plan_description, String
+
+    def self.new_from(args)
+      args[:bedrooms] = args.delete(:bed_rooms) unless args[:bedrooms]
+      args[:bathrooms] = args.delete(:bath_rooms) unless args[:bathrooms]
+      args[:avg_square_feet] = args.delete(:avg_sq_ft) unless args[:avg_square_feet]
+
+      self.new(args)
+    end
+
+    def bedrooms_override_from_unit_type
+      bed_and_bath_unit_type_split[0].to_f
+    end
+
+    def bathrooms_override_from_unit_type
+      bed_and_bath_unit_type_split[1].to_f
+    end
+
+    private
+
+    def bed_and_bath_unit_type_split
+      unit_type.split('x')
+    end
   end
 
 end

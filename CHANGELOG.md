@@ -1,5 +1,14 @@
 ## TBA
 
+* Add `#bedrooms_override_from_unit_type` and `#bathrooms_override_from_unit_type` to RentSummary.  These are calculated from the #unit_type as illustrated by the following:
+
+```
+rent_summary = RentSummary.new(unit_type: '3.5x2')
+rent_summary.bedrooms_override_from_unit_type
+=> 3.5
+rent_summary.bathrooms_override_from_unit_type
+=> 2
+```
 * Fix bug when fetching lease terms - Invalid building/unit XXXXXX
 
 ## 1.0.0.beta.1
