@@ -24,7 +24,7 @@ module YieldStarClient
       it { is_expected.to validate_presence_of(:username) }
       it { is_expected.to validate_presence_of(:password) }
 
-      it { is_expected.to ensure_length_of(:client_name).is_at_most(16) }
+      it { is_expected.to validate_length_of(:client_name).is_at_most(16) }
     end
 
     it "validates the length of client_name" do
