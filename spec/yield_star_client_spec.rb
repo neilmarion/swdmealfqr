@@ -31,7 +31,7 @@ describe YieldStarClient do
   describe ".configure" do
     subject { YieldStarClient.configure(&config_block) }
 
-    let(:logger) { mock() }
+    let(:logger) { double() }
 
     context "with full configuration" do
       let(:config_block) do
@@ -98,7 +98,7 @@ describe YieldStarClient do
       end
     end
 
-    let(:logger) { mock() }
+    let(:logger) { double() }
 
     subject { YieldStarClient.reset }
 

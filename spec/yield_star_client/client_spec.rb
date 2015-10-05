@@ -22,7 +22,7 @@ describe YieldStarClient::Client do
   let(:namespace) { 'http://foo.com/namespace' }
   let(:client_name) { 'test_client' }
   let(:debug) { true }
-  let(:logger) { mock() }
+  let(:logger) { double() }
 
   it "has the correct settings" do
     expect(subject.endpoint).to eq endpoint
@@ -211,7 +211,7 @@ describe YieldStarClient::Client do
     context 'with nil' do
       let(:new_logger) { nil }
       context 'when there is a logger configured globally' do
-        let(:global_logger) { mock() }
+        let(:global_logger) { double() }
 
         before do
           YieldStarClient.configure { |config| config.logger = global_logger }
@@ -225,7 +225,7 @@ describe YieldStarClient::Client do
     end
 
     context 'with custom logger' do
-      let(:new_logger) { mock() }
+      let(:new_logger) { double() }
 
       it 'should change the logger' do
         expect { subject }.to change { client.logger }.to(new_logger)
