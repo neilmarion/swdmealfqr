@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rdiscount', '~>1.6')
   s.add_development_dependency('vcr', '~> 2.9')
   s.add_development_dependency 'virtus-matchers'
-  s.add_development_dependency 'shoulda-matchers'
+  s.add_development_dependency 'shoulda-matchers', "< 3.0"
 
   s.has_rdoc=true
 end

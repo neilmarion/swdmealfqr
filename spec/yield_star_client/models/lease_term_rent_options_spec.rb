@@ -50,7 +50,7 @@ module YieldStarClient
       end
 
       it { is_expected.to validate_presence_of(:unit_number) }
-      it { is_expected.to ensure_length_of(:building).is_at_most(50) }
+      it { is_expected.to validate_length_of(:building).is_at_most(50) }
     end
 
     describe "#to_request_hash" do

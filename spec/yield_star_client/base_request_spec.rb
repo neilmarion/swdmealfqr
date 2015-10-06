@@ -24,7 +24,7 @@ module YieldStarClient
       it { is_expected.to validate_presence_of(:username) }
       it { is_expected.to validate_presence_of(:password) }
 
-      it { is_expected.to ensure_length_of(:client_name).is_at_most(16) }
+      it { is_expected.to validate_length_of(:client_name).is_at_most(16) }
     end
 
     it "validates the length of client_name" do
@@ -59,8 +59,8 @@ module YieldStarClient
       end
 
       it "makes a request with the correct action" do
-        FakeRequest = Class.new(BaseRequest)
-        FakeRequest::SOAP_ACTION = :fake_action
+        fake_request_class = Class.new(BaseRequest)
+        fake_request_class::SOAP_ACTION = :fake_action
 
         params = {
           client_name: "client_name",
@@ -76,7 +76,7 @@ module YieldStarClient
           with(:fake_action, hash_including(params)).
           and_return(response)
 
-        expect(FakeRequest.execute(params)).to eq response
+        expect(fake_request_class.execute(params)).to eq response
       end
     end
 

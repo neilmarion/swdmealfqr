@@ -16,7 +16,7 @@ module YieldStarClient
         subject { described_class.new }
 
         it { is_expected.to validate_presence_of(:external_property_id) }
-        it { is_expected.to ensure_length_of(:external_property_id).is_at_most(50) }
+        it { is_expected.to validate_length_of(:external_property_id).is_at_most(50) }
         it { is_expected.to validate_presence_of(:unit) }
       end
 
