@@ -23,8 +23,14 @@ Sensible defaults are provided for other configuration options. **TODO**: link t
 
 **TODO:** More thorough usage examples.
 
-        client = YieldStarClient::Client.new
-        client.get_properties('my_client_name')
+```ruby
+client = YieldStarClient::Client.new(
+  username: "abc",
+  password: "efg",
+)
+# See YieldStarClient::VALID_CONFIG_OPTIONS for all available options
+client.get_properties('my_client_name')
+```
 
 **TODO:** Link to docs for more info.
 
