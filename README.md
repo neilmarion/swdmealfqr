@@ -19,6 +19,10 @@ You will probably only need to configure the username and password for connectin
 
 Sensible defaults are provided for other configuration options. **TODO**: link to the docs for the rest of the config.
 
+## Factories
+
+To make testing in your apps easier, `require 'yield_star_client/factories'` to import FactoryGirl factories. See that file for available factories.
+
 ## Examples ##
 
 **TODO:** More thorough usage examples.
