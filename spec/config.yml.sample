@@ -1,4 +1,4 @@
 endpoint: "http://rmsws.yieldstar.com/rmsws/AppExchange"
 client_name: "bozzuto"
 username: "g5"
-password: ""
+password: "something"

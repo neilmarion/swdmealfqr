@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('vcr', '~> 2.9')
   s.add_development_dependency 'virtus-matchers'
   s.add_development_dependency 'shoulda-matchers', "< 3.0"
+  s.add_development_dependency 'gemfury_helpers'
 
   s.has_rdoc=true
 end
