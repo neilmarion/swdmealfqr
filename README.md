@@ -6,16 +6,20 @@ Client adapter for the YieldStar AppExchange web service.
 
 The YieldStar adapter is available on [Rubygems][rubygems] and can be installed via:
 
-        gem install 'yield_star_client'
+```ruby
+gem install 'yield_star_client'
+```
 
 ## Configuration ##
 
 You will probably only need to configure the username and password for connecting to the remote service:
 
-        YieldStarClient.configure do |config|
-            config.username = 'my_user'
-            config.password = 'my_pass'
-        end
+```ruby
+YieldStarClient.configure do |config|
+  config.username = 'my_user'
+  config.password = 'my_pass'
+end
+```
 
 Sensible defaults are provided for other configuration options. **TODO**: link to the docs for the rest of the config.
 
