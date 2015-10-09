@@ -1,0 +1,3 @@
+checkout:
+  post:
+    - cp spec/config.yml{.sample,}
