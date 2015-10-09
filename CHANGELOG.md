@@ -1,3 +1,7 @@
+## TBA
+
+* Add initial set of factories
+
 ## 1.2.0
 
 * Include `#bedrooms_override_from_unit_type` and `#bathrooms_override_from_unit_type` in RentSummary#to_hash

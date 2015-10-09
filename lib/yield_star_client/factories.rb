@@ -52,4 +52,23 @@ FactoryGirl.define do
     best_final_rent 2350
   end
 
+  factory(:yield_star_client_rent_summary, {
+    class: YieldStarClient::RentSummary,
+  }) do
+    effective_date "2012-01-02".to_date
+    external_property_id "21398"
+    floor_plan_name "2B1B"
+    unit_type "2x1"
+    bedrooms 2.0
+    bathrooms 1.0
+    avg_square_feet 329
+    min_market_rent 100
+    max_market_rent 200
+    min_concession 10
+    max_concession 20
+    min_final_rent 90
+    max_final_rent 180
+    floor_plan_description "Best floor plan"
+  end
+
 end
