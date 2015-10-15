@@ -1,4 +1,4 @@
-## TBA
+## 1.4.0
 
 * Add `AvailableUnit#id` useful when unique (scoped to property) id for unit is needed
 
