@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'virtus-matchers'
   s.add_development_dependency 'shoulda-matchers', "< 3.0"
   s.add_development_dependency 'gemfury_helpers'
+  s.add_development_dependency 'factory_girl'
 
   s.has_rdoc=true
 end

@@ -1,3 +1,7 @@
+## TBA
+
+* Add `AvailableUnit#id` useful when unique (scoped to property) id for unit is needed
+
 ## 1.3.0
 
 * Add initial set of factories

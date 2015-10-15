@@ -38,6 +38,11 @@ module YieldStarClient
     property :best_market_rent, :type => Integer
     property :best_concession, :type => Integer
     property :best_final_rent, :type => Integer
+
+    def id
+      concat = [building, unit_type, unit_number].join("-")
+      Digest::SHA1.hexdigest concat
+    end
   end
 
 end
