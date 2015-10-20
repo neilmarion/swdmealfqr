@@ -27,6 +27,10 @@ module YieldStarClient
       # TODO: add support for nested types to modelish?
       self.units = [self.units].flatten.collect { |u| AvailableUnit.new(u) }
     end
+
+    def id
+      floor_plan_name
+    end
   end
 
 end
