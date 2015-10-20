@@ -1,4 +1,4 @@
-## TBA
+## 1.5.0
 
 * Add `AvailableFloorPlan#id`
 
