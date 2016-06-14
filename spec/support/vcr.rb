@@ -4,4 +4,6 @@ VCR.configure do |c|
   c.configure_rspec_metadata!
   c.filter_sensitive_data('<USERNAME>') { CONFIG[:username] }
   c.filter_sensitive_data('<PASSWORD>') { CONFIG[:password] }
+  c.filter_sensitive_data('<ENDPOINT>') { CONFIG[:endpoint]}
+  c.filter_sensitive_data('<CLIENT_NAME>') { CONFIG[:client_name]}
 end

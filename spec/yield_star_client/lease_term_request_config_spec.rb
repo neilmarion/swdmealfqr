@@ -26,7 +26,6 @@ module YieldStarClient
     context "validations" do
       subject { fake_request_class.new }
       it { is_expected.to validate_presence_of(:external_property_id) }
-      it { is_expected.to validate_presence_of(:unit_number) }
     end
 
     it "defines request_args" do

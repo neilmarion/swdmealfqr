@@ -1,3 +1,7 @@
+## TBA
+
+* Update `#get_lease_term_rent` to accept single hash parameters
+
 ## 1.5.0
 
 * Add `AvailableFloorPlan#id`

@@ -10,14 +10,18 @@ module YieldStarClient
         soap_wrapper_element => {
           return: {
             external_property_id: "external_property_id",
-            soap_unit_element => {
-              unit_number: "unit_number",
-              building: "building",
-              make_ready_date: make_ready_date,
-              unit_rate: unit_rate,
-            }
+            soap_unit_element => ltr_plus_response_hashes
           }
         }
+      }
+    end
+    let(:ltr_plus_response_hashes) { response_value_for_single_unit }
+    let(:response_value_for_single_unit) do
+      {
+        unit_number: "unit_number",
+        building: "building",
+        make_ready_date: make_ready_date,
+        unit_rate: unit_rate,
       }
     end
 
@@ -83,5 +87,50 @@ module YieldStarClient
       it { is_expected.to be_empty }
     end
 
+    context "there are multiple unit rates for multiple units" do
+      let(:ltr_plus_response_hashes) { response_value_for_multiple_units }
+      let(:response_value_for_multiple_units) do
+        [
+          {
+            unit_number: "unit_number",
+            building: "building",
+            make_ready_date: make_ready_date,
+            unit_rate: [{rate_info: "1"}, {rate_info: "2"}],
+          },
+          {
+            unit_number: "unit_number_2",
+            building: "building",
+            make_ready_date: make_ready_date,
+            unit_rate: {rate_info: "3"},
+          }
+        ]
+      end
+
+      it "expected to return lease term rent hashes into one flat array" do
+        expect(subject).to eq [
+          {
+            external_property_id: "external_property_id",
+            unit_number: "unit_number",
+            building: "building",
+            make_ready_date: make_ready_date,
+            rate_info: "1",
+          },
+          {
+            external_property_id: "external_property_id",
+            unit_number: "unit_number",
+            building: "building",
+            make_ready_date: make_ready_date,
+            rate_info: "2",
+          },
+          {
+            external_property_id: "external_property_id",
+            unit_number: "unit_number_2",
+            building: "building",
+            make_ready_date: make_ready_date,
+            rate_info: "3",
+          },
+        ]
+      end
+    end
   end
 end
