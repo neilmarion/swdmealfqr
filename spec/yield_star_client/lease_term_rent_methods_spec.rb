@@ -37,17 +37,22 @@ module YieldStarClient
       end
 
       context "when receiving with a hash parameter" do
-        let(:date_tomorrow) { Date.today + 1 }
+        let(:date_tomorrow) { Date.new(2016, 6, 17) }
+        # NOTE: use date_tomorrow defined below when recording new
+        # cassettes as the lease term dates would've drastically
+        # changed since then. Then update date_tomorrow's value
+        # above to be the same as (Date.today + 1)
+        # let(:date_tomorrow) { Date.today + 1 }
         it "returns lease terms for a single unit" do
           lease_term_rents = client.get_lease_term_rent(
             external_property_id: external_property_id,
             units: {
               # building: 1, # optional, and not needed in current vcr record
-              unit_number: unit_number_2,
+              unit_number: unit_number,
               min_lease_term: 1,
               max_lease_term: 18,
-              first_move_in_date: date_tomorrow.to_s,
-              last_move_in_date: (date_tomorrow + 45).to_s,
+              # first_move_in_date: date_tomorrow.to_s,
+              # last_move_in_date: (date_tomorrow + 45).to_s,
               ready_for_move_in_date: date_tomorrow,
               unit_available_date: date_tomorrow,
             }
@@ -56,11 +61,9 @@ module YieldStarClient
           expect(lease_term_rents).to_not be_empty
           expect(lease_term_rents.first).to be_a LeaseTermRent
           lease_term_rents.each do |lt|
-            expect(lt.unit_number).to eq unit_number_2
+            expect(lt.unit_number).to eq unit_number
             expect(lt.lease_term).to be >= 1
             expect(lt.lease_term).to be <= 18
-            expect(lt.move_in_date).to be >= date_tomorrow
-            expect(lt.move_in_date).to be <= (date_tomorrow + 45)
           end
         end
 
@@ -73,8 +76,8 @@ module YieldStarClient
                 unit_number: unit_number,
                 min_lease_term: 1,
                 max_lease_term: 18,
-                first_move_in_date: date_tomorrow.to_s,
-                last_move_in_date: (date_tomorrow + 45).to_s,
+                # first_move_in_date: date_tomorrow.to_s,
+                # last_move_in_date: (date_tomorrow + 45).to_s,
                 ready_for_move_in_date: date_tomorrow,
                 unit_available_date: date_tomorrow,
               },
@@ -82,8 +85,8 @@ module YieldStarClient
                 unit_number: unit_number_2,
                 min_lease_term: 1,
                 max_lease_term: 18,
-                first_move_in_date: date_tomorrow.to_s,
-                last_move_in_date: (date_tomorrow + 45).to_s,
+                # first_move_in_date: date_tomorrow.to_s,
+                # last_move_in_date: (date_tomorrow + 45).to_s,
                 ready_for_move_in_date: date_tomorrow,
                 unit_available_date: date_tomorrow,
               }
@@ -96,8 +99,6 @@ module YieldStarClient
             expect([unit_number, unit_number_2]).to include lt.unit_number
             expect(lt.lease_term).to be >= 1
             expect(lt.lease_term).to be <= 18
-            expect(lt.move_in_date).to be >= date_tomorrow
-            expect(lt.move_in_date).to be <= (date_tomorrow + 45)
           end
         end
       end
