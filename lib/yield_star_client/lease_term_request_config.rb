@@ -24,19 +24,13 @@ module YieldStarClient
       end
 
       def request_args
-        if units
-          lease_term_rent_options = [units].flatten.map do |options_hash|
-            options_hash.slice(
-              :unit_number,
-              :building,
-              :min_lease_term,
-              :max_lease_term,
-              :first_move_in_date,
-              :last_move_in_date,
-            )
-          end
-        else
-          lease_term_rent_options = LeaseTermRentOptions.new(attributes.slice(
+        options_hashes = if units
+                           [units]
+                         else
+                           [attributes]
+                         end.flatten
+        lease_term_rent_options = options_hashes.map do |options_hash|
+          LeaseTermRentOptions.new(options_hash.slice(
             :unit_number,
             :building,
             :min_lease_term,

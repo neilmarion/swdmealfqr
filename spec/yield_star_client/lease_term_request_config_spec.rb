@@ -52,9 +52,9 @@ module YieldStarClient
 
       expected_args = {
         unit_number: "unit_number",
-        sample_request_element: {
+        sample_request_element: [{
           rent_options: "rent_options"
-        }
+        }]
       }
 
       expect(request.request_args).to include(expected_args)
