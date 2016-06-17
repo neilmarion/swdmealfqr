@@ -1,4 +1,4 @@
-## TBA
+## 1.6.0
 
 * Update `#get_lease_term_rent` to accept single hash parameters
 
