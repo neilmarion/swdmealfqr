@@ -4,5 +4,6 @@ source "http://rubygems.org"
 gemspec
 
 gem "pry"
+gem "pry-byebug"
 gem "vcr"
 gem "virtus-matchers", github: "jpmoral/virtus-matchers", branch: "master"

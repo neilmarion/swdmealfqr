@@ -26,7 +26,6 @@ module YieldStarClient
     context "validations" do
       subject { fake_request_class.new }
       it { is_expected.to validate_presence_of(:external_property_id) }
-      it { is_expected.to validate_presence_of(:unit_number) }
     end
 
     it "defines request_args" do
@@ -53,9 +52,9 @@ module YieldStarClient
 
       expected_args = {
         unit_number: "unit_number",
-        sample_request_element: {
+        sample_request_element: [{
           rent_options: "rent_options"
-        }
+        }]
       }
 
       expect(request.request_args).to include(expected_args)
