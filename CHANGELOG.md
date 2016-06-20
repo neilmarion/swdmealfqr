@@ -1,4 +1,4 @@
-## TBA
+## 1.6.1
 
 * Fix typo on yield_star_client_unit factory
 
