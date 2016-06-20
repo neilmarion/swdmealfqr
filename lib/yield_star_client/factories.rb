@@ -14,7 +14,7 @@ FactoryGirl.define do
     external_property_id "321809"
     floor_plan_name "1B1B-SM*"
     name "Unit 104"
-    availablity_status :occupied
+    availability_status :occupied
     building "123"
     bedrooms 1.0
     bathrooms 1.0
