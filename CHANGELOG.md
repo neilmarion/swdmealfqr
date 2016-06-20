@@ -1,3 +1,7 @@
+## TBA
+
+* Fix typo on yield_star_client_unit factory
+
 ## 1.6.0
 
 * Update `#get_lease_term_rent` to accept single hash parameters
