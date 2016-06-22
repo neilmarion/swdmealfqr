@@ -1,3 +1,8 @@
+## TBA
+
+* Added development rake task: `rake console` to fire up irb
+  console with this library preloaded
+
 ## 1.6.1
 
 * Fix typo on yield_star_client_unit factory
