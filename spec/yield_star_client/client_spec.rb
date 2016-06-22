@@ -57,7 +57,6 @@ describe YieldStarClient::Client do
 
   # Methods from RentMethods
   it { should respond_to(:get_rent_summary) }
-  it { should respond_to(:get_available_units) }
 
   # Methods from LeaseTermRentMethods
   it { should respond_to(:get_lease_term_rent) }
@@ -86,7 +85,7 @@ describe YieldStarClient::Client do
       let(:new_endpoint) { 'http://new-foo.com/service/' }
 
       it "should change the endpoint" do
-        expect { subject }.to change{client.endpoint}.from(endpoint).to(new_endpoint) 
+        expect { subject }.to change{client.endpoint}.from(endpoint).to(new_endpoint)
       end
     end
 
@@ -134,7 +133,7 @@ describe YieldStarClient::Client do
         it "should change the username to the configured username" do
           expect { subject }.to change{client.username}.from(username).to(configured_username)
         end
-      end 
+      end
     end
   end
 

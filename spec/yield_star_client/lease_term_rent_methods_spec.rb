@@ -14,7 +14,11 @@ module YieldStarClient
     describe "#get_lease_term_rent", vcr: {record: :once} do
       let(:properties) { client.get_properties }
       let(:external_property_id) { properties.last.external_property_id }
-      let(:floor_plan) { client.get_available_units(external_property_id).last }
+      let(:floor_plan) do
+        client.get_floor_plans_with_units(external_property_id).find do |floor_plan|
+          floor_plan.units.any?
+        end
+      end
       let(:unit_number) { unit.unit_number }
       let(:unit) { floor_plan.units.first }
       let(:unit_number_2) { unit_2.unit_number }
@@ -108,7 +112,7 @@ module YieldStarClient
       it "returns the lease term rents", vcr: {record: :once} do
         properties = client.get_properties
         external_property_id = properties.last.external_property_id
-        floor_plan = client.get_available_units(external_property_id).first
+        floor_plan = client.get_floor_plans_with_units(external_property_id).first
         unit_number = floor_plan.units.first.unit_number
         lease_term_rents = client.get_lease_term_rent_plus(
           external_property_id,
@@ -136,7 +140,7 @@ module YieldStarClient
         renewal_lease_term_rents = catch(:renewal_lease_term_rents) do
           properties.each do |property|
             external_property_id = property.external_property_id
-            floor_plans = client.get_available_units(external_property_id)
+            floor_plans = client.get_floor_plans_with_units(external_property_id)
             floor_plans.each do |floor_plan|
               floor_plan.units.each do |unit|
                 unit_number = unit.unit_number

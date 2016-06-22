@@ -8,8 +8,7 @@
           <externalPropertyId>99</externalPropertyId>
           <name>The Economy</name>
           <description>An affordable choice for the frugal resident.</description>
-          <squareFootage>450</squareFootage>
-          <unitCount>42</unitCount>
+          <squareFootage>450</squareFootage> <unitCount>42</unitCount>
           <bedRooms>1.0</bedRooms>
           <bathRooms>1.0</bathRooms>
         </floorPlan>

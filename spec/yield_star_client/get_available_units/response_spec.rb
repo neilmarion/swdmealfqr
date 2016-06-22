@@ -4,38 +4,32 @@ module YieldStarClient
   module GetAvailableUnits
     describe Response do
 
-      describe "#available_units" do
+      describe "#available_floor_plans" do
         let(:soap_response) { double(to_hash: response_hash) }
-        let(:response_hash) { {} }
-        let(:available_floor_plan_1_hash) do
-          { external_property_id: "external_property_id_1" }
-        end
-        let(:available_floor_plan_2_hash) do
-          { external_property_id: "external_property_id_2" }
-        end
-        let(:available_floor_plan_1) { double(AvailableFloorPlan) }
-        let(:available_floor_plan_2) { double(AvailableFloorPlan) }
-        let(:available_floor_plan_hashes) do
-          [ available_floor_plan_1_hash, available_floor_plan_2_hash ]
+        let(:response_hash) do
+          [
+            {
+              external_property_id: "external_property_id",
+            }
+          ]
         end
 
-        it "returns AvailableFloorPlan objects from the soap response" do
-          allow(ExtractAvailableFloorPlanHashes).to receive(:execute).
-            with(response_hash).
-            and_return(available_floor_plan_hashes)
+        before do
+          allow_any_instance_of(described_class).
+            to receive(:extract_available_floor_plan_hashes_from).
+            and_return(response_hash)
+        end
 
-          allow(AvailableFloorPlan).to receive(:new).
-            with(available_floor_plan_1_hash).
-            and_return(available_floor_plan_1)
-          allow(AvailableFloorPlan).to receive(:new).
-            with(available_floor_plan_2_hash).
-            and_return(available_floor_plan_2)
+        it "returns an array of FloorPlan objects" do
+          result = described_class.new(soap_response)
 
-          available_floor_plans = described_class.new(soap_response).
-            available_units
-
-          expect(available_floor_plans).
-            to eq [available_floor_plan_1, available_floor_plan_2]
+          expect(result.available_floor_plans.first).to be_a FloorPlan
+          expect(result.available_floor_plans.map(&:external_property_id)).
+            to match_array(
+              [
+                "external_property_id",
+              ]
+            )
         end
       end
 

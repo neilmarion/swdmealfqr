@@ -30,23 +30,5 @@ module YieldStarClient
         expect(rent_summaries.first).to be_a RentSummary
       end
     end
-
-    describe "#get_available_units" do
-      it "returns the available units grouped by floor plan", vcr: {record: :once} do
-        floor_plans = catch(:floor_plans) do
-          client.get_properties.each do |property|
-            external_property_id = property.external_property_id
-            floor_plans = client.get_available_units(external_property_id)
-            throw :floor_plans, floor_plans if floor_plans.any?
-          end
-          throw :floor_plans, [] if floor_plans.empty?
-        end
-
-        fail "Unable to find available units" if floor_plans.empty?
-        expect(floor_plans.first).to be_an AvailableFloorPlan
-        expect(floor_plans.last.units.first).to be_a AvailableUnit
-      end
-    end
-
   end
 end

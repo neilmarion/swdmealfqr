@@ -33,7 +33,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 22 Jun 2016 01:56:41 GMT
+      - Tue, 21 Jun 2016 23:28:06 GMT
     body:
       encoding: UTF-8
       string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getPropertiesResponse
@@ -138,7 +138,7 @@ http_interactions:
         Hutzler Lane</ns2:address><ns2:city>Pikesville</ns2:city><ns2:state>MD</ns2:state><ns2:zip>21208</ns2:zip><ns2:longitude>-76.728231</ns2:longitude><ns2:latitude>39.376595</ns2:latitude><ns2:yearBuilt>2009</ns2:yearBuilt></ns2:property><ns2:property><ns2:externalPropertyId>00000519</ns2:externalPropertyId><ns2:name>1500
         Locust</ns2:name><ns2:address>1500 Locust St</ns2:address><ns2:city>Philadelphia</ns2:city><ns2:state>PA</ns2:state><ns2:zip>19102-0000</ns2:zip><ns2:longitude>-75.166437</ns2:longitude><ns2:latitude>39.948290</ns2:latitude><ns2:phone>215-893-0800</ns2:phone><ns2:fax></ns2:fax><ns2:website></ns2:website><ns2:yearBuilt>1972</ns2:yearBuilt></ns2:property></ns2:return></ns2:getPropertiesResponse></S:Body></S:Envelope>
     http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:45 GMT
+  recorded_at: Tue, 21 Jun 2016 23:23:06 GMT
 - request:
     method: post
     uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
@@ -172,13 +172,13 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 22 Jun 2016 01:56:41 GMT
+      - Tue, 21 Jun 2016 23:28:13 GMT
     body:
       encoding: UTF-8
       string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getFloorPlansResponse
         xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:floorPlan><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:name>1B1B-LGD*</ns2:name><ns2:description>1B1B-LGD</ns2:description><ns2:squareFootage>648</ns2:squareFootage><ns2:unitCount>61</ns2:unitCount><ns2:bedRooms>1.0</ns2:bedRooms><ns2:bathRooms>1.0</ns2:bathRooms></ns2:floorPlan><ns2:floorPlan><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:name>1B1B-SM*</ns2:name><ns2:description>1B1B-SM</ns2:description><ns2:squareFootage>579</ns2:squareFootage><ns2:unitCount>82</ns2:unitCount><ns2:bedRooms>1.0</ns2:bedRooms><ns2:bathRooms>1.0</ns2:bathRooms></ns2:floorPlan><ns2:floorPlan><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:name>0B1B*</ns2:name><ns2:description>0B1B</ns2:description><ns2:squareFootage>444</ns2:squareFootage><ns2:unitCount>12</ns2:unitCount><ns2:bedRooms>0.0</ns2:bedRooms><ns2:bathRooms>1.0</ns2:bathRooms></ns2:floorPlan><ns2:floorPlan><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:name>2B2B*</ns2:name><ns2:description>2B2B</ns2:description><ns2:squareFootage>1015</ns2:squareFootage><ns2:unitCount>34</ns2:unitCount><ns2:bedRooms>2.0</ns2:bedRooms><ns2:bathRooms>2.0</ns2:bathRooms></ns2:floorPlan></ns2:return></ns2:getFloorPlansResponse></S:Body></S:Envelope>
     http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:45 GMT
+  recorded_at: Tue, 21 Jun 2016 23:23:13 GMT
 - request:
     method: post
     uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
@@ -212,7 +212,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 22 Jun 2016 01:56:42 GMT
+      - Tue, 21 Jun 2016 23:28:14 GMT
     body:
       encoding: UTF-8
       string: '<?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getAvailableUnitsResponse
@@ -252,220 +252,5 @@ http_interactions:
         View - Wilkes Ln</ns2:feature><ns2:feature>YSM: 8th fl</ns2:feature><ns2:status>OnNotice</ns2:status><ns2:dateAvailable>2016-07-07</ns2:dateAvailable><ns2:baseMarketRent>1104</ns2:baseMarketRent><ns2:baseConcession>0</ns2:baseConcession><ns2:baseFinalRent>1104</ns2:baseFinalRent><ns2:bestLeaseTerm>12</ns2:bestLeaseTerm><ns2:bestMarketRent>1104</ns2:bestMarketRent><ns2:bestConcession>0</ns2:bestConcession><ns2:bestFinalRent>1104</ns2:bestFinalRent></ns2:unit><ns2:unit><ns2:unitType>671s1</ns2:unitType><ns2:unitNumber>1021</ns2:unitNumber><ns2:feature>YSM:
         View - Wilkes Ln</ns2:feature><ns2:feature>YSM: 10th fl</ns2:feature><ns2:status>NewUnit</ns2:status><ns2:dateAvailable>2016-07-31</ns2:dateAvailable><ns2:baseMarketRent>1112</ns2:baseMarketRent><ns2:baseConcession>0</ns2:baseConcession><ns2:baseFinalRent>1112</ns2:baseFinalRent><ns2:bestLeaseTerm>12</ns2:bestLeaseTerm><ns2:bestMarketRent>1112</ns2:bestMarketRent><ns2:bestConcession>0</ns2:bestConcession><ns2:bestFinalRent>1112</ns2:bestFinalRent></ns2:unit><ns2:bedRooms>0.0</ns2:bedRooms><ns2:bathRooms>1.0</ns2:bathRooms><ns2:sqFt>444</ns2:sqFt></ns2:floorPlan></ns2:return></ns2:getAvailableUnitsResponse></S:Body></S:Envelope>'
     http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:48 GMT
-- request:
-    method: post
-    uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://yieldstar.com/ws/AppExchange/v1"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><wsdl:getRenewalLeaseTermRent><wsdl:request><wsdl:clientName><CLIENT_NAME></wsdl:clientName><wsdl:externalPropertyId>00000671</wsdl:externalPropertyId><wsdl:units
-        xsi:nil="true"/><wsdl:unitNumber>0821</wsdl:unitNumber><wsdl:building xsi:nil="true"/><wsdl:minLeaseTerm
-        xsi:nil="true"/><wsdl:maxLeaseTerm xsi:nil="true"/><wsdl:firstMoveInDate xsi:nil="true"/><wsdl:lastMoveInDate
-        xsi:nil="true"/><wsdl:renewalLeaseTermRentUnitRequest><wsdl:unitNumber>0821</wsdl:unitNumber></wsdl:renewalLeaseTermRentUnitRequest></wsdl:request></wsdl:getRenewalLeaseTermRent></env:Body></env:Envelope>
-    headers:
-      Soapaction:
-      - '"getRenewalLeaseTermRent"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '843'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      Content-Type:
-      - text/xml;charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Date:
-      - Wed, 22 Jun 2016 01:56:44 GMT
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getRenewalLeaseTermRentResponse
-        xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:renewalLeaseTermRentUnitResponse><ns2:unitNumber>0821</ns2:unitNumber></ns2:renewalLeaseTermRentUnitResponse></ns2:return></ns2:getRenewalLeaseTermRentResponse></S:Body></S:Envelope>
-    http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:48 GMT
-- request:
-    method: post
-    uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://yieldstar.com/ws/AppExchange/v1"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><wsdl:getRenewalLeaseTermRent><wsdl:request><wsdl:clientName><CLIENT_NAME></wsdl:clientName><wsdl:externalPropertyId>00000671</wsdl:externalPropertyId><wsdl:units
-        xsi:nil="true"/><wsdl:unitNumber>0920</wsdl:unitNumber><wsdl:building xsi:nil="true"/><wsdl:minLeaseTerm
-        xsi:nil="true"/><wsdl:maxLeaseTerm xsi:nil="true"/><wsdl:firstMoveInDate xsi:nil="true"/><wsdl:lastMoveInDate
-        xsi:nil="true"/><wsdl:renewalLeaseTermRentUnitRequest><wsdl:unitNumber>0920</wsdl:unitNumber></wsdl:renewalLeaseTermRentUnitRequest></wsdl:request></wsdl:getRenewalLeaseTermRent></env:Body></env:Envelope>
-    headers:
-      Soapaction:
-      - '"getRenewalLeaseTermRent"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '843'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      Content-Type:
-      - text/xml;charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Date:
-      - Wed, 22 Jun 2016 01:56:45 GMT
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getRenewalLeaseTermRentResponse
-        xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:renewalLeaseTermRentUnitResponse><ns2:unitNumber>0920</ns2:unitNumber></ns2:renewalLeaseTermRentUnitResponse></ns2:return></ns2:getRenewalLeaseTermRentResponse></S:Body></S:Envelope>
-    http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:50 GMT
-- request:
-    method: post
-    uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://yieldstar.com/ws/AppExchange/v1"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><wsdl:getRenewalLeaseTermRent><wsdl:request><wsdl:clientName><CLIENT_NAME></wsdl:clientName><wsdl:externalPropertyId>00000671</wsdl:externalPropertyId><wsdl:units
-        xsi:nil="true"/><wsdl:unitNumber>0919</wsdl:unitNumber><wsdl:building xsi:nil="true"/><wsdl:minLeaseTerm
-        xsi:nil="true"/><wsdl:maxLeaseTerm xsi:nil="true"/><wsdl:firstMoveInDate xsi:nil="true"/><wsdl:lastMoveInDate
-        xsi:nil="true"/><wsdl:renewalLeaseTermRentUnitRequest><wsdl:unitNumber>0919</wsdl:unitNumber></wsdl:renewalLeaseTermRentUnitRequest></wsdl:request></wsdl:getRenewalLeaseTermRent></env:Body></env:Envelope>
-    headers:
-      Soapaction:
-      - '"getRenewalLeaseTermRent"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '843'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      Content-Type:
-      - text/xml;charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Date:
-      - Wed, 22 Jun 2016 01:56:54 GMT
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getRenewalLeaseTermRentResponse
-        xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:renewalLeaseTermRentUnitResponse><ns2:unitNumber>0919</ns2:unitNumber></ns2:renewalLeaseTermRentUnitResponse></ns2:return></ns2:getRenewalLeaseTermRentResponse></S:Body></S:Envelope>
-    http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:51 GMT
-- request:
-    method: post
-    uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://yieldstar.com/ws/AppExchange/v1"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><wsdl:getRenewalLeaseTermRent><wsdl:request><wsdl:clientName><CLIENT_NAME></wsdl:clientName><wsdl:externalPropertyId>00000671</wsdl:externalPropertyId><wsdl:units
-        xsi:nil="true"/><wsdl:unitNumber>1017</wsdl:unitNumber><wsdl:building xsi:nil="true"/><wsdl:minLeaseTerm
-        xsi:nil="true"/><wsdl:maxLeaseTerm xsi:nil="true"/><wsdl:firstMoveInDate xsi:nil="true"/><wsdl:lastMoveInDate
-        xsi:nil="true"/><wsdl:renewalLeaseTermRentUnitRequest><wsdl:unitNumber>1017</wsdl:unitNumber></wsdl:renewalLeaseTermRentUnitRequest></wsdl:request></wsdl:getRenewalLeaseTermRent></env:Body></env:Envelope>
-    headers:
-      Soapaction:
-      - '"getRenewalLeaseTermRent"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '843'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      Content-Type:
-      - text/xml;charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Date:
-      - Wed, 22 Jun 2016 01:56:54 GMT
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getRenewalLeaseTermRentResponse
-        xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:renewalLeaseTermRentUnitResponse><ns2:unitNumber>1017</ns2:unitNumber></ns2:renewalLeaseTermRentUnitResponse></ns2:return></ns2:getRenewalLeaseTermRentResponse></S:Body></S:Envelope>
-    http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:51 GMT
-- request:
-    method: post
-    uri: http://<USERNAME>:<PASSWORD>@rmsws.yieldstar.com/rmsws/AppExchange
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://yieldstar.com/ws/AppExchange/v1"
-        xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><wsdl:getRenewalLeaseTermRent><wsdl:request><wsdl:clientName><CLIENT_NAME></wsdl:clientName><wsdl:externalPropertyId>00000671</wsdl:externalPropertyId><wsdl:units
-        xsi:nil="true"/><wsdl:unitNumber>0817</wsdl:unitNumber><wsdl:building xsi:nil="true"/><wsdl:minLeaseTerm
-        xsi:nil="true"/><wsdl:maxLeaseTerm xsi:nil="true"/><wsdl:firstMoveInDate xsi:nil="true"/><wsdl:lastMoveInDate
-        xsi:nil="true"/><wsdl:renewalLeaseTermRentUnitRequest><wsdl:unitNumber>0817</wsdl:unitNumber></wsdl:renewalLeaseTermRentUnitRequest></wsdl:request></wsdl:getRenewalLeaseTermRent></env:Body></env:Envelope>
-    headers:
-      Soapaction:
-      - '"getRenewalLeaseTermRent"'
-      Content-Type:
-      - text/xml;charset=UTF-8
-      Content-Length:
-      - '843'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      Content-Type:
-      - text/xml;charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Date:
-      - Wed, 22 Jun 2016 01:56:55 GMT
-    body:
-      encoding: UTF-8
-      string: <?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:getRenewalLeaseTermRentResponse
-        xmlns:ns2="http://yieldstar.com/ws/AppExchange/v1"><ns2:return><ns2:externalPropertyId>00000671</ns2:externalPropertyId><ns2:renewalLeaseTermRentUnitResponse><ns2:unitNumber>0817</ns2:unitNumber><ns2:unitRate><ns2:leaseTerm>1</ns2:leaseTerm><ns2:endDate>2016-09-13</ns2:endDate><ns2:marketRent>2189</ns2:marketRent><ns2:finalRent>2189</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>2</ns2:leaseTerm><ns2:endDate>2016-10-13</ns2:endDate><ns2:marketRent>2120</ns2:marketRent><ns2:finalRent>2120</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>3</ns2:leaseTerm><ns2:endDate>2016-11-12</ns2:endDate><ns2:marketRent>1819</ns2:marketRent><ns2:finalRent>1819</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>4</ns2:leaseTerm><ns2:endDate>2016-12-12</ns2:endDate><ns2:marketRent>1932</ns2:marketRent><ns2:finalRent>1932</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>5</ns2:leaseTerm><ns2:endDate>2017-01-11</ns2:endDate><ns2:marketRent>1990</ns2:marketRent><ns2:finalRent>1990</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>6</ns2:leaseTerm><ns2:endDate>2017-02-10</ns2:endDate><ns2:marketRent>1573</ns2:marketRent><ns2:finalRent>1573</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>7</ns2:leaseTerm><ns2:endDate>2017-03-12</ns2:endDate><ns2:marketRent>1570</ns2:marketRent><ns2:finalRent>1570</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>8</ns2:leaseTerm><ns2:endDate>2017-04-11</ns2:endDate><ns2:marketRent>1502</ns2:marketRent><ns2:finalRent>1502</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>9</ns2:leaseTerm><ns2:endDate>2017-05-11</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>true</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>10</ns2:leaseTerm><ns2:endDate>2017-06-10</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>11</ns2:leaseTerm><ns2:endDate>2017-07-10</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>12</ns2:leaseTerm><ns2:endDate>2017-08-09</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>13</ns2:leaseTerm><ns2:endDate>2017-09-08</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>14</ns2:leaseTerm><ns2:endDate>2017-10-08</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>15</ns2:leaseTerm><ns2:endDate>2017-11-07</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>16</ns2:leaseTerm><ns2:endDate>2017-12-07</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>17</ns2:leaseTerm><ns2:endDate>2018-01-06</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate><ns2:unitRate><ns2:leaseTerm>18</ns2:leaseTerm><ns2:endDate>2018-02-05</ns2:endDate><ns2:marketRent>1481</ns2:marketRent><ns2:finalRent>1481</ns2:finalRent><ns2:best>false</ns2:best></ns2:unitRate></ns2:renewalLeaseTermRentUnitResponse></ns2:return></ns2:getRenewalLeaseTermRentResponse></S:Body></S:Envelope>
-    http_version: 
-  recorded_at: Wed, 22 Jun 2016 01:51:52 GMT
+  recorded_at: Tue, 21 Jun 2016 23:23:15 GMT
 recorded_with: VCR 3.0.3
