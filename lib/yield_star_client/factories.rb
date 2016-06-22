@@ -3,7 +3,6 @@ FactoryGirl.define do
   factory :yield_star_client_floor_plan, class: YieldStarClient::FloorPlan do
     external_property_id "321809"
     name "1B1B-SM*"
-    description "1B1B"
     square_feet 82
     unit_count 10
     bedrooms 1

@@ -15,11 +15,21 @@ module YieldStarClient
   class FloorPlan < Modelish::Base
     property :external_property_id
     property :name
-    property :description
-    property :square_feet, :type => Integer, :from => :square_footage
+    property :square_feet, :type => Integer
     property :unit_count, :type => Integer
-    property :bedrooms, :type => Float, :from => :bed_rooms
-    property :bathrooms, :type => Float, :from => :bath_rooms
-  end
+    property :bedrooms, :type => Float
+    property :bathrooms, :type => Float
+    property :units, :from => :unit, :default => []
 
+    def initialize(options = {})
+      super(options)
+
+      self.units = [self.units].flatten.collect { |u| AvailableUnit.new(u) }
+    end
+
+    def id
+      name
+    end
+
+  end
 end
