@@ -1,9 +1,9 @@
-## TBA
+## 2.0
+
+* Replace `get_available_units` with `get_floor_plans_with_units`
 
 * Added development rake task: `rake console` to fire up irb
   console with this library preloaded
-
-* Replace `get_available_units` with `get_floor_plans_with_units`
 
 ## 1.6.1
 
