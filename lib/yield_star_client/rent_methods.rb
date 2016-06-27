@@ -22,26 +22,5 @@ module YieldStarClient
       response = GetRentSummary::Request.execute(request_args)
       GetRentSummary::Response.new(response).rent_summaries
     end
-
-    # Retrieves rental information for all currently available units at a specific 
-    # property, grouped by floor plan.
-    #
-    # @param [String] external_property_id the ID of the property where the available
-    #                                      units are located
-    #
-    # @return [Array<YieldStarClient::AvailableFloorPlan>] list of floor plans with
-    #                                                      available units
-    #
-    # @raise [ArgumentError] when a required argument is missing or invalid
-    # @raise [YieldStarClient::AuthenticationError] when unable to authenticate to the web service
-    # @raise [YieldStarClient::OperationError] when the service raises an OperationError fault
-    # @raise [YieldStarClient::InternalError] when the service raises an InternalError fault
-    # @raise [YieldStarClient::ServerError] when any other server-side error occurs
-    def get_available_units(external_property_id)
-      request_args = default_savon_params.
-        merge(external_property_id: external_property_id)
-      response = GetAvailableUnits::Request.execute(request_args)
-      GetAvailableUnits::Response.new(response).available_units
-    end
   end
 end

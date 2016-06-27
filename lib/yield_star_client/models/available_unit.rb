@@ -16,13 +16,13 @@ module YieldStarClient
   # @attr [Integer] base_market_rent the 12-month market rent
   # @attr [Integer] base_concession the concession amountt
   # @attr [Integer] base_final_rent the 12-month effective rent (market rent less concessions)
-  # @attr [Integer] best_lease_term the lease term associated with the best price from 
+  # @attr [Integer] best_lease_term the lease term associated with the best price from
   #                                 the Lease Term Rent Matrix.
-  # @attr [Integer] best_market_rent the market monthly rent associated with the best price 
+  # @attr [Integer] best_market_rent the market monthly rent associated with the best price
   #                                  term and move-in period
-  # @attr [Integer] best_concession the concession associated with the best price term 
+  # @attr [Integer] best_concession the concession associated with the best price term
   #                                 and move-in period
-  # @attr [Integer] best_final_rent the effective monthly rent associated with the best 
+  # @attr [Integer] best_final_rent the effective monthly rent associated with the best
   #                                 price term and move-in period
   class AvailableUnit < Modelish::Base
     property :building

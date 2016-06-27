@@ -40,6 +40,19 @@ module YieldStarClient
       end
     end
 
+    describe "#get_floor_plans_with_units" do
+      it "returns all floorplans with their units", vcr: { record: :once } do
+        property = client.get_properties.first
+        external_property_id = property.external_property_id
+        floor_plans_with_units = client.get_floor_plans_with_units(external_property_id)
+
+        floor_plan = floor_plans_with_units.first
+
+        expect(floor_plan).to be_a FloorPlan
+        expect(floor_plan.units.first).to be_an AvailableUnit
+      end
+    end
+
   end
 
 end
