@@ -19,6 +19,7 @@ module YieldStarClient
         attribute :max_lease_term, String
         attribute :first_move_in_date, Date
         attribute :last_move_in_date, Date
+        attribute :unit_available_date, Date
 
         validates :external_property_id, presence: true
       end
@@ -37,6 +38,7 @@ module YieldStarClient
             :max_lease_term,
             :first_move_in_date,
             :last_move_in_date,
+            :unit_available_date,
           )).to_request_hash
         end
         request_element = self.class.lease_term_request_opts.
