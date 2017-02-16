@@ -21,6 +21,7 @@ module YieldStarClient
       it { is_expected.to have_attribute(:max_lease_term, String) }
       it { is_expected.to have_attribute(:first_move_in_date, Date) }
       it { is_expected.to have_attribute(:last_move_in_date, Date) }
+      it { is_expected.to have_attribute(:unit_available_date, Date) }
     end
 
     context "validations" do
@@ -36,6 +37,7 @@ module YieldStarClient
         max_lease_term: "max_lease_term",
         first_move_in_date: "first_move_in_date",
         last_move_in_date: "last_move_in_date",
+        unit_available_date: "unit_available_date",
       )
 
       rent_options = double(
@@ -48,6 +50,7 @@ module YieldStarClient
         max_lease_term: "max_lease_term",
         first_move_in_date: "first_move_in_date",
         last_move_in_date: "last_move_in_date",
+        unit_available_date: "unit_available_date",
       ).and_return(rent_options)
 
       expected_args = {

@@ -60,8 +60,6 @@ describe YieldStarClient::Client do
 
   # Methods from LeaseTermRentMethods
   it { should respond_to(:get_lease_term_rent) }
-  it { should respond_to(:get_lease_term_rent_plus) }
-  it { should respond_to(:get_renewal_lease_term_rent) }
 
   context "with default configuration" do
     subject(:client) { YieldStarClient::Client.new }

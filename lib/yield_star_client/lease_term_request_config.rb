@@ -37,6 +37,7 @@ module YieldStarClient
             :max_lease_term,
             :first_move_in_date,
             :last_move_in_date,
+            :unit_available_date,
           )).to_request_hash
         end
         request_element = self.class.lease_term_request_opts.
