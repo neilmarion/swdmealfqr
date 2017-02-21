@@ -39,7 +39,6 @@ require 'yield_star_client/get_floor_plan/request'
 require 'yield_star_client/get_floor_plan/response'
 
 require 'yield_star_client/extract_lease_term_rent_hashes'
-require 'yield_star_client/extract_available_floor_plan_hashes'
 
 require 'yield_star_client/errors'
 
