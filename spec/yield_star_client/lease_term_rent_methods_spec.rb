@@ -10,7 +10,7 @@ module YieldStarClient
       ))
     end
 
-    describe "#get_lease_term_rent", vcr: {record: :once} do
+    describe "#get_lease_term_rent", vcr: { record: :once } do
       let(:properties) { client.get_properties }
       let(:external_property_id) { properties.last.external_property_id }
       let(:floor_plan) do
@@ -43,9 +43,10 @@ module YieldStarClient
         )
 
         expect(lease_term_rents).to_not be_empty
-        expect(lease_term_rents.first).to be_a LeaseTermRent
-        expect(lease_term_rents.map(&:unit_number).uniq).to eq ["1904", "0509"]
-        expect(lease_term_rents.map(&:building).uniq).to eq ["Z19", "Z05"]
+
+        lease_term_rents.each do |lease_term_rent|
+          expect(lease_term_rent).to be_a LeaseTermRent
+        end
       end
     end
 
