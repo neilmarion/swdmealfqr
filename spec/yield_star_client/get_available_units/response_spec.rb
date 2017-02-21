@@ -4,32 +4,47 @@ module YieldStarClient
   module GetAvailableUnits
     describe Response do
 
-      describe "#available_floor_plans" do
-        let(:soap_response) { double(to_hash: response_hash) }
-        let(:response_hash) do
-          [
-            {
-              external_property_id: "external_property_id",
+      include Savon::SpecHelper
+
+      let(:fixture) do
+        filename = File.join(
+          SPEC_DIR,
+          "fixtures",
+          "get_available_units",
+          "multiple_floor_plans.xml",
+        )
+        File.read(filename)
+      end
+      let(:request_params) do
+        {
+          :client_name => CONFIG[:client_name],
+          :external_property_id => CONFIG[:external_property_id]
+        }
+      end
+
+      before(:all) do
+        savon.mock!
+
+        savon.expects(:get_available_units)
+          .with(
+            message: {
+              request: request_params
             }
-          ]
-        end
+          )
+          .returns(fixture)
+      end
 
-        before do
-          allow_any_instance_of(described_class).
-            to receive(:extract_available_floor_plan_hashes_from).
-            and_return(response_hash)
-        end
+      after(:all) { savon.unmock! }
 
-        it "returns an array of FloorPlan objects" do
-          result = described_class.new(soap_response)
+      describe "#available_units" do
+        it "returns an array of AvailableUnit objects" do
+          response = described_class.new(
+            GetAvailableUnits::Request.execute(CONFIG)
+          )
 
-          expect(result.available_floor_plans.first).to be_a FloorPlan
-          expect(result.available_floor_plans.map(&:external_property_id)).
-            to match_array(
-              [
-                "external_property_id",
-              ]
-            )
+          sample = response.available_units.sample
+
+          expect(sample).to be_an AvailableUnit
         end
       end
 
