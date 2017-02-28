@@ -1,3 +1,7 @@
+## 2.0.1
+
+* Remove lease term methods that are not needed
+
 ## 2.0
 
 * Replace `get_available_units` with `get_floor_plans_with_units`
