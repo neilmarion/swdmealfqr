@@ -43,10 +43,7 @@ module YieldStarClient
         )
 
         expect(lease_term_rents).to_not be_empty
-
-        lease_term_rents.each do |lease_term_rent|
-          expect(lease_term_rent).to be_a LeaseTermRent
-        end
+        expect(lease_term_rents.first).to be_a LeaseTermRent
       end
     end
 
