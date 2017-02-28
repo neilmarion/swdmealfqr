@@ -20,7 +20,7 @@ module YieldStarClient
 
         floor_plan_hashes.map do |floor_plan_hash|
           [floor_plan_hash[:unit]]
-        end.flatten
+        end.flatten.compact
       end
 
     end
