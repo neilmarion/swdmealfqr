@@ -1,4 +1,4 @@
-## TBA
+## 3.0
 
 * Use `get_rent_summary` to build Floorplans
 
