@@ -8,7 +8,7 @@ module YieldStarClient
         available_unit_hashes = extract_available_unit_hashes_from(@soap_response.to_hash)
 
         @available_units = available_unit_hashes.map do |hash|
-          AvailableUnit.new(hash)
+          AvailableUnit.new_from_hash(hash)
         end
       end
 

@@ -25,6 +25,7 @@ module YieldStarClient
   # @attr [Integer] best_final_rent the effective monthly rent associated with the best
   #                                 price term and move-in period
   class AvailableUnit < Modelish::Base
+    property :id
     property :building
     property :unit_type
     property :unit_number
@@ -39,9 +40,12 @@ module YieldStarClient
     property :best_concession, :type => Integer
     property :best_final_rent, :type => Integer
 
-    def id
-      concat = [building, unit_type, unit_number].join("-")
-      Digest::SHA1.hexdigest concat
+    def self.new_from_hash(hash)
+      new(
+        hash.merge(
+          id: hash[:unit_number]
+        )
+      )
     end
   end
 
