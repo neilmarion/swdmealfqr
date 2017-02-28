@@ -2,26 +2,25 @@ module YieldStarClient
   module GetAvailableUnits
     class Response < BaseResponse
 
-      def available_floor_plans
-        return @available_floor_plans if @available_floor_plans
-        available_floor_plan_hashes =
-          extract_available_floor_plan_hashes_from(@soap_response.to_hash)
-        @available_floor_plans = available_floor_plan_hashes.map do |hash|
-          FloorPlan.new(
-            external_property_id: hash[:external_property_id],
-            name: hash[:floor_plan_name],
-            square_feet: hash[:sq_ft],
-            bedrooms: hash[:bed_rooms],
-            bathrooms: hash[:bath_rooms],
-            units: hash[:unit],
-          )
+      def available_units
+        return @available_units if @available_units
+
+        available_unit_hashes = extract_available_unit_hashes_from(@soap_response.to_hash)
+
+        @available_units = available_unit_hashes.map do |hash|
+          AvailableUnit.new_from_hash(hash)
         end
       end
 
       private
 
-      def extract_available_floor_plan_hashes_from(soap_response)
-        ExtractAvailableFloorPlanHashes.execute(soap_response)
+      def extract_available_unit_hashes_from(soap_response)
+        return_data = soap_response[:get_available_units_response][:return]
+        floor_plan_hashes = [return_data[:floor_plan]].flatten.compact
+
+        floor_plan_hashes.map do |floor_plan_hash|
+          [floor_plan_hash[:unit]]
+        end.flatten.compact
       end
 
     end

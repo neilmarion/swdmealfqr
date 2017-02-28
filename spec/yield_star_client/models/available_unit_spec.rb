@@ -3,17 +3,17 @@ require 'spec_helper'
 module YieldStarClient
   RSpec.describe AvailableUnit do
 
-    describe "#id" do
-      let(:unit) do
-        build(:yield_star_client_available_unit, {
-          building: "22",
-          unit_type: "2br",
-          unit_number: "101",
-        })
+    describe ".new_from_hash" do
+      let(:hash) do
+        {
+          unit_number: "111"
+        }
       end
 
-      it "is a hash of the building, unit type, unit number" do
-        expect(unit.id).to eq Digest::SHA1.hexdigest "22-2br-101"
+      it "assigns `unit_number` to `id`" do
+        unit = described_class.new_from_hash(hash)
+
+        expect(unit.id).to eq "111"
       end
     end
 

@@ -2,12 +2,14 @@ module YieldStarClient
   module GetRentSummary
     class Response < BaseResponse
 
-      def rent_summaries
-        return @rent_summaries if @rent_summaries
+      def rent_summaries_as_floor_plans
+        return @floorplans if @floorplans
+
         rent_summary_hashes =
           extract_rent_summary_hashes_from(@soap_response.to_hash)
-        @rent_summaries = rent_summary_hashes.map do |hash|
-          RentSummary.new_from(hash)
+
+        @floorplans = rent_summary_hashes.map do |hash|
+          FloorPlan.new_from_rent_summary_hash(hash)
         end
       end
 

@@ -4,34 +4,47 @@ module YieldStarClient
   module GetRentSummary
     describe Response do
 
-      describe "#rent_summaries" do
-        let(:soap_response) { double(to_hash: response_hash) }
-        let(:response_hash) { {} }
-        let(:rent_summary_1_hash) do
-          { external_property_id: "external_property_id_1" }
-        end
-        let(:rent_summary_2_hash) do
-          { external_property_id: "external_property_id_2" }
-        end
-        let(:rent_summary_1) { double(RentSummary) }
-        let(:rent_summary_2) { double(RentSummary) }
-        let(:rent_summary_hashes) do
-          [ rent_summary_1_hash, rent_summary_2_hash ]
-        end
+      include Savon::SpecHelper
 
-        it "returns RentSummary objects from the soap response" do
-          allow(ExtractRentSummaryHashes).to receive(:execute).
-            with(response_hash).
-            and_return(rent_summary_hashes)
+      let(:fixture) do
+        filename = File.join(
+          SPEC_DIR,
+          "fixtures",
+          "get_rent_summary",
+          "multiple_summaries.xml",
+        )
+        File.read(filename)
+      end
+      let(:request_params) do
+        {
+          :client_name => CONFIG[:client_name],
+          :external_property_id => CONFIG[:external_property_id]
+        }
+      end
 
-          allow(RentSummary).to receive(:new).with(rent_summary_1_hash).
-            and_return(rent_summary_1)
-          allow(RentSummary).to receive(:new).with(rent_summary_2_hash).
-            and_return(rent_summary_2)
+      before(:all) do
+        savon.mock!
 
-          rent_summaries = described_class.new(soap_response).rent_summaries
+        savon.expects(:get_rent_summary)
+          .with(
+            message: {
+              request: request_params
+            }
+          )
+          .returns(fixture)
+      end
 
-          expect(rent_summaries).to eq [rent_summary_1, rent_summary_2]
+      after(:all) { savon.unmock! }
+
+      describe "#rent_summaries_as_floor_plans" do
+        it "returns an array of FloorPlan objects" do
+          response = described_class.new(
+            GetRentSummary::Request.execute(CONFIG)
+          )
+
+          sample = response.rent_summaries_as_floor_plans.sample
+
+          expect(sample).to be_a FloorPlan
         end
       end
 

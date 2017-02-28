@@ -1,3 +1,7 @@
+## TBA
+
+* Use `get_rent_summary` to build Floorplans
+
 ## 2.0.1
 
 * Remove lease term methods that are not needed
