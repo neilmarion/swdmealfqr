@@ -18,22 +18,34 @@ module YieldStarClient
     # @param [Savon::SOAP::Fault] soap_error the error object raised by the soap client
     # @return [YieldStarClient::ServerError] the corresponding YieldStarClient error
     def self.translate_fault(soap_error)
-      fault = soap_error.to_hash[:fault]
+      if soap_error.instance_of? Savon::HTTPError
+        fault = soap_error.to_hash
 
-      # set up defaults
-      error_class = YieldStarClient::ServerError
-      fault_detail = {:code => fault[:faultcode], :message => fault[:faultstring]}
-
-      if detail = fault[:detail]
-        if detail.has_key?(:authentication_fault)
+        if fault[:code] == 401
           error_class = YieldStarClient::AuthenticationError
-          fault_detail = detail[:authentication_fault]
-        elsif detail.has_key?(:operation_fault)
-          error_class = YieldStarClient::OperationError
-          fault_detail = detail[:operation_fault]
-        elsif detail.has_key?(:internal_error_fault)
-          error_class = YieldStarClient::InternalError
-          fault_detail = detail[:internal_error_fault]
+          message = "Authentication Error"
+        else
+          error_class = YieldStarClient::ServerError
+          message = fault[:body]
+        end
+
+        fault_detail = {:code => fault[:code], :message => message}
+      else
+        fault = soap_error.to_hash[:fault]
+        error_class = YieldStarClient::ServerError
+        fault_detail = {:code => fault[:faultcode], :message => fault[:faultstring]}
+
+        if detail = fault[:detail]
+          if detail.has_key?(:authentication_fault)
+            error_class = YieldStarClient::AuthenticationError
+            fault_detail = detail[:authentication_fault]
+          elsif detail.has_key?(:operation_fault)
+            error_class = YieldStarClient::OperationError
+            fault_detail = detail[:operation_fault]
+          elsif detail.has_key?(:internal_error_fault)
+            error_class = YieldStarClient::InternalError
+            fault_detail = detail[:internal_error_fault]
+          end
         end
       end
 
